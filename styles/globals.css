@@ -1,3 +1,103 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply border-2 border-black;
+  }
+
+  input:checked + div {
+    @apply border-blue-800;
+  }
+
+  input:checked + div svg {
+    @apply block;
+  }
+}
+
+@layer components {
+  .navbar {
+    @apply flex flex-row gap-1 border-2 border-black text-black bg-black;
+  }
+  .navbar__item {
+    @apply flex items-center justify-between flex-grow;
+  }
+
+  .navbar__item-text {
+    @apply tracking-wider;
+  }
+
+  .title {
+    @apply tracking-wider font-bold uppercase;
+  }
+
+  .hero {
+    @apply md:grid border-2 border-black grid-rows-[auto] grid-cols-3;
+  }
+
+  .animate-fly {
+    @apply translate-x-40 -translate-y-40 opacity-0;
+  }
+}
+
+@layer utilities {
+  .text-responsive {
+    @apply text-[4vw] sm:text-[3vw] md:text-2xl;
+  }
+
+  .bigger-text-responsive {
+    @apply text-[7vw] sm:text-[5vw] md:text-5xl md:leading-tight;
+  }
+
+  .logo-responsive {
+    @apply text-[13vw]  md:text-7xl;
+  }
+
+  .title-responsive {
+    @apply text-[8vw]  md:text-5xl;
+  }
+
+  .my-border {
+    @apply border-2 border-black;
+  }
+
+  .animate-black-white {
+    @apply bg-black text-white hover:bg-white hover:text-black transition-all;
+  }
+
+  .animate-white-black {
+    @apply bg-white text-black hover:bg-black hover:text-white transition-all;
+  }
+
+  .grid-item-center {
+    @apply grid place-items-center;
+  }
+
+  .card-list {
+    @apply flex flex-col lg:grid grid-cols-12 grid-rows-6;
+  }
+
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  .line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  .animate-section {
+    @apply transition-all duration-500 ease-in;
+  }
+
+  .animate-left-right-in {
+    @apply translate-x-0 opacity-100;
+  }
+
+  .animate-left-right-out {
+    @apply translate-x-full opacity-0;
+  }
+}
