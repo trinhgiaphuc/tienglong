@@ -60,11 +60,11 @@ const words = [
         nghĩa nóc nhà dần được sử dụng để đề cập đến phụ nữ.`,
 ];
 
-const WordList = () => {
+const WordList = ({ nogrid }) => {
   let className = '';
 
   return (
-    <ul className="my-border card-list">
+    <ul className={`my-border ${nogrid ? 'flex flex-col' : 'card-list'}`}>
       {words.map((word, i) => {
         if (i === 0) className = 'col-span-5 row-span-2 hover:bg-red-300';
         if (i === 1) className = 'col-span-4 row-span-2 hover:bg-green-300';

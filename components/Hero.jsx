@@ -1,29 +1,32 @@
 import Link from 'next/link';
-import Navigation from './Navigation';
+import React from 'react';
 
-export default function Hero() {
+const Hero = React.memo(function WrappedHero() {
   return (
     <div className="hero">
       <div className="my-border px-4 col-span-2 grid-item-center">
-        <h1 className="title logo-responsive text-center leading-tight md:leading-tight">
+        <h1 className="title p-1 logo-responsive text-center font-ole leading-tight md:leading-tight">
           Tiếng Lòng
         </h1>
       </div>
 
-      <div className="my-border px-4 py-2 row-span-2 cursor-pointer animate-black-white grid-item-center">
-        <p className="bigger-text-responsive uppercase font-medium text-center mt-auto md:leading-[1.1] md:mt-0">
-          định nghĩa mọi thứ theo cách của bạn
-        </p>
-      </div>
+      <Link href="/define" passHref>
+        <div className="my-border px-4 py-2 row-span-2 cursor-pointer animate-black-white grid-item-center">
+          <p className="bigger-text-responsive uppercase font-medium text-center mt-auto md:leading-[1.1] md:mt-0">
+            định nghĩa mọi thứ theo cách của bạn
+          </p>
+        </div>
+      </Link>
 
       <div className="my-border h-full px-4 py-2 col-span-2 grid-item-center">
         <p className="bigger-text-responsive text-center uppercase">
-          <span className="font-medium text-zinc-800">thế giới quan</span>{' '}
-          <span className="font-ole underline">kỳ thú</span>
+          <span className="font-medium text-zinc-800">ngân hàng từ lóng </span>
+          <span className="font-ole underline">số 1</span>
+          <span className="font-medium text-zinc-800"> Việt Nam</span>
         </p>
 
         <div className="w-full m-auto flex p-2">
-          <Link href="/" passHref>
+          <Link href="/define" passHref>
             <a className="ml-auto p-1 font-medium my-border animate-white-black">
               📚Định nghĩa📚
             </a>
@@ -32,4 +35,6 @@ export default function Hero() {
       </div>
     </div>
   );
-}
+});
+
+export default Hero;

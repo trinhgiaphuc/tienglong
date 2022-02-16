@@ -1,17 +1,18 @@
+import '@styles/globals.css';
+
 import Navigation from '@components/Navigation';
-import { Fragment } from 'react';
-import Hero from '../components/Hero';
-import '../styles/globals.css';
+import UserProvider from '@lib/userContext';
 
 function MyApp({ Component, pageProps }) {
-  console.log(Component());
-  return Component.enter ? (
-    <Component {...pageProps} />
+  return Component.noNavigation ? (
+    <UserProvider>
+      <Component {...pageProps} />
+    </UserProvider>
   ) : (
-    <Fragment>
+    <UserProvider>
       <Navigation />
       <Component {...pageProps} />
-    </Fragment>
+    </UserProvider>
   );
 }
 
