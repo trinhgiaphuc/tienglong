@@ -1,6 +1,6 @@
-import SectionTitle from '@components/SectionTitle';
+import SectionTitle from '@components/word/SectionTitle';
 import Spinner from '@components/Spinner';
-import UsernameCheckForm from '@components/UsernameCheckForm';
+import UsernameCheckForm from '@components/user/UsernameCheckForm';
 
 import { useAuth } from '@lib/userContext';
 import Router from 'next/router';

@@ -80,6 +80,10 @@
   .show_select:focus ~ div {
     @apply scale-100 -translate-y-full;
   }
+
+  .word-button {
+    @apply border rounded-full py-2 px-4 flex-center border-zinc-300;
+  }
 }
 
 @layer utilities {

@@ -4,9 +4,21 @@ import Footer from '@components/Footer';
 import Hero from '@components/Hero';
 import Link from 'next/link';
 import Metatags from '@components/Metatags';
-import SectionWord from '@components/SectionWords';
+import SectionWord from '@components/word/SectionWords';
+import { getInitialWords } from '@lib/firebase-admin';
 
-export default function Home() {
+export async function getServerSideProps({ req, res }) {
+  try {
+    const words = JSON.stringify(await getInitialWords());
+    return { props: { words: JSON.parse(words) } };
+  } catch (error) {
+    console.log(error);
+  }
+
+  return { props: { words } };
+}
+
+export default function Home({ words }) {
   const { status } = useAuth();
 
   if (status === 'loading') return null;
@@ -17,9 +29,13 @@ export default function Home() {
       <Hero />
 
       <main className="my-border text-zinc-800">
-        <SectionWord section="từ hôm nay" href="/today-words" />
+        <SectionWord section="từ hôm nay" href="/today-words" words={words} />
         <DefineBanner />
-        <SectionWord section="từ đang thịnh hành" href="/trending-words" />
+        <SectionWord
+          section="từ đang thịnh hành"
+          href="/trending-words"
+          words={words}
+        />
 
         <div className="my-border relative group flex-center bg-black py-10 text-white">
           <h1 className="title-responsive px-4 text-center py-2 uppercase">

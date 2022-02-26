@@ -2,11 +2,11 @@ import { Fragment } from 'react';
 
 import { useAuth } from '@lib/userContext';
 
-import BioForm from '@components/BioForm';
+import BioForm from '@components/user/BioForm';
 import Error from 'pages/_error';
-import WordList from '@components/WordList';
+import WordList from '@components/word/WordList';
 import Spinner from '@components/Spinner';
-import SectionTitle from '@components/SectionTitle';
+import SectionTitle from '@components/word/SectionTitle';
 
 export default function ProfilePage() {
   const { user, status } = useAuth();

@@ -1,4 +1,23 @@
-import AdminLoginForm from '@components/AdminLoginForm';
+import AdminLoginForm from '@components/admin/AdminLoginForm';
+import { validateToken } from 'pages/api/admin';
+
+export async function getServerSideProps({ req, res }) {
+  let user;
+
+  try {
+    user = validateToken(req.cookies.TIENGLONG_ACCESS_TOKEN);
+    if (user) {
+      return {
+        redirect: {
+          permanent: true,
+          destination: '/admin/chatroom',
+        },
+      };
+    }
+  } catch (error) {
+    return { props: {} };
+  }
+}
 
 const AdminPage = () => {
   return (

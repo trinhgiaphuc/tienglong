@@ -6,7 +6,22 @@ import { firestoreAdmin } from '@lib/firebase-admin';
 import { supabase } from '@lib/supabase';
 
 export default async function handler(req, res) {
-  const { uid, password } = req.body;
+  const { uid, password, logOut } = req.body;
+
+  if (typeof logOut !== undefined && logOut) {
+    res.setHeader(
+      'Set-Cookie',
+      cookie.serialize('TIENGLONG_ACCESS_TOKEN', '', {
+        httpOnly: true,
+        expires: new Date('Thu, 01 Jan 1970 00:00:00 GMT'),
+        path: '/',
+        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production',
+      })
+    );
+
+    return res.status(200).json({ ok: 'ok' });
+  }
 
   let firebaseUserData;
   try {
@@ -17,7 +32,7 @@ export default async function handler(req, res) {
     if (!firebaseUserData.role.includes('admin'))
       throw new Error('Chưa được cấp quyền');
   } catch (error) {
-    return res.status(401).json({ error });
+    return res.status(401).json({ error: error.message });
   }
 
   const { data, error } = await supabase

@@ -11,7 +11,7 @@ import {
   IoLogInOutline,
   IoPersonCircleOutline,
 } from 'react-icons/io5';
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 
 const NavigationLink = ({ role }) => (
   <div className="navbar__item lg:flex-grow relative text-white bg-black px-4 group">
@@ -46,7 +46,7 @@ const NavigationLink = ({ role }) => (
   </div>
 );
 
-const Navigate = () => {
+const Navigation = () => {
   const { user, username, status } = useAuth();
 
   if (status === 'loading') return null;
@@ -84,7 +84,7 @@ const Navigate = () => {
   );
 
   return (
-    <nav className="navbar h-[6%] sticky top-0 left-0">
+    <nav className="navbar h-[6%] z-50 sticky top-0 left-0">
       <NavigationLink role={user?.role} />
 
       <div className="navbar__item bg-white px-4 flex-grow">
@@ -134,7 +134,5 @@ const Navigate = () => {
     </nav>
   );
 };
-
-const Navigation = React.memo(Navigate);
 
 export default Navigation;

@@ -1,14 +1,18 @@
 import { addNewDefinition } from '@lib/db';
+import { useAuth } from '@lib/userContext';
 import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 
 const AddWordForm = () => {
   const router = useRouter();
 
+  const { username } = useAuth();
+
   const [word, setWord] = useState('');
   const [definition, setDefinition] = useState('');
   const [example, setExample] = useState('');
-  const [tags, setTags] = useState({ trend: '', source: '', other: '' });
+  const [tags, setTags] = useState({ trend: '', source: '' });
+  const [othersTags, setOthersTags] = useState('');
 
   const ref = useRef();
 
@@ -19,24 +23,27 @@ const AddWordForm = () => {
     if (e.target.name === 'nguon_goc') {
       setTags({ ...tags, source: e.target.id });
     }
-
-    console.log(`${tags.source}${tags.trend}${tags.other}`);
   };
 
   const handleSubmit = async e => {
     e.preventDefault();
 
-    console.dir(e);
+    const res = await addNewDefinition({
+      word,
+      definition,
+      example,
+      tags:
+        othersTags.length > 0
+          ? Object.values({ ...tags, ...othersTags.split(',') })
+          : Object.values(tags),
+      author: username,
+    });
 
-    console.log(ref.current);
-
-    // const res = await addNewDefinition({ word, definition, example, tag });
-
-    // if (res.success) {
-    //   router.push(`/`);
-    // } else if (!res.success) {
-    //   console.log(res.error);
-    // }
+    if (res.success) {
+      router.push(`/`);
+    } else if (!res.success) {
+      console.log(res.error);
+    }
   };
 
   return (
@@ -83,20 +90,15 @@ const AddWordForm = () => {
           className="input border-none w-full p-5 show_select"
           placeholder="Ví Dụ: #vjppro#alo#hehehe"
           onChange={e =>
-            setTags({
-              other: e.target.value
-                .trim()
-                .toLocaleLowerCase()
-                .replace(' ', '')
-                .replace(',', '')
-                .split(','),
-            })
+            setOthersTags(
+              e.target.value.trim().toLocaleLowerCase().replace(' ', '')
+            )
           }
           value={tags.other}
           type="text"
         />
         <div className="selector group-hover:scale-100 group-hover:-translate-y-full">
-          <SelectTest handleSelect={handleSelect} />
+          {/* <SelectTest handleSelect={handleSelect} /> */}
           <SelectTrendTag handleSelect={handleSelect} />
           <SelectSourceTag handleSelect={handleSelect} />
         </div>
@@ -138,24 +140,24 @@ const SelectYearTag = () => {
   );
 };
 
-const SelectTest = ({ handleSelect }) => (
-  <div className="my-border flex flex-col bg-blue-400">
-    <div className="wordList__tag">
-      <input onChange={handleSelect} type="radio" name="test" id="op1" />
-      <label htmlFor="op1">Không Lỗi Thời</label>
-    </div>
+// const SelectTest = ({ handleSelect }) => (
+//   <div className="my-border flex flex-col bg-blue-400">
+//     <div className="wordList__tag">
+//       <input onChange={handleSelect} type="radio" name="test" id="op1" />
+//       <label htmlFor="op1">Không Lỗi Thời</label>
+//     </div>
 
-    <div className="wordList__tag">
-      <input onChange={handleSelect} type="radio" name="test" id="op2" />
-      <label htmlFor="op2">Đang Thịnh Hành</label>
-    </div>
+//     <div className="wordList__tag">
+//       <input onChange={handleSelect} type="radio" name="test" id="op2" />
+//       <label htmlFor="op2">Đang Thịnh Hành</label>
+//     </div>
 
-    <div className="wordList__tag">
-      <input onChange={handleSelect} type="radio" name="test" id="op3" />
-      <label htmlFor="op3">Không Còn Phổ Biến</label>
-    </div>
-  </div>
-);
+//     <div className="wordList__tag">
+//       <input onChange={handleSelect} type="radio" name="test" id="op3" />
+//       <label htmlFor="op3">Không Còn Phổ Biến</label>
+//     </div>
+//   </div>
+// );
 
 const SelectTrendTag = ({ handleSelect }) => (
   <div className="my-border flex flex-col bg-red-400">

@@ -1,30 +1,39 @@
 import ChatCard from './ChatCard';
 
 import { auth } from '@lib/firebase';
-import { supabase } from '@lib/supabase';
+import { getAvatarFromMessage, supabase } from '@lib/supabase';
 import { IoAttach } from 'react-icons/io5';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const AdminChatroom = ({ messages }) => {
   const [currentMsg, setCurrentMsg] = useState(messages);
+  const [content, setContent] = useState('');
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const content = e.target[1].value;
     await supabase
       .from('message')
       .insert({ content, userId: auth.currentUser.uid });
+    setContent('');
+  };
+
+  const msgEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    msgEndRef.current.scrollIntoView({ behavior: 'smooth' });
   };
 
   useEffect(() => {
-    const unsub = supabase
+    supabase
       .from('message')
-      .on('INSERT', payload => {
-        setCurrentMsg([...currentMsg, payload.new]);
+      .on('INSERT', async payload => {
+        const userId = await getAvatarFromMessage(payload.new.userId);
+        const mess = { ...payload.new, userId };
+        setCurrentMsg([...currentMsg, mess]);
       })
       .subscribe();
 
-    return () => supabase.removeSubscription(unsub);
+    scrollToBottom();
   }, [currentMsg]);
 
   return (
@@ -42,6 +51,7 @@ const AdminChatroom = ({ messages }) => {
               </div>
             );
           })}
+          <div ref={msgEndRef} />
         </div>
         <form onSubmit={handleSubmit} className="grid grid-cols-12">
           <div className="col-span-1">
@@ -59,6 +69,8 @@ const AdminChatroom = ({ messages }) => {
             />
           </div>
           <input
+            value={content}
+            onChange={e => setContent(e.target.value)}
             placeholder="tin nhắn..."
             className="my-border col-span-10 text-responsive px-4 outline-none"
             type="text"

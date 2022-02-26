@@ -2,7 +2,7 @@ import { IoPlayForward } from 'react-icons/io5';
 import SectionTitle from './SectionTitle';
 import WordList from './WordList';
 
-export default function SectionWord({ section, href }) {
+export default function SectionWord({ section, href, words }) {
   return (
     <div>
       <SectionTitle
@@ -16,7 +16,7 @@ export default function SectionWord({ section, href }) {
         }
       />
 
-      <WordList />
+      <WordList words={words} />
     </div>
   );
 }

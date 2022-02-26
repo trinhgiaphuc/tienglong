@@ -6,7 +6,7 @@ const ChatCard = props => {
 
   if (!user) return null;
 
-  return user.uid === props.user.id ? (
+  return user.id === props.user.id ? (
     <MyChatCard {...props} />
   ) : (
     <OthersChatCard {...props} />
@@ -25,11 +25,13 @@ const OthersChatCard = ({ content, user, createdAt }) => {
           layout="responsive"
         />
       </div>
-      <div className="px-4 py-2 rounded-3xl flex-center flex-col my-border">
+      <div className="px-4 py-2 rounded-3xl flex items-start flex-col my-border">
         <p className="smaller-text-responsive">
           {new Date(createdAt).toLocaleString()}
         </p>
-        <p className="text-responsive text-center">{content}</p>
+        <p className="text-responsive text-center self-center max-w-[30ch]">
+          {content}
+        </p>
       </div>
     </div>
   );
@@ -38,11 +40,13 @@ const OthersChatCard = ({ content, user, createdAt }) => {
 const MyChatCard = ({ content, user, createdAt }) => {
   return (
     <div className="p-4 flex items-center justify-end gap-2">
-      <div className="px-4 py-2 rounded-3xl flex-center flex-col my-border ">
+      <div className="px-4 py-2 rounded-3xl flex items-start flex-col my-border ">
         <p className="smaller-text-responsive">
           {new Date(createdAt).toLocaleString()}
         </p>
-        <p className="text-responsive text-center">{content}</p>
+        <p className="text-responsive text-center self-center max-w-[35ch]">
+          {content}
+        </p>
       </div>
       <div className="w-16 h-16 aspect-square rounded-full overflow-hidden">
         <Image

@@ -1,5 +1,5 @@
-import AdminChatroom from '@components/AdminChatroom';
-import { getAllMessages } from '@lib/supabase';
+import AdminChatroom from '@components/admin/AdminChatroom';
+import { getMessages } from '@lib/supabase';
 import { validateToken } from 'pages/api/admin';
 
 export async function getServerSideProps({ req, res }) {
@@ -7,6 +7,7 @@ export async function getServerSideProps({ req, res }) {
 
   try {
     user = validateToken(req.cookies.TIENGLONG_ACCESS_TOKEN);
+    // if (user.keys().length === 0) throw new Error('asd');
   } catch (error) {
     return {
       redirect: {
@@ -16,7 +17,7 @@ export async function getServerSideProps({ req, res }) {
     };
   }
 
-  const messages = await getAllMessages(10);
+  const messages = await getMessages(10);
 
   return { props: { messages } };
 }
