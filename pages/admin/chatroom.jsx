@@ -7,7 +7,6 @@ export async function getServerSideProps({ req, res }) {
 
   try {
     user = validateToken(req.cookies.TIENGLONG_ACCESS_TOKEN);
-    // if (user.keys().length === 0) throw new Error('asd');
   } catch (error) {
     return {
       redirect: {

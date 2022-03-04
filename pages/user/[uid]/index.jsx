@@ -7,6 +7,16 @@ import Error from 'pages/_error';
 import WordList from '@components/word/WordList';
 import Spinner from '@components/Spinner';
 import SectionTitle from '@components/word/SectionTitle';
+import { getUserWords } from '@lib/db';
+
+export async function getServerSideProps(ctx) {
+  const { uid } = ctx.query;
+  const wordList = await getUserWords(uid);
+
+  console.log(wordList);
+
+  return { props: {} };
+}
 
 export default function ProfilePage() {
   const { user, status } = useAuth();
@@ -22,7 +32,7 @@ export default function ProfilePage() {
         <Fragment>
           <div className="my-border h-full overflow-y-scroll">
             <SectionTitle title="Từ Được Người Dùng Định Nghĩa" />
-            <WordList nogrid={true} />
+            {/* <WordList nogrid={true} /> */}
           </div>
           <BioForm {...user} />
         </Fragment>

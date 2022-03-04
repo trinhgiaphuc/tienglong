@@ -75,6 +75,7 @@ const UsernameCheckForm = ({ setStatus, setUser, setUsername, username }) => {
       email,
       role: ['user'],
       username: name,
+      heart: 0,
       image: photoURL,
       createdAt: Timestamp.now(),
       updatedAt: Timestamp.now(),

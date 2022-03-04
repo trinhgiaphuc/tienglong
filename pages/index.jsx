@@ -1,5 +1,3 @@
-import { useAuth } from '@lib/userContext';
-
 import Footer from '@components/Footer';
 import Hero from '@components/Hero';
 import Link from 'next/link';
@@ -9,20 +7,16 @@ import { getInitialWords } from '@lib/firebase-admin';
 
 export async function getServerSideProps({ req, res }) {
   try {
-    const words = JSON.stringify(await getInitialWords());
-    return { props: { words: JSON.parse(words) } };
+    const words = await getInitialWords();
+    return { props: { words } };
   } catch (error) {
     console.log(error);
   }
 
-  return { props: { words } };
+  return { props: {} };
 }
 
 export default function Home({ words }) {
-  const { status } = useAuth();
-
-  if (status === 'loading') return null;
-
   return (
     <div>
       <Metatags title="Home Page" />

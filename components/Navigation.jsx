@@ -13,6 +13,38 @@ import {
 } from 'react-icons/io5';
 import { Fragment } from 'react';
 
+const Navigation = () => {
+  const { user, username, status } = useAuth();
+
+  return (
+    <nav className="navbar h-[6%] z-50 sticky top-0 left-0">
+      <NavigationLink role={user?.role} />
+
+      <div className="navbar__item bg-white px-4 flex-grow">
+        <input
+          className="navbar__item-text w-full text-responsive h-full outline-none placeholder:text-black"
+          placeholder="TÌM KIẾM"
+        />
+        <IoSearch className="title-responsive hidden sm:block" />
+      </div>
+
+      {status === 'authenticated' ? (
+        <Link href={`/user/${user?.id}`} passHref>
+          <div className="navbar__item lg:flex-grow bg-white px-4 cursor-pointer">
+            <UserTag status={status} username={username} user={user} />
+          </div>
+        </Link>
+      ) : (
+        <div className="navbar__item lg:flex-grow bg-white px-4">
+          <UserTag status={status} username={username} user={user} />
+        </div>
+      )}
+
+      {status === 'loading' ? null : <AuthButton status={status} />}
+    </nav>
+  );
+};
+
 const NavigationLink = ({ role }) => (
   <div className="navbar__item lg:flex-grow relative text-white bg-black px-4 group">
     <h1 className="navbar__item-text text-responsive hidden uppercase sm:block">
@@ -46,23 +78,8 @@ const NavigationLink = ({ role }) => (
   </div>
 );
 
-const Navigation = () => {
-  const { user, username, status } = useAuth();
-
-  if (status === 'loading') return null;
-
-  const loadingAuth = () =>
-    status === 'authenticated' ? (
-      <h1 className="navbar__item-text text-responsive flex-grow text-center uppercase hidden sm:block">
-        đăng xuất
-      </h1>
-    ) : (
-      <h1 className="navbar__item-text text-responsive flex-grow text-center uppercase hidden sm:block">
-        đăng nhập
-      </h1>
-    );
-
-  const userTag = () => (
+const UserTag = ({ status, username, user }) =>
+  status === 'loading' ? null : (
     <Fragment>
       <h2 className="navbar__item-text w-full text-responsive p-4 outline-none placeholder:text-black hidden lg:block">
         {status === 'authenticated' ? username : 'Khách'}
@@ -83,55 +100,41 @@ const Navigation = () => {
     </Fragment>
   );
 
-  return (
-    <nav className="navbar h-[6%] z-50 sticky top-0 left-0">
-      <NavigationLink role={user?.role} />
+const AuthButton = ({ status }) => {
+  const loadingAuth = () =>
+    status === 'authenticated' ? (
+      <h1 className="navbar__item-text text-responsive flex-grow text-center uppercase hidden sm:block">
+        đăng xuất
+      </h1>
+    ) : (
+      <h1 className="navbar__item-text text-responsive flex-grow text-center uppercase hidden sm:block">
+        đăng nhập
+      </h1>
+    );
 
-      <div className="navbar__item bg-white px-4 flex-grow">
-        <input
-          className="navbar__item-text w-full text-responsive h-full outline-none placeholder:text-black"
-          placeholder="TÌM KIẾM"
-        />
-        <IoSearch className="title-responsive hidden sm:block" />
-      </div>
-
+  return status === 'authenticated' ? (
+    <button
+      className="navbar__item lg:flex-grow bg-white px-4 cursor-pointer"
+      onClick={handleSignOut}
+    >
+      {loadingAuth()}
       {status === 'authenticated' ? (
-        <Link href={`/user/${user?.id}`} passHref>
-          <div className="navbar__item lg:flex-grow bg-white px-4 cursor-pointer">
-            {userTag()}
-          </div>
-        </Link>
+        <IoLogOutOutline className="title-responsive" />
       ) : (
-        <div className="navbar__item lg:flex-grow bg-white px-4 cursor-pointer">
-          {userTag()}
-        </div>
+        <IoLogInOutline className="title-responsive" />
       )}
-
-      {status === 'authenticated' ? (
-        <button
-          className="navbar__item lg:flex-grow bg-white px-4 cursor-pointer"
-          onClick={handleSignOut}
-        >
-          {loadingAuth()}
-          {status === 'authenticated' ? (
-            <IoLogOutOutline className="title-responsive" />
-          ) : (
-            <IoLogInOutline className="title-responsive" />
-          )}
-        </button>
-      ) : (
-        <Link href="/enter" passHref>
-          <button className="navbar__item  lg:flex-grow bg-white px-4 cursor-pointer">
-            {loadingAuth()}
-            {status === 'authenticated' ? (
-              <IoLogOutOutline className="title-responsive" />
-            ) : (
-              <IoLogInOutline className="title-responsive" />
-            )}
-          </button>
-        </Link>
-      )}
-    </nav>
+    </button>
+  ) : (
+    <Link href="/enter" passHref>
+      <button className="navbar__item  lg:flex-grow bg-white px-4 cursor-pointer">
+        {loadingAuth()}
+        {status === 'authenticated' ? (
+          <IoLogOutOutline className="title-responsive" />
+        ) : (
+          <IoLogInOutline className="title-responsive" />
+        )}
+      </button>
+    </Link>
   );
 };
 

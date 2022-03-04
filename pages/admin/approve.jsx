@@ -1,15 +1,15 @@
-import RelatedWord from '@components/word/RelatedWords';
+import WordDetailList from '@components/word/WordDetailList';
 import { getPendingWords } from '@lib/firebase-admin';
-import Link from 'next/link';
 import { validateToken } from 'pages/api/admin';
+import Link from 'next/link';
 
 export async function getServerSideProps({ req, res }) {
   let user;
 
   try {
     user = validateToken(req.cookies.TIENGLONG_ACCESS_TOKEN);
-    const pendingWords = JSON.stringify(await getPendingWords());
-    return { props: { pendingWords: JSON.parse(pendingWords) } };
+    const pendingWords = await getPendingWords();
+    return { props: { pendingWords } };
   } catch (error) {
     return {
       redirect: {
@@ -29,7 +29,7 @@ const ApprovePage = ({ pendingWords }) => {
         </a>
       </Link>
       <div className="w-3/4 mx-auto p-2">
-        <RelatedWord pendingWords={pendingWords} />
+        <WordDetailList words={pendingWords} />
       </div>
     </div>
   );

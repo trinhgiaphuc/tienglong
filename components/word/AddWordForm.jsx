@@ -1,7 +1,7 @@
 import { addNewDefinition } from '@lib/db';
 import { useAuth } from '@lib/userContext';
 import { useRouter } from 'next/router';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 const AddWordForm = () => {
   const router = useRouter();
@@ -11,10 +11,9 @@ const AddWordForm = () => {
   const [word, setWord] = useState('');
   const [definition, setDefinition] = useState('');
   const [example, setExample] = useState('');
-  const [tags, setTags] = useState({ trend: '', source: '' });
+  const [tags, setTags] = useState({});
+  const [yearRelease, setYearRelease] = useState(new Date().getFullYear());
   const [othersTags, setOthersTags] = useState('');
-
-  const ref = useRef();
 
   const handleSelect = e => {
     if (e.target.name === 'muc_do_thinh_hanh') {
@@ -25,24 +24,37 @@ const AddWordForm = () => {
     }
   };
 
+  const tagCombiner = (tags, othersTags) => {
+    let finalTags = [];
+    if (Object.keys(tags).length > 0) {
+      finalTags = [...finalTags, ...Object.values(tags)];
+    }
+    if (othersTags.split(',')[0] !== '') {
+      finalTags = [...finalTags, ...othersTags.split(',')];
+    }
+    finalTags.push(yearRelease);
+    return finalTags;
+  };
+
   const handleSubmit = async e => {
     e.preventDefault();
+
+    const combinedTags = tagCombiner(tags, othersTags);
 
     const res = await addNewDefinition({
       word,
       definition,
       example,
-      tags:
-        othersTags.length > 0
-          ? Object.values({ ...tags, ...othersTags.split(',') })
-          : Object.values(tags),
+      heartCount: 0,
+      tags: combinedTags,
+      yearRelease,
       author: username,
     });
 
     if (res.success) {
-      router.push(`/`);
+      router.push('/');
     } else if (!res.success) {
-      console.log(res.error);
+      console.log(res);
     }
   };
 
@@ -63,7 +75,7 @@ const AddWordForm = () => {
 
       <textarea
         rows={15}
-        className="input w-full  md:h-full text-responsive resize-none col-span-6 row-span-3"
+        className="input w-full md:h-full text-responsive resize-none col-span-6 row-span-3"
         placeholder="Định nghĩa"
         minLength={15}
         onChange={e => setDefinition(e.target.value)}
@@ -82,28 +94,27 @@ const AddWordForm = () => {
         spellCheck={false}
       />
 
-      <div
-        className="input w-full md:h-full relative text-responsive flex col-span-4 group"
-        ref={ref}
-      >
+      <div className="input w-full md:h-full relative text-responsive flex col-span-4 group">
         <input
           className="input border-none w-full p-5 show_select"
-          placeholder="Ví Dụ: #vjppro#alo#hehehe"
+          placeholder="Ví Dụ: tag1,tag2,tag3"
           onChange={e =>
             setOthersTags(
-              e.target.value.trim().toLocaleLowerCase().replace(' ', '')
+              e.target.value
+                .trim()
+                .toLocaleLowerCase()
+                .replace(/[^a-zA-Z0-9,]+/, '')
+                .replace(',,', ',')
             )
           }
-          value={tags.other}
-          type="text"
+          value={othersTags}
         />
         <div className="selector group-hover:scale-100 group-hover:-translate-y-full">
-          {/* <SelectTest handleSelect={handleSelect} /> */}
           <SelectTrendTag handleSelect={handleSelect} />
           <SelectSourceTag handleSelect={handleSelect} />
         </div>
 
-        <SelectYearTag />
+        <SelectYearTag setYearRelease={setYearRelease} />
       </div>
 
       <div className="bg-blue-400 col-span-10 w-full">
@@ -115,7 +126,7 @@ const AddWordForm = () => {
   );
 };
 
-const SelectYearTag = () => {
+const SelectYearTag = ({ setYearRelease }) => {
   const years = [];
   for (let i = 1800; i <= 2100; i++) {
     years.push(i);
@@ -125,11 +136,12 @@ const SelectYearTag = () => {
       className="outline-none show_select font-medium p-2 sm:p-4 tracking-wide text-responsive"
       name="years"
       id="select_year"
+      defaultValue={new Date().getFullYear()}
+      onChange={e => setYearRelease(e.target.value)}
     >
       {years.map(year => (
         <option
           className="text-responsive tracking-wide"
-          selected={year === new Date().getFullYear()}
           key={year}
           value={year}
         >
@@ -139,25 +151,6 @@ const SelectYearTag = () => {
     </select>
   );
 };
-
-// const SelectTest = ({ handleSelect }) => (
-//   <div className="my-border flex flex-col bg-blue-400">
-//     <div className="wordList__tag">
-//       <input onChange={handleSelect} type="radio" name="test" id="op1" />
-//       <label htmlFor="op1">Không Lỗi Thời</label>
-//     </div>
-
-//     <div className="wordList__tag">
-//       <input onChange={handleSelect} type="radio" name="test" id="op2" />
-//       <label htmlFor="op2">Đang Thịnh Hành</label>
-//     </div>
-
-//     <div className="wordList__tag">
-//       <input onChange={handleSelect} type="radio" name="test" id="op3" />
-//       <label htmlFor="op3">Không Còn Phổ Biến</label>
-//     </div>
-//   </div>
-// );
 
 const SelectTrendTag = ({ handleSelect }) => (
   <div className="my-border flex flex-col bg-red-400">
