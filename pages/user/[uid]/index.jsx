@@ -6,33 +6,34 @@ import BioForm from '@components/user/BioForm';
 import Error from 'pages/_error';
 import WordList from '@components/word/WordList';
 import Spinner from '@components/Spinner';
-import SectionTitle from '@components/word/SectionTitle';
-import { getUserWords } from '@lib/db';
+import { getUserWords } from '@lib/firebase-admin';
 
 export async function getServerSideProps(ctx) {
   const { uid } = ctx.query;
   const wordList = await getUserWords(uid);
 
-  console.log(wordList);
-
-  return { props: {} };
+  return { props: { wordList } };
 }
 
-export default function ProfilePage() {
+export default function ProfilePage({ wordList }) {
   const { user, status } = useAuth();
 
   return status !== 'unauthenticated' ? (
     <div className="h-[94%] flex flex-col lg:grid grid-cols-2">
-      {status === 'loading' ? (
+      {status !== 'loading' ? (
         <Fragment>
-          <Spinner />
-          <Spinner />
+          <Spinner size={52} />
+          <Spinner size={52} />
         </Fragment>
       ) : (
         <Fragment>
-          <div className="my-border h-full overflow-y-scroll">
-            <SectionTitle title="Từ Được Người Dùng Định Nghĩa" />
-            {/* <WordList nogrid={true} /> */}
+          <div className="h-full overflow-y-scroll">
+            <div className="my-border">
+              <h1 className="my-border text-4xl font-medium px-4 text-center py-10 uppercase">
+                Từ Được Người Dùng Định Nghĩa
+              </h1>
+            </div>
+            <WordList nogrid={true} words={wordList} />
           </div>
           <BioForm {...user} />
         </Fragment>

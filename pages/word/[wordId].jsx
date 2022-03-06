@@ -16,8 +16,8 @@ export async function getServerSideProps(context) {
 
 export default function Word({ wordDetails }) {
   return (
-    <div className="my-border p-2 flex flex-col">
-      <div className="w-3/4 mx-auto">
+    <div className="my-border lg:p-2  flex flex-col">
+      <div className="w-full lg:w-3/4 mx-auto">
         <div className="my-border group flex-center bg-black py-10 text-white">
           <h1 className="title-responsive px-4 text-center py-2 uppercase">
             Chi Tiết Từ

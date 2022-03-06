@@ -25,8 +25,8 @@ const WordDetail = ({ wordDetails, wordIsPending }) => {
   const [hideWord, setHideWord] = useState(false);
 
   return hideWord ? null : (
-    <div className="h-full my-border flex flex-center flex-col p-4 gap-2 font-mono">
-      <div className="flex gap-2 self-start">
+    <div className="my-border h-full flex-center flex-col p-4 gap-2 font-mono">
+      <div className="flex gap-2 self-start flex-wrap">
         <Link href="/" passHref>
           <a className="rounded-3xl smaller-text-responsive p-3 bg-orange-400 text-center">
             {new Date(createdAt).toLocaleDateString()}

@@ -24,7 +24,7 @@ const ApprovePage = ({ pendingWords }) => {
   return (
     <div className="my-border h-[94%] overflow-y-scroll no-scrollbar">
       <Link href="/admin/chatroom">
-        <a className="text-responsive p-4 text-center uppercase">
+        <a className="text-responsive p-4 text-center uppercase hover:underline">
           &#8592; Phòng Chat
         </a>
       </Link>

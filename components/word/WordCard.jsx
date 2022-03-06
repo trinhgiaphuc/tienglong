@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 const WordCard = ({ word }) => {
-  const { createdAt, id, tags, definition, author } = word;
+  const { createdAt, id, tags, definition, author, authorId } = word;
 
   return (
     <article className="px-8 py-4 h-full tracking-wide font-mono flex flex-col gap-5 justify-around">
@@ -26,13 +26,13 @@ const WordCard = ({ word }) => {
           <h1 className="text-4xl font-bold font-ole text-center">
             {word.word}
           </h1>
-          <p className="text-black text-[2ch] line-clamp-3 text-ellipsis">
+          <p className="text-black p-2 text-[2ch] line-clamp-3 text-ellipsis">
             {definition}
           </p>
         </a>
       </Link>
 
-      <Link href="/" passHref>
+      <Link href={`/user/${authorId}`} passHref>
         <p className="self-end font-bold smaller-text-responsive uppercase cursor-pointer">
           {author}
         </p>

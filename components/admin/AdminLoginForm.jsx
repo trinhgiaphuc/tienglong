@@ -3,21 +3,27 @@ import { auth } from '@lib/firebase';
 import Router from 'next/router';
 import { useState } from 'react';
 
+import Spinner from '@components/Spinner';
+
 const AdminLoginForm = () => {
   const [passCode, setPasscode] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async e => {
     e.preventDefault();
     const password = e.target[0].value;
 
+    setLoading(true);
     const result = await fetcher('admin', {
       uid: auth.currentUser.uid,
       password,
     });
-
     if (result.error) setError(result.error);
-    else Router.push('/admin/chatroom');
+    else {
+      setLoading(false);
+      Router.push('/admin/chatroom');
+    }
   };
 
   return (
@@ -46,8 +52,13 @@ const AdminLoginForm = () => {
             {error}
           </h1>
         ) : null}
-        <button className="uppercase my-border py-2 px-4 font-medium bg-green-400 rounded-lg">
+        <button className="uppercase flex-center my-border py-2 px-4 font-medium bg-green-400 rounded-lg">
           Mở Khóa
+          {loading ? (
+            <div className="justify-self-end">
+              <Spinner size={8} />
+            </div>
+          ) : null}
         </button>
       </form>
     </div>

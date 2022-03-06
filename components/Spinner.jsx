@@ -1,9 +1,11 @@
 import Image from 'next/image';
 
-export default function Spinner() {
+export default function Spinner({ size }) {
+  const iconSize = `h-${size} w-${size}`;
+
   return (
-    <div className="h-full w-full my-border grid-item-center">
-      <div className="h-52 w-52">
+    <div className="h-full w-full grid-item-center">
+      <div className={`${iconSize} aspect-square`}>
         <Image
           priority
           width={100}

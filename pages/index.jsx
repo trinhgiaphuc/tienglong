@@ -1,5 +1,5 @@
-import Footer from '@components/Footer';
-import Hero from '@components/Hero';
+import Footer from '@components/layouts/Footer';
+import Hero from '@components/layouts/Hero';
 import Link from 'next/link';
 import Metatags from '@components/Metatags';
 import SectionWord from '@components/word/SectionWords';

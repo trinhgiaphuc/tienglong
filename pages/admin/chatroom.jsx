@@ -1,6 +1,7 @@
 import AdminChatroom from '@components/admin/AdminChatroom';
 import { getMessages } from '@lib/supabase';
 import { validateToken } from 'pages/api/admin';
+import Link from 'next/link';
 
 export async function getServerSideProps({ req, res }) {
   let user;
@@ -22,7 +23,16 @@ export async function getServerSideProps({ req, res }) {
 }
 
 const AdminChatroomPage = ({ messages }) => {
-  return <AdminChatroom messages={messages} />;
+  return (
+    <div className="h-[94%] bg-neutral-400 flex items-center flex-col">
+      <Link href="/admin/approve">
+        <a className="text-responsive p-2 text-center self-start uppercase hover:underline">
+          &#8592; Duyệt Bài
+        </a>
+      </Link>
+      <AdminChatroom messages={messages} />
+    </div>
+  );
 };
 
 export default AdminChatroomPage;
