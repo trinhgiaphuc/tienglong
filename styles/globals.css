@@ -16,7 +16,7 @@
   }
 
   *::-webkit-scrollbar {
-    width: 7px;
+    width: 0px;
   }
 
   *::-webkit-scrollbar-track {
@@ -74,7 +74,7 @@
   }
 
   .selector {
-    @apply absolute top-0 left-0 w-full h-[200%] overflow-y-scroll lg:h-auto no-scrollbar md:w-[120%] font-medium flex flex-col lg:grid grid-cols-3 gap-2 smaller-text-responsive scale-y-0 hover:scale-100 transition-all;
+    @apply absolute top-0 left-0 w-full h-[200%] overflow-y-scroll lg:h-auto md:w-[120%] font-medium flex flex-col lg:grid grid-cols-3 gap-2 smaller-text-responsive scale-y-0 hover:scale-100 transition-all;
   }
 
   .show_select:focus ~ div {
@@ -148,9 +148,5 @@
 
   .animate-left-right-out {
     @apply translate-x-full opacity-0;
-  }
-
-  .no-scrollbar::-webkit-scrollbar {
-    width: 0px;
   }
 }
