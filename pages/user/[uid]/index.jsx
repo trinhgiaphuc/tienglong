@@ -20,7 +20,7 @@ export default function ProfilePage({ wordList }) {
 
   return status !== 'unauthenticated' ? (
     <div className="h-[94%] flex flex-col lg:grid grid-cols-2">
-      {status !== 'loading' ? (
+      {status === 'loading' ? (
         <Fragment>
           <Spinner size={52} />
           <Spinner size={52} />

@@ -31,8 +31,8 @@ export default function Home({ words }) {
           words={words}
         />
 
-        <div className="my-border relative group flex-center bg-black py-10 text-white">
-          <h1 className="title-responsive px-4 text-center py-2 uppercase">
+        <div className="my-border group flex-center bg-black py-10 text-white">
+          <h1 className="title-responsive px-4 text-center uppercase">
             spacing
           </h1>
         </div>

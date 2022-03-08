@@ -19,8 +19,10 @@ const AdminLoginForm = () => {
       uid: auth.currentUser.uid,
       password,
     });
-    if (result.error) setError(result.error);
-    else {
+    if (result.error) {
+      setLoading(false);
+      setError(result.error);
+    } else {
       setLoading(false);
       Router.push('/admin/chatroom');
     }
