@@ -118,21 +118,13 @@ const AuthButton = ({ status }) => {
       onClick={handleSignOut}
     >
       {loadingAuth()}
-      {status === 'authenticated' ? (
-        <IoLogOutOutline className="title-responsive" />
-      ) : (
-        <IoLogInOutline className="title-responsive" />
-      )}
+      <IoLogOutOutline className="title-responsive" />
     </button>
   ) : (
     <Link href="/enter" passHref>
       <button className="navbar__item  lg:flex-grow bg-white px-4 cursor-pointer">
         {loadingAuth()}
-        {status === 'authenticated' ? (
-          <IoLogOutOutline className="title-responsive" />
-        ) : (
-          <IoLogInOutline className="title-responsive" />
-        )}
+        <IoLogInOutline className="title-responsive" />
       </button>
     </Link>
   );

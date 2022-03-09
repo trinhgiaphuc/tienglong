@@ -18,7 +18,7 @@ export async function getServerSideProps({ req, res }) {
 
 export default function Home({ words }) {
   return (
-    <div className="no-scrollbar">
+    <div>
       <Metatags title="Home Page" />
       <Hero />
 

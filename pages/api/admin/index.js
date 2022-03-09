@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import cookie from 'cookie';
 
 import { firestoreAdmin } from '@lib/firebase-admin';
-import { supabase } from '@lib/supabase';
+import { createAdminAccount, findUserWithUserId } from '@lib/supabase';
 
 export default async function handler(req, res) {
   const { uid, password, logOut } = req.body;
@@ -11,7 +11,7 @@ export default async function handler(req, res) {
   if (typeof logOut !== undefined && logOut) {
     res.setHeader(
       'Set-Cookie',
-      cookie.serialize('TIENGLONG_ACCESS_TOKEN', '', {
+      cookie.serialize('ADMIN_ACCESS_TOKEN', '', {
         httpOnly: true,
         expires: new Date('Thu, 01 Jan 1970 00:00:00 GMT'),
         path: '/',
@@ -35,43 +35,30 @@ export default async function handler(req, res) {
     return res.status(401).json({ error: error.message });
   }
 
-  const { data, error } = await supabase
-    .from('admin')
-    .select('*')
-    .eq('id', uid)
-    .limit(1);
-
-  let user = data[0];
+  let user = await findUserWithUserId(uid);
 
   if (!user) {
     try {
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(password, salt);
-      user = await supabase.from('admin').insert([
-        {
-          id: uid,
-          username: firebaseUserData.username,
-          hashedPassword,
-          avatar: firebaseUserData.image,
-        },
-      ]);
+      user = await createAdminAccount(
+        uid,
+        firebaseUserData.username,
+        password,
+        firebaseUserData.image
+      );
     } catch (error) {
       console.log(error);
     }
-  }
+  } else {
+    const passwordIsCorrect = bcrypt.compareSync(password, user.hashedPassword);
 
-  const passwordIsCorrect = bcrypt.compareSync(
-    password,
-    data[0].hashedPassword
-  );
-
-  if (!passwordIsCorrect) {
-    return res.status(401).json({ error: 'Mật mã sai' });
+    if (!passwordIsCorrect) {
+      return res.status(401).json({ error: 'Mật mã sai' });
+    }
   }
 
   const token = jwt.sign(
     { username: user.username, image: firebaseUserData.image },
-    process.env.NEXT_PUBLIC_JWT_SECRET,
+    process.env.JWT_SECRET,
     {
       expiresIn: '8h',
     }
@@ -79,7 +66,7 @@ export default async function handler(req, res) {
 
   res.setHeader(
     'Set-Cookie',
-    cookie.serialize('TIENGLONG_ACCESS_TOKEN', token, {
+    cookie.serialize('ADMIN_ACCESS_TOKEN', token, {
       httpOnly: true,
       maxAge: 8 * 60 * 60,
       path: '/',
@@ -91,5 +78,4 @@ export default async function handler(req, res) {
   return res.status(200).json({ ok: 'ok' });
 }
 
-export const validateToken = token =>
-  jwt.verify(token, process.env.NEXT_PUBLIC_JWT_SECRET);
+export const validateToken = token => jwt.verify(token, process.env.JWT_SECRET);

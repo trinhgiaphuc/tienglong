@@ -3,22 +3,20 @@ import { Fragment } from 'react';
 import { useAuth } from '@lib/userContext';
 
 import BioForm from '@components/user/BioForm';
-import Error from 'pages/_error';
 import WordList from '@components/word/WordList';
 import Spinner from '@components/Spinner';
 import { getUserWords } from '@lib/firebase-admin';
 
-export async function getServerSideProps(ctx) {
-  const { uid } = ctx.query;
+export async function getServerSideProps({ req, res, query }) {
+  const { uid } = query;
   const wordList = await getUserWords(uid);
-
   return { props: { wordList } };
 }
 
 export default function ProfilePage({ wordList }) {
   const { user, status } = useAuth();
 
-  return status !== 'unauthenticated' ? (
+  return (
     <div className="h-[94%] flex flex-col lg:grid grid-cols-2">
       {status === 'loading' ? (
         <Fragment>
@@ -39,7 +37,5 @@ export default function ProfilePage({ wordList }) {
         </Fragment>
       )}
     </div>
-  ) : (
-    <Error error={{ code: 'permission-denied' }} />
   );
 }

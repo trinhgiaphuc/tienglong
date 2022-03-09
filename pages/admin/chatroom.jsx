@@ -7,7 +7,7 @@ export async function getServerSideProps({ req, res }) {
   let user;
 
   try {
-    user = validateToken(req.cookies.TIENGLONG_ACCESS_TOKEN);
+    user = validateToken(req.cookies.ADMIN_ACCESS_TOKEN);
   } catch (error) {
     return {
       redirect: {
