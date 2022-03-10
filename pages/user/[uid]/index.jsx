@@ -1,12 +1,12 @@
 import { Fragment } from 'react';
 
 import { useAuth } from '@lib/userContext';
+import { withAuth } from '@lib/withAuth';
 
 import BioForm from '@components/user/BioForm';
 import WordList from '@components/word/WordList';
 import Spinner from '@components/Spinner';
 import { getUserWords } from '@lib/firebase-admin';
-import { withAuth } from '@lib/withAuth';
 
 export const getServerSideProps = withAuth(async ({ req, res, query }) => {
   const { uid } = query;
