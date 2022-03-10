@@ -6,12 +6,13 @@ import BioForm from '@components/user/BioForm';
 import WordList from '@components/word/WordList';
 import Spinner from '@components/Spinner';
 import { getUserWords } from '@lib/firebase-admin';
+import { withAuth } from '@lib/withAuth';
 
-export async function getServerSideProps({ req, res, query }) {
+export const getServerSideProps = withAuth(async ({ req, res, query }) => {
   const { uid } = query;
   const wordList = await getUserWords(uid);
   return { props: { wordList } };
-}
+});
 
 export default function ProfilePage({ wordList }) {
   const { user, status } = useAuth();
