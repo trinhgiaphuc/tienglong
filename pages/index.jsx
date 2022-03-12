@@ -1,7 +1,7 @@
 import Footer from '@components/layouts/Footer';
 import Hero from '@components/layouts/Hero';
 import Link from 'next/link';
-import Metatags from '@components/Metatags';
+import Metatags from '@components/utils/Metatags';
 import SectionWord from '@components/word/SectionWords';
 import { getInitialWords } from '@lib/firebase-admin';
 

@@ -1,6 +1,6 @@
 import '@styles/globals.css';
 
-import Navigation from '@components/Navigation';
+import Navigation from '@components/navigation/Navigation';
 import UserProvider from '@lib/userContext';
 
 function MyApp({ Component, pageProps }) {

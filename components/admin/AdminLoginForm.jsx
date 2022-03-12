@@ -3,7 +3,7 @@ import { auth } from '@lib/firebase';
 import Router from 'next/router';
 import { useState } from 'react';
 
-import Spinner from '@components/Spinner';
+import Spinner from '@components/utils/Spinner';
 
 const AdminLoginForm = () => {
   const [passCode, setPasscode] = useState('');

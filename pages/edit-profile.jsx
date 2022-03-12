@@ -1,5 +1,5 @@
 import SectionTitle from '@components/word/SectionTitle';
-import Spinner from '@components/Spinner';
+import Spinner from '@components/utils/Spinner';
 import UsernameCheckForm from '@components/user/UsernameCheckForm';
 
 import { useAuth } from '@lib/userContext';

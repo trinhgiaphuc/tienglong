@@ -2,11 +2,12 @@ import { Fragment } from 'react';
 
 import { useAuth } from '@lib/userContext';
 import { withAuth } from '@lib/withAuth';
+import { getUserWords } from '@lib/firebase-admin';
 
 import BioForm from '@components/user/BioForm';
 import WordList from '@components/word/WordList';
-import Spinner from '@components/Spinner';
-import { getUserWords } from '@lib/firebase-admin';
+import Spinner from '@components/utils/Spinner';
+import ResponsiveSplitScreen from '@components/layouts/ResponsiveSplitScreen';
 
 export const getServerSideProps = withAuth(async ({ req, res, query }) => {
   const { uid } = query;
@@ -17,26 +18,20 @@ export const getServerSideProps = withAuth(async ({ req, res, query }) => {
 export default function ProfilePage({ wordList }) {
   const { user, status } = useAuth();
 
-  return (
-    <div className="h-[94%] flex flex-col lg:grid grid-cols-2">
-      {status === 'loading' ? (
-        <Fragment>
-          <Spinner size={52} />
-          <Spinner size={52} />
-        </Fragment>
-      ) : (
-        <Fragment>
-          <div className="h-full overflow-y-scroll">
-            <div className="my-border">
-              <h1 className="my-border text-4xl font-medium px-4 text-center py-10 uppercase">
-                Từ Được Người Dùng Định Nghĩa
-              </h1>
-            </div>
-            <WordList nogrid={true} words={wordList} />
-          </div>
-          <BioForm {...user} />
-        </Fragment>
-      )}
-    </div>
+  return status === 'loading' ? (
+    <ResponsiveSplitScreen>
+      <Spinner />
+      <Spinner />
+    </ResponsiveSplitScreen>
+  ) : (
+    <ResponsiveSplitScreen>
+      <BioForm {...user} />
+      <div className="h-full overflow-y-scroll">
+        <h1 className="my-border text-4xl font-medium px-4 text-center py-10 uppercase">
+          Từ Được Người Dùng Định Nghĩa
+        </h1>
+        <WordList nogrid={true} words={wordList} />
+      </div>
+    </ResponsiveSplitScreen>
   );
 }

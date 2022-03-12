@@ -11,7 +11,7 @@ export default async function handler(req, res) {
       'Set-Cookie',
       cookie.serialize('USER_ACCESS_TOKEN', token, {
         httpOnly: true,
-        maxAge: 8 * 60 * 60,
+        maxAge: 30 * 24 * 60 * 60,
         path: '/',
         sameSite: 'strict',
         secure: process.env.NODE_ENV === 'production',
@@ -22,7 +22,6 @@ export default async function handler(req, res) {
       'Set-Cookie',
       cookie.serialize('USER_ACCESS_TOKEN', '', {
         httpOnly: true,
-        maxAge: 8 * 60 * 60,
         expires: new Date(Date.now() - 1),
         path: '/',
         sameSite: 'strict',
