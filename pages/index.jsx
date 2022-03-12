@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Metatags from '@components/utils/Metatags';
 import SectionWord from '@components/word/SectionWords';
 import { getInitialWords } from '@lib/firebase-admin';
+import Title from '@components/word/Title';
 
 export async function getServerSideProps({ req, res }) {
   try {
@@ -46,14 +47,12 @@ export default function Home({ words }) {
 const DefineBanner = () => (
   <div>
     <div className="my-border group flex-center bg-black p-2 text-white">
-      <h2 className="title-responsive tracking-wide px-4 text-center py-2 rounded-full uppercase">
-        Hôm nay bạn sẽ định nghĩa gì?
-      </h2>
+      <Title color="white">Hôm nay bạn sẽ định nghĩa gì?</Title>
     </div>
 
     <div className="my-border group flex-center bg-black text-white py-3">
       <Link href="/define" passHref>
-        <button className="text-responsive hover:scale-[1.02] py-4 transition-all active:scale-100">
+        <button className="text-responsive hover:scale-[1.02] pb-4 transition-all active:scale-100">
           <span className="underline p-2 rounded-sm bg-white text-black">
             Đến Mục Định nghĩa
           </span>

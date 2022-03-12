@@ -1,20 +1,17 @@
-import { IoPlayForward } from 'react-icons/io5';
 import SectionTitle from './SectionTitle';
+import Title from './Title';
 import WordList from './WordList';
+
+import { IoPlayForward } from 'react-icons/io5';
 
 export default function SectionWord({ section, href, words }) {
   return (
     <div>
-      <SectionTitle
-        href={href}
-        title={section}
-        animation1={
-          <IoPlayForward className="title-responsive animate-section opacity-100 group-hover:animate-left-right-out" />
-        }
-        animation2={
-          <IoPlayForward className="title-responsive animate-section opacity-0 -translate-x-[100%] group-hover:animate-left-right-in" />
-        }
-      />
+      <SectionTitle href={href}>
+        <IoPlayForward className="title-responsive animate-section opacity-100 group-hover:animate-left-right-out" />
+        <Title>{section}</Title>
+        <IoPlayForward className="title-responsive animate-section opacity-0 -translate-x-[100%] group-hover:animate-left-right-in" />
+      </SectionTitle>
 
       <WordList words={words} />
     </div>
