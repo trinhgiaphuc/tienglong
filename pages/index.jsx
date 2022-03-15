@@ -1,48 +1,15 @@
+import Link from 'next/link';
 import Footer from '@components/layouts/Footer';
 import Hero from '@components/layouts/Hero';
-import Link from 'next/link';
 import Metatags from '@components/utils/Metatags';
 import SectionWord from '@components/word/SectionWords';
-import { getInitialWords } from '@lib/firebase-admin';
 import Title from '@components/word/Title';
 
-export async function getServerSideProps({ req, res }) {
-  try {
-    const words = await getInitialWords();
-    return { props: { words } };
-  } catch (error) {
-    console.log(error);
-  }
+import { getInitialWords } from '@lib/firebase-admin';
+import { getWordsClient } from '@lib/db';
+import { useRouter } from 'next/router';
 
-  return { props: {} };
-}
-
-export default function Home({ words }) {
-  return (
-    <div>
-      <Metatags title="Home Page" />
-      <Hero />
-
-      <main className="my-border text-zinc-800">
-        <SectionWord section="từ hôm nay" href="/today-words" words={words} />
-        <DefineBanner />
-        <SectionWord
-          section="từ đang thịnh hành"
-          href="/trending-words"
-          words={words}
-        />
-
-        <div className="my-border group flex-center bg-black py-10 text-white">
-          <h1 className="title-responsive px-4 text-center uppercase">
-            spacing
-          </h1>
-        </div>
-      </main>
-
-      <Footer />
-    </div>
-  );
-}
+import { useQuery } from 'react-query';
 
 const DefineBanner = () => (
   <div>
@@ -62,3 +29,44 @@ const DefineBanner = () => (
     </div>
   </div>
 );
+
+export default function Home({ words }) {
+  const router = useRouter();
+  const wordsQuery = useQuery('words', getWordsClient, {
+    initialData: words,
+    staleTime: Infinity,
+  });
+
+  router.push('');
+
+  return (
+    <div>
+      <Metatags title="Home Page" />
+      <Hero />
+
+      <main className="my-border text-zinc-800">
+        <SectionWord section="từ hôm nay" href="/today-words" words={words} />
+        <DefineBanner />
+        <SectionWord
+          section="từ đang thịnh hành"
+          href="/trending-words"
+          words={words}
+        />
+      </main>
+
+      <Footer />
+    </div>
+  );
+}
+
+export async function getServerSideProps({ req, res }) {
+  try {
+    const words = await getInitialWords();
+    console.log('refetched');
+    return { props: { words } };
+  } catch (error) {
+    console.log(error);
+  }
+
+  return { props: {} };
+}

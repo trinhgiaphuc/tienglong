@@ -5,8 +5,8 @@ const ResponsiveSplitScreen = ({ children }) => {
 
   return (
     <div className="my-border flex flex-col lg:h-[94%] lg:grid grid-cols-2">
-      <Fragment>{left}</Fragment>
-      <Fragment>{right}</Fragment>
+      <div className="h-full overflow-y-scroll">{left}</div>
+      <div className="h-full overflow-y-scroll">{right}</div>
     </div>
   );
 };

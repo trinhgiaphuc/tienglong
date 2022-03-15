@@ -47,7 +47,7 @@ const Navigation = () => {
 
 const NavigationLink = ({ role }) => (
   <div className="navbar__item lg:flex-grow relative text-white bg-black px-4 group">
-    <h1 className="navbar__item-text text-responsive hidden uppercase sm:block">
+    <h1 className="navbar__item-text text-responsive hidden uppercase lg:block">
       điều hướng
     </h1>
     <IoGridOutline className="md:text-4xl sm:text-3xl title-responsive  group-hover:rotate-[180deg] transition-all duration-1000" />

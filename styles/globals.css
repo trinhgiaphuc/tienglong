@@ -88,15 +88,15 @@
 
 @layer utilities {
   .smaller-text-responsive {
-    @apply text-[3vw] lg:text-[1vw] sm:text-[2vw];
+    @apply text-xs lg:text-[1vw] sm:text-[2vw];
   }
 
   .text-responsive {
-    @apply text-[4vw] sm:text-[3vw] md:text-2xl;
+    @apply text-[2ch] sm:text-[3vw] md:text-2xl leading-relaxed;
   }
 
   .bigger-text-responsive {
-    @apply text-[7vw] sm:text-[5vw] md:text-5xl md:leading-tight;
+    @apply text-[10vw] sm:text-[5vw] md:text-5xl md:leading-tight;
   }
 
   .logo-responsive {

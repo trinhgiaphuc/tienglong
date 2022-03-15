@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import SectionTitle from './SectionTitle';
 import Title from './Title';
 import WordList from './WordList';
@@ -6,7 +7,7 @@ import { IoPlayForward } from 'react-icons/io5';
 
 export default function SectionWord({ section, href, words }) {
   return (
-    <div>
+    <Fragment>
       <SectionTitle href={href}>
         <IoPlayForward className="title-responsive animate-section opacity-100 group-hover:animate-left-right-out" />
         <Title>{section}</Title>
@@ -14,6 +15,6 @@ export default function SectionWord({ section, href, words }) {
       </SectionTitle>
 
       <WordList words={words} />
-    </div>
+    </Fragment>
   );
 }
