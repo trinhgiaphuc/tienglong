@@ -44,7 +44,7 @@ const WordDetail = ({ wordDetails, wordIsPending }) => {
           ))}
         </div>
 
-        <WordDropDown />
+        <WordDropDown authorId={authorId} />
       </div>
 
       <h1 className="bigger-text-responsive uppercase font-bold font-ole text-center p-2">

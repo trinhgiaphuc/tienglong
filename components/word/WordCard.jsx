@@ -22,7 +22,7 @@ const WordCard = ({ word }) => {
             </Link>
           ))}
         </div>
-        <WordDropDown />
+        <WordDropDown authorId={authorId} />
       </span>
 
       <article className="flex-grow flex flex-col justify-evenly">
