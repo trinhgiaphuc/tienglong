@@ -88,7 +88,7 @@
 
 @layer utilities {
   .smaller-text-responsive {
-    @apply text-xs lg:text-[1vw] sm:text-[2vw];
+    @apply text-xs lg:text-[1vw] sm:text-[2vw] tracking-wide leading-5 md:leading-6 md:tracking-normal;
   }
 
   .text-responsive {
@@ -100,7 +100,7 @@
   }
 
   .logo-responsive {
-    @apply text-[13vw]  md:text-7xl;
+    @apply text-[13vw] md:text-7xl md:leading-relaxed;
   }
 
   .title-responsive {

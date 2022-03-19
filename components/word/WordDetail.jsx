@@ -8,6 +8,7 @@ import {
 } from '@components/buttons';
 
 import { useState } from 'react';
+import WordDropDown from './WordDropDown';
 
 const WordDetail = ({ wordDetails, wordIsPending }) => {
   const {
@@ -26,20 +27,24 @@ const WordDetail = ({ wordDetails, wordIsPending }) => {
 
   return hideWord ? null : (
     <div className="my-border h-full flex-center flex-col p-4 gap-2 font-mono">
-      <div className="flex gap-2 self-start flex-wrap">
-        <Link href="/" passHref>
-          <a className="rounded-3xl smaller-text-responsive p-3 bg-orange-400 text-center">
-            {new Date(createdAt).toLocaleDateString()}
-          </a>
-        </Link>
-
-        {tags.map(tag => (
-          <Link key={tag} href="/" passHref>
-            <a className="rounded-3xl smaller-text-responsive p-3 bg-blue-400 text-center">
-              {tag}
+      <div className="w-full flex items-start">
+        <div className="flex-grow flex gap-2 self-start flex-wrap">
+          <Link href="/" passHref>
+            <a className="rounded-3xl smaller-text-responsive p-3 bg-orange-400 text-center">
+              {new Date(createdAt).toLocaleDateString()}
             </a>
           </Link>
-        ))}
+
+          {tags.map(tag => (
+            <Link key={tag} href="/" passHref>
+              <a className="rounded-3xl smaller-text-responsive p-3 bg-blue-400 text-center">
+                {tag}
+              </a>
+            </Link>
+          ))}
+        </div>
+
+        <WordDropDown />
       </div>
 
       <h1 className="bigger-text-responsive uppercase font-bold font-ole text-center p-2">
@@ -47,15 +52,17 @@ const WordDetail = ({ wordDetails, wordIsPending }) => {
       </h1>
 
       <div className="text-responsive grid grid-cols-12 gap-4 items-baseline">
-        <p className="font-black col-span-2 justify-self-center text-center">
+        <p className="font-black col-span-3 ms:col-span-2 justify-self-center text-center">
           Định Nghĩa:
         </p>
-        <p className="col-span-10 p-2 max-w-[65ch]">{definition}</p>
+        <p className="col-span-9 ms:col-span-10 p-2 max-w-[65ch]">
+          {definition}
+        </p>
 
-        <p className="font-black col-span-2 justify-self-center text-center">
+        <p className="font-black col-span-3 ms:col-span-2 justify-self-center text-center">
           Ví Dụ:
         </p>
-        <p className="col-span-10 p-2 max-w-[65ch]">{example}</p>
+        <p className="col-span-9 ms:col-span-10 p-2 max-w-[65ch]">{example}</p>
       </div>
 
       <Link href="/">

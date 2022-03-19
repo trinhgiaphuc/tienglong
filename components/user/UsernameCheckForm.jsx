@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 
 import { Timestamp } from 'firebase/firestore';
 import { createNewUser, getUsernameDoc } from '@lib/db';
@@ -33,6 +33,8 @@ const UsernameCheckForm = ({ setStatus, setUser, setUsername, username }) => {
   const [error, setError] = useState('');
   const [nameAccepted, setNameAccepted] = useState(false);
   const [checkingName, setCheckingName] = useState(false);
+
+  const router = useRouter();
 
   const checkName = async name => {
     for (const badWord of badWords) {
@@ -79,9 +81,12 @@ const UsernameCheckForm = ({ setStatus, setUser, setUsername, username }) => {
     setUser(data);
     setUsername(name);
 
-    await createNewUser(data);
+    const res = await createNewUser(data);
 
-    setStatus('authenticated');
+    if (res.ok) {
+      setStatus('authenticated');
+      router.back();
+    }
   };
 
   return (

@@ -8,12 +8,14 @@ import Router from 'next/router';
 const EditProfilePage = () => {
   const { status, setStatus, setUser, setUsername, username } = useAuth();
 
-  // if (status === 'unauthenticated') return Router.back();
-  // if (status === 'loading') return <Spinner />;
+  if (status === 'loading') return <Spinner />;
+  if (status === 'authenticated') return Router.back();
 
   return (
     <div className="h-[94%] flex flex-col">
-      <SectionTitle title="Xin Vui Lòng Hoàn Tất Thủ Tục Để Tiến Hành Tạo Tài Khoản" />
+      <SectionTitle>
+        Xin Vui Lòng Hoàn Tất Thủ Tục Để Tiến Hành Tạo Tài Khoản
+      </SectionTitle>
       <UsernameCheckForm
         setStatus={setStatus}
         setUser={setUser}
