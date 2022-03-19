@@ -1,15 +1,11 @@
 import Link from 'next/link';
 import Footer from '@components/layouts/Footer';
 import Hero from '@components/layouts/Hero';
-import Metatags from '@components/utils/Metatags';
 import SectionWord from '@components/word/SectionWords';
 import Title from '@components/word/Title';
 
 import { getInitialWords } from '@lib/firebase-admin';
-import { getWordsClient } from '@lib/db';
-import { useRouter } from 'next/router';
-
-import { useQuery } from 'react-query';
+import Layout from '@components/layouts/Layout';
 
 const DefineBanner = () => (
   <div>
@@ -31,17 +27,8 @@ const DefineBanner = () => (
 );
 
 export default function Home({ words }) {
-  const router = useRouter();
-  const wordsQuery = useQuery('words', getWordsClient, {
-    initialData: words,
-    staleTime: Infinity,
-  });
-
-  router.push('');
-
   return (
-    <div>
-      <Metatags title="Home Page" />
+    <Layout title="Tiếng Lòng" description="Từ Điển Tiếng Lóng">
       <Hero />
 
       <main className="my-border text-zinc-800">
@@ -55,14 +42,13 @@ export default function Home({ words }) {
       </main>
 
       <Footer />
-    </div>
+    </Layout>
   );
 }
 
 export async function getServerSideProps({ req, res }) {
   try {
     const words = await getInitialWords();
-    console.log('refetched');
     return { props: { words } };
   } catch (error) {
     console.log(error);

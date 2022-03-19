@@ -6,10 +6,10 @@ import { useAuth } from '@lib/userContext';
 import Router from 'next/router';
 
 const EditProfilePage = () => {
-  const { setStatus, setUser, setUsername, username } = useAuth();
+  const { status, setStatus, setUser, setUsername, username } = useAuth();
 
-  if (username) return Router.back();
-  // if (username === null) return <Spinner />;
+  // if (status === 'unauthenticated') return Router.back();
+  // if (status === 'loading') return <Spinner />;
 
   return (
     <div className="h-[94%] flex flex-col">

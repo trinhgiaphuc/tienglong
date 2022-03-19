@@ -34,8 +34,6 @@ const UsernameCheckForm = ({ setStatus, setUser, setUsername, username }) => {
   const [nameAccepted, setNameAccepted] = useState(false);
   const [checkingName, setCheckingName] = useState(false);
 
-  const ref = useRef(1);
-
   const checkName = async name => {
     for (const badWord of badWords) {
       if (name.includes(badWord)) {
@@ -51,19 +49,16 @@ const UsernameCheckForm = ({ setStatus, setUser, setUsername, username }) => {
   };
 
   useEffect(() => {
-    name.length === 0 ? (ref.current = 1) : (ref.current = 2);
-
     let timer;
-    if (ref.current === 2) {
+    if (name.length !== 0) {
       timer = setTimeout(async () => {
         setCheckingName(true);
         await checkName(name);
         setCheckingName(false);
       }, 800);
     }
-
     return () => clearTimeout(timer);
-  }, [error, name, username]);
+  }, [name]);
 
   const handleSubmit = async e => {
     e.preventDefault();
