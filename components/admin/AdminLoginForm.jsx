@@ -54,11 +54,14 @@ const AdminLoginForm = () => {
             {error}
           </h1>
         ) : null}
-        <button className="uppercase flex-center my-border py-2 px-4 font-medium bg-green-400 rounded-lg">
+        <button
+          type="submit"
+          className="uppercase flex-center my-border py-2 px-4 font-medium bg-green-400 rounded-lg"
+        >
           Mở Khóa
           {loading ? (
             <div className="justify-self-end">
-              <Spinner size={8} />
+              <Spinner size="tini" />
             </div>
           ) : null}
         </button>

@@ -1,6 +1,6 @@
 import WordDetailList from '@components/word/WordDetailList';
 import { getPendingWords } from '@lib/firebase-admin';
-import { validateToken } from 'pages/api/admin';
+import { validateToken } from '@lib/withAuth';
 import Link from 'next/link';
 
 export async function getServerSideProps({ req, res }) {

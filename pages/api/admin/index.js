@@ -2,44 +2,37 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import cookie from 'cookie';
 
-import { firestoreAdmin } from '@lib/firebase-admin';
-import { createAdminAccount, findUserWithUserId } from '@lib/supabase';
+import { checkAdminRole, getSpecificUser } from '@lib/firebase-admin';
+import { createAdminAccount, findAdminWithId } from '@lib/supabase';
 
 export default async function handler(req, res) {
-  const { uid, password, logOut } = req.body;
-
-  if (typeof logOut !== undefined && logOut) {
-    res.setHeader(
-      'Set-Cookie',
-      cookie.serialize('ADMIN_ACCESS_TOKEN', '', {
-        httpOnly: true,
-        expires: new Date('Thu, 01 Jan 1970 00:00:00 GMT'),
-        path: '/',
-        sameSite: 'lax',
-        secure: process.env.NODE_ENV === 'production',
-      })
-    );
-
-    return res.status(200).json({ ok: 'ok' });
-  }
+  const { uid, password } = req.body;
 
   let firebaseUserData;
   try {
-    const res = await firestoreAdmin.collection('users').doc(uid).get();
-    firebaseUserData = res.data();
-
-    if (!firebaseUserData) throw new Error('Tài khoản không tồn tại');
-    if (!firebaseUserData.role.includes('admin'))
-      throw new Error('Chưa được cấp quyền');
+    firebaseUserData = await getSpecificUser(uid);
+    checkAdminRole(firebaseUserData);
   } catch (error) {
     return res.status(401).json({ error: error.message });
   }
 
-  let user = await findUserWithUserId(uid);
+  let admin;
+  try {
+    admin = await findAdminWithId(uid);
+  } catch (error) {
+    console.log(error);
+  }
 
-  if (!user) {
+  if (admin) {
+    const passwordIsCorrect = bcrypt.compareSync(
+      password,
+      admin.hashedPassword
+    );
+    if (!passwordIsCorrect)
+      return res.status(401).json({ error: 'Mật mã sai' });
+  } else {
     try {
-      user = await createAdminAccount(
+      admin = await createAdminAccount(
         uid,
         firebaseUserData.username,
         password,
@@ -48,20 +41,12 @@ export default async function handler(req, res) {
     } catch (error) {
       console.log(error);
     }
-  } else {
-    const passwordIsCorrect = bcrypt.compareSync(password, user.hashedPassword);
-
-    if (!passwordIsCorrect) {
-      return res.status(401).json({ error: 'Mật mã sai' });
-    }
   }
 
   const token = jwt.sign(
-    { username: user.username, image: firebaseUserData.image },
+    { username: firebaseUserData.username, image: firebaseUserData.image },
     process.env.JWT_SECRET,
-    {
-      expiresIn: '8h',
-    }
+    { expiresIn: '8h' }
   );
 
   res.setHeader(
@@ -77,5 +62,3 @@ export default async function handler(req, res) {
 
   return res.status(200).json({ ok: 'ok' });
 }
-
-export const validateToken = token => jwt.verify(token, process.env.JWT_SECRET);

@@ -2,6 +2,7 @@ import Image from 'next/image';
 
 export default function Spinner({ size = 'medium' }) {
   const iconSize = {
+    tini: 'h-7 w-7',
     small: 'h-20 w-20',
     medium: 'h-52 w-52',
     large: 'h-80 w-80',
