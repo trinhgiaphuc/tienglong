@@ -8,12 +8,12 @@
   }
 
   body {
-    @apply my-border bg-white w-screen h-screen overflow-x-hidden;
+    @apply my-border bg-white overflow-x-hidden;
   }
 
-  #__next {
+  /* #__next {
     @apply h-full w-full overflow-y-scroll overflow-x-hidden;
-  }
+  } */
 
   *::-webkit-scrollbar {
     width: 0px;

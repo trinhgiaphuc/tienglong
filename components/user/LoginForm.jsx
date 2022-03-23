@@ -1,9 +1,17 @@
 import { facebookProvider, googleProvider, handleSignIn } from '@lib/firebase';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
-const LoginForm = () => {
+const LoginForm = ({ referer }) => {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.prefetch(referer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleGoBack = () => {
-    Router.back();
+    router.back();
   };
 
   return (
@@ -19,13 +27,17 @@ const LoginForm = () => {
         <div className="flex-center flex-col gap-5">
           <button
             className="my-border rounded w-full uppercase font-medium p-4 shadow-sm shadow-black"
-            onClick={() => handleSignIn(facebookProvider)}
+            onClick={() =>
+              handleSignIn(facebookProvider).then(() => router.push(referer))
+            }
           >
             Đăng Nhập Bằng Facebook
           </button>
           <button
             className="my-border rounded w-full uppercase font-medium p-4 shadow-sm shadow-black"
-            onClick={() => handleSignIn(googleProvider)}
+            onClick={() =>
+              handleSignIn(googleProvider).then(() => router.push(referer))
+            }
           >
             Đằng Nhập Bằng Google
           </button>

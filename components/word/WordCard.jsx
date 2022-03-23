@@ -31,7 +31,7 @@ const WordCard = ({ word }) => {
             <h1 className="bigger-text-responsive font-bold font-ole text-center">
               {word.word}
             </h1>
-            <p className="text-black p-2 text-responsive text-justify line-clamp-3 text-ellipsis">
+            <p className="prose text-black p-2 text-responsive text-justify text-ellipsis">
               {definition}
             </p>
           </a>

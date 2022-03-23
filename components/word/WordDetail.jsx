@@ -51,7 +51,7 @@ const WordDetail = ({ wordDetails, wordIsPending }) => {
         {word}
       </h1>
 
-      <div className="text-responsive grid grid-cols-12 gap-4 items-baseline">
+      <div className="prose text-responsive grid grid-cols-12 gap-4 items-baseline">
         <p className="font-black col-span-3 ms:col-span-2 justify-self-center text-center">
           Định Nghĩa:
         </p>
@@ -65,7 +65,7 @@ const WordDetail = ({ wordDetails, wordIsPending }) => {
         <p className="col-span-9 ms:col-span-10 p-2 max-w-[65ch]">{example}</p>
       </div>
 
-      <Link href="/">
+      <Link href={`/user/${authorId}`}>
         <a className="text-responsive px-4 py-2 font-bold self-end uppercase ">
           {author}
         </a>

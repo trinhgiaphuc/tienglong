@@ -17,29 +17,42 @@ export default async function handler(req, res) {
         secure: process.env.NODE_ENV === 'production',
       })
     );
-  } else if (logout) {
-    res
-      .setHeader(
-        'Set-Cookie',
-        cookie.serialize('USER_ACCESS_TOKEN', '', {
-          httpOnly: true,
-          expires: new Date(Date.now() - 1),
-          path: '/',
-          sameSite: 'strict',
-          secure: process.env.NODE_ENV === 'production',
-        })
-      )
-      .setHeader(
-        'Set-Cookie',
-        cookie.serialize('ADMIN_ACCESS_TOKEN', '', {
-          httpOnly: true,
-          expires: new Date(Date.now() - 1),
-          path: '/',
-          sameSite: 'strict',
-          secure: process.env.NODE_ENV === 'production',
-        })
-      );
-  }
 
-  return res.status(200).json({ ok: 'ok' });
+    return res.status(200).json({ ok: 'ok' });
+  } else if (logout) {
+    console.log(res.clearCookie);
+    res.setHeader('Set-Cookie', [
+      cookie.serialize('USER_ACCESS_TOKEN', '', {
+        maxAge: -1,
+        path: '/',
+      }),
+      cookie.serialize('ADMIN_ACCESS_TOKEN', '', {
+        maxAge: -1,
+        path: '/',
+      }),
+    ]);
+
+    res.status(200).redirect('/').end();
+    // res
+    //   .setHeader(
+    //     'Set-Cookie',
+    //     cookie.serialize('USER_ACCESS_TOKEN', '', {
+    //       httpOnly: true,
+    //       expires: new Date(Date.now() - 1),
+    //       path: '/',
+    //       sameSite: 'strict',
+    //       secure: process.env.NODE_ENV === 'production',
+    //     })
+    //   )
+    //   .setHeader(
+    //     'Set-Cookie',
+    //     cookie.serialize('ADMIN_ACCESS_TOKEN', '', {
+    //       httpOnly: true,
+    //       expires: new Date(Date.now() - 1),
+    //       path: '/',
+    //       sameSite: 'strict',
+    //       secure: process.env.NODE_ENV === 'production',
+    //     })
+    //   );
+  }
 }

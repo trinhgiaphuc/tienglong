@@ -47,7 +47,8 @@ export default function Home({ words }) {
 }
 
 export async function getServerSideProps({ req, res }) {
-  console.log(req.cookies);
+  // FIXME: fix cookies
+
   try {
     const words = await getInitialWords();
     return { props: { words } };

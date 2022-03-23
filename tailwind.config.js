@@ -14,5 +14,5 @@ module.exports = {
       ole: ['"Ole"', 'cursive'],
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/typography')],
 };
