@@ -22,15 +22,15 @@ const Navigation = () => {
 
       <div className="navbar__item bg-white px-4 flex-grow">
         <input
-          className="navbar__item-text w-full text-responsive h-full outline-none placeholder:text-black"
+          className="navbar__item-text w-full prose lg:prose-xl xl:prose-2xl h-full outline-none"
           placeholder="TÌM KIẾM"
         />
-        <IoSearch className="title-responsive hidden sm:block" />
+        <IoSearch className="prose lg:prose-xl xl:prose-2xl hidden sm:block" />
       </div>
 
       {status === 'authenticated' ? (
         <Link href={`/user/${user?.id}`} passHref>
-          <div className="navbar__item lg:flex-grow bg-white px-4 cursor-pointer">
+          <div className="navbar__item lg:flex-grow bg-white lg:pl-4 cursor-pointer">
             <UserTag status={status} username={username} user={user} />
           </div>
         </Link>
@@ -79,16 +79,17 @@ const NavigationLink = ({ role }) => (
 const UserTag = ({ status, username, user }) =>
   status === 'loading' ? null : (
     <Fragment>
-      <h2 className="navbar__item-text w-full prose lg:prose-xl xl:prose-2xl  p-4 outline-none placeholder:text-black hidden lg:block">
+      <h2 className=" w-full prose lg:prose-xl xl:prose-2xl outline-none hidden lg:block">
         {status === 'authenticated' ? username : 'Khách'}
       </h2>
       {user ? (
-        <div className="aspect-square my-border h-3/4 over">
+        <div className=" aspect-square h-full">
           <Image
             src={user.image}
             alt="user image"
             width={500}
             height={500}
+            quality={50}
             layout="responsive"
           />
         </div>
