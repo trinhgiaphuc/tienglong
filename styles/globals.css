@@ -16,16 +16,18 @@
   } */
 
   *::-webkit-scrollbar {
-    width: 0px;
+    display: none;
   }
 
   *::-webkit-scrollbar-track {
+    display: none;
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   }
 
   *::-webkit-scrollbar-thumb {
-    background-color: darkgrey;
-    outline: 1px solid slategrey;
+    display: none;
+    /* background-color: darkgrey; */
+    outline: none;
   }
 
   input:checked + div {
@@ -49,10 +51,6 @@
     @apply flex items-center justify-between;
   }
 
-  .navbar__item-text {
-    @apply tracking-wider;
-  }
-
   .title {
     @apply tracking-wider font-bold uppercase;
   }
@@ -73,9 +71,9 @@
     @apply my-border p-2 sm:p-4 flex-grow flex-center;
   }
 
-  .selector {
-    @apply absolute top-0 left-0 w-full h-[200%] overflow-y-scroll lg:h-auto md:w-[120%] font-medium flex flex-col lg:grid grid-cols-3 gap-2 smaller-text-responsive scale-y-0 hover:scale-100 transition-all;
-  }
+  /* .selector {
+    @apply absolute top-0 left-0 w-full h-[200%] overflow-y-scroll lg:h-auto md:w-[120%] font-medium flex flex-col lg:grid grid-cols-3 gap-2 scale-y-0 hover:scale-100 transition-all;
+  } */
 
   .show_select:focus ~ div {
     @apply scale-100 -translate-y-full;
@@ -87,26 +85,6 @@
 }
 
 @layer utilities {
-  .smaller-text-responsive {
-    @apply text-xs lg:text-[1vw] sm:text-[2vw] tracking-wide leading-5 md:leading-6 md:tracking-normal;
-  }
-
-  .text-responsive {
-    @apply text-[2ch] sm:text-[3vw] md:text-2xl leading-relaxed;
-  }
-
-  .bigger-text-responsive {
-    @apply text-[10vw] sm:text-[5vw] md:text-5xl md:leading-tight;
-  }
-
-  .logo-responsive {
-    @apply text-[13vw] md:text-7xl md:leading-relaxed;
-  }
-
-  .title-responsive {
-    @apply text-[8vw]  md:text-5xl;
-  }
-
   .my-border {
     @apply border-2 border-black;
   }

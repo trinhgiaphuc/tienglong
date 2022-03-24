@@ -46,13 +46,11 @@ const Navigation = () => {
 };
 
 const NavigationLink = ({ role }) => (
-  <div className="navbar__item lg:flex-grow relative text-white bg-black px-4 group">
-    <h1 className="navbar__item-text text-responsive hidden uppercase lg:block">
-      điều hướng
-    </h1>
-    <IoGridOutline className="md:text-4xl sm:text-3xl title-responsive  group-hover:rotate-[180deg] transition-all duration-1000" />
+  <div className="flex items-center justify-between lg:flex-grow prose-invert prose-a:no-underline relative text-white bg-black px-4 group">
+    <h2 className="hidden uppercase lg:block">điều hướng</h2>
+    <IoGridOutline className="prose-xl  group-hover:rotate-[180deg] transition-all duration-1000" />
     <div className="bg-black w-screen h-screen lg:w-full lg:h-auto absolute bottom-0 left-0 -z-10 opacity-0 group-hover:translate-y-full group-hover:opacity-100 transition-all duration-300 ease-in">
-      <div className="flex flex-col text-responsive p-4 gap-4 uppercase">
+      <div className="flex flex-col p-4 gap-4 uppercase">
         <Link passHref href="/">
           <a className="hover:underline">Trang Chủ</a>
         </Link>
@@ -81,11 +79,11 @@ const NavigationLink = ({ role }) => (
 const UserTag = ({ status, username, user }) =>
   status === 'loading' ? null : (
     <Fragment>
-      <h2 className="navbar__item-text w-full text-responsive p-4 outline-none placeholder:text-black hidden lg:block">
+      <h2 className="navbar__item-text w-full prose lg:prose-xl xl:prose-2xl  p-4 outline-none placeholder:text-black hidden lg:block">
         {status === 'authenticated' ? username : 'Khách'}
       </h2>
       {user ? (
-        <div className="aspect-square border border-black rounded-full min-w-max h-3/4 overflow-clip">
+        <div className="aspect-square my-border h-3/4 over">
           <Image
             src={user.image}
             alt="user image"
@@ -95,22 +93,17 @@ const UserTag = ({ status, username, user }) =>
           />
         </div>
       ) : (
-        <IoPersonCircleOutline className="title-responsive" />
+        <IoPersonCircleOutline className="prose lg:prose-xl xl:prose-2xl" />
       )}
     </Fragment>
   );
 
 const AuthButton = ({ status }) => {
-  const loadingAuth = () =>
-    status === 'authenticated' ? (
-      <h1 className="navbar__item-text text-responsive flex-grow text-center uppercase hidden sm:block">
-        đăng xuất
-      </h1>
-    ) : (
-      <h1 className="navbar__item-text text-responsive flex-grow text-center uppercase hidden sm:block">
-        đăng nhập
-      </h1>
-    );
+  const loadingAuth = () => (
+    <h1 className="prose lg:prose-xl xl:prose-2xl flex-grow text-center uppercase hidden sm:block">
+      {status === 'authenticated' ? 'đăng xuất' : 'đăng nhập'}
+    </h1>
+  );
 
   return status === 'authenticated' ? (
     <button
@@ -118,13 +111,13 @@ const AuthButton = ({ status }) => {
       onClick={handleSignOut}
     >
       {loadingAuth()}
-      <IoLogOutOutline className="title-responsive" />
+      <IoLogOutOutline className="prose lg:prose-xl xl:prose-2xl" />
     </button>
   ) : (
     <Link href="/enter" passHref>
       <button className="navbar__item  lg:flex-grow bg-white px-4 cursor-pointer">
         {loadingAuth()}
-        <IoLogInOutline className="title-responsive" />
+        <IoLogInOutline className="prose lg:prose-xl xl:prose-2xl" />
       </button>
     </Link>
   );
