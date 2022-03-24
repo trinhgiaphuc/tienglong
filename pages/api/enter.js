@@ -1,3 +1,4 @@
+import { auth } from '@lib/firebase-admin';
 import cookie from 'cookie';
 
 export default async function handler(req, res) {
@@ -6,6 +7,22 @@ export default async function handler(req, res) {
 
   if (login) {
     const token = authorization.split(' ')[1];
+
+    let decodedIdToken;
+    try {
+      decodedIdToken = await auth.verifyIdToken(token);
+      if (!decodedIdToken || !decodedIdToken.uid) {
+        return res.status(401).json({ message: 'Not Real User.' });
+      }
+    } catch (error) {
+      console.log(`verifyIdToken error: ${error}`);
+      return {
+        redirect: {
+          permanent: true,
+          destination: '/enter',
+        },
+      };
+    }
 
     res.setHeader(
       'Set-Cookie',
@@ -17,10 +34,7 @@ export default async function handler(req, res) {
         secure: process.env.NODE_ENV === 'production',
       })
     );
-
-    return res.status(200).json({ ok: 'ok' });
   } else if (logout) {
-    console.log(res.clearCookie);
     res.setHeader('Set-Cookie', [
       cookie.serialize('USER_ACCESS_TOKEN', '', {
         maxAge: -1,
@@ -31,28 +45,6 @@ export default async function handler(req, res) {
         path: '/',
       }),
     ]);
-
-    res.status(200).redirect('/').end();
-    // res
-    //   .setHeader(
-    //     'Set-Cookie',
-    //     cookie.serialize('USER_ACCESS_TOKEN', '', {
-    //       httpOnly: true,
-    //       expires: new Date(Date.now() - 1),
-    //       path: '/',
-    //       sameSite: 'strict',
-    //       secure: process.env.NODE_ENV === 'production',
-    //     })
-    //   )
-    //   .setHeader(
-    //     'Set-Cookie',
-    //     cookie.serialize('ADMIN_ACCESS_TOKEN', '', {
-    //       httpOnly: true,
-    //       expires: new Date(Date.now() - 1),
-    //       path: '/',
-    //       sameSite: 'strict',
-    //       secure: process.env.NODE_ENV === 'production',
-    //     })
-    //   );
   }
+  return res.status(200).json({ ok: 'ok' });
 }

@@ -124,7 +124,7 @@
   }
 
   .card-list {
-    @apply flex flex-col lg:grid grid-cols-12 grid-rows-6;
+    @apply lg:grid grid-cols-12;
   }
 
   .flex-center {
