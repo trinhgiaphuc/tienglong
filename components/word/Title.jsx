@@ -2,7 +2,7 @@ const Title = ({ color = 'black', children }) => {
   const textColor = `text-${color}`;
   return (
     <h1
-      className={`title-responsive font-medium px-4 bg-transparent text-center py-10 uppercase ${textColor}`}
+      className={`prose sm:prose-2xl md:text-4xl  font-medium px-4 bg-transparent text-center sm:py-2 md:py-5 uppercase ${textColor}`}
     >
       {children}
     </h1>

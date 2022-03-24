@@ -3,19 +3,20 @@ import Footer from '@components/layouts/Footer';
 import Hero from '@components/layouts/Hero';
 import SectionWord from '@components/word/SectionWords';
 import Title from '@components/word/Title';
+import { Fragment } from 'react';
 
 import { getInitialWords } from '@lib/firebase-admin';
 import Layout from '@components/layouts/Layout';
 
 const DefineBanner = () => (
-  <div>
+  <Fragment>
     <div className="my-border group flex-center bg-black p-2 text-white">
       <Title color="white">Hôm nay bạn sẽ định nghĩa gì?</Title>
     </div>
 
-    <div className="my-border group flex-center bg-black text-white py-3">
+    <div className="my-border prose-a:text-xs group flex-center bg-black text-white py-3">
       <Link href="/define" passHref>
-        <button className="text-responsive hover:scale-[1.02] pb-4 transition-all active:scale-100">
+        <button className="hover:scale-[1.02] pb-4 transition-all active:scale-100">
           <span className="underline p-2 rounded-sm bg-white text-black">
             Đến Mục Định nghĩa
           </span>
@@ -23,7 +24,7 @@ const DefineBanner = () => (
         </button>
       </Link>
     </div>
-  </div>
+  </Fragment>
 );
 
 export default function Home({ words }) {

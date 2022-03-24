@@ -71,9 +71,9 @@
     @apply my-border p-2 sm:p-4 flex-grow flex-center;
   }
 
-  /* .selector {
+  .selector {
     @apply absolute top-0 left-0 w-full h-[200%] overflow-y-scroll lg:h-auto md:w-[120%] font-medium flex flex-col lg:grid grid-cols-3 gap-2 scale-y-0 hover:scale-100 transition-all;
-  } */
+  }
 
   .show_select:focus ~ div {
     @apply scale-100 -translate-y-full;
