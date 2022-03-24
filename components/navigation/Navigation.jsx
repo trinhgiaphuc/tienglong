@@ -17,7 +17,7 @@ const Navigation = () => {
   const { user, username, status } = useAuth();
 
   return (
-    <nav className="navbar h-[6%] z-50 sticky top-0 left-0">
+    <nav className="navbar h-12 z-50 sticky top-0 left-0">
       <NavigationLink role={user?.role} />
 
       <div className="navbar__item bg-white px-4 flex-grow">

@@ -11,7 +11,11 @@ module.exports = {
         '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
       ],
       mono: ['"Space Mono"', 'monospace'],
-      ole: ['"Ole"', 'cursive'],
+      ole: [
+        '"Ole"',
+        'cursive',
+        '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
+      ],
     },
   },
   plugins: [require('@tailwindcss/typography')],

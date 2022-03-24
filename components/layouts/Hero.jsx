@@ -5,9 +5,7 @@ const Hero = React.memo(function WrappedHero() {
   return (
     <div className="hero">
       <div className="my-border col-span-2 grid-item-center">
-        <h1 className="title logo-responsive text-center font-ole">
-          Tiếng Lòng
-        </h1>
+        <h1 className="title logo-responsive text-center">Tiếng Lòng</h1>
       </div>
 
       <Link href="/define" passHref>
