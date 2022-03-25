@@ -30,7 +30,7 @@ const Navigation = () => {
 
       {status === 'authenticated' ? (
         <Link href={`/user/${user?.id}`} passHref>
-          <div className="navbar__item lg:flex-grow bg-white lg:pl-4 cursor-pointer">
+          <div className="navbar__item min-w-max lg:flex-grow bg-white lg:pl-4 cursor-pointer">
             <UserTag status={status} username={username} user={user} />
           </div>
         </Link>
