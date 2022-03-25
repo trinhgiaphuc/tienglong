@@ -27,7 +27,7 @@ const WordDetail = ({ wordDetails, wordIsPending }) => {
 
   return hideWord ? null : (
     <main className="my-border relative h-full flex-center flex-col p-4 gap-2 font-ole">
-      <div className="w-full flex items-start">
+      <div className="px-2 w-full flex flex-wrap items-start mb-5 mr-8">
         <div className="flex-grow flex gap-2 self-start flex-wrap ">
           <Link href="/" passHref>
             <a className="year-created-tag">
@@ -43,7 +43,7 @@ const WordDetail = ({ wordDetails, wordIsPending }) => {
         </div>
       </div>
 
-      <div className="prose prose-lg">
+      <div className="prose-lg prose-h1:mb-5">
         <h1 className=" uppercase font-bold font-ole text-center p-2">
           {word}
         </h1>
@@ -56,13 +56,13 @@ const WordDetail = ({ wordDetails, wordIsPending }) => {
             <p className="">{definition}</p>
           </div>
 
-          <hr className="w-3/4 border-black mx-auto" />
+          <hr className="w-3/4 my-0 border-black mx-auto" />
 
-          <div className="prose text-black">
-            <h4 className="font-black prose text-black justify-self-center text-center">
+          <div className="prose prose-p:mb-0 text-black">
+            <h4 className="font-black text-black justify-self-center text-center">
               Ví Dụ:
             </h4>
-            <p className="">{example}</p>
+            <p>{example}</p>
           </div>
         </div>
       </div>

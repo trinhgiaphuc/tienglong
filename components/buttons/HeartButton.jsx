@@ -9,25 +9,27 @@ const HeartButton = ({ heartCount, authorId, wordId }) => {
   const [hearts, setHearts] = useState(heartCount);
   const [wordLiked, setWordLiked] = useState(false);
 
-  if (!user) return null;
-
-  checkHeartExistence(wordId).then(setWordLiked);
+  if (user) {
+    checkHeartExistence(wordId).then(setWordLiked);
+  }
 
   return (
     <button
-      className="word-button text-responsive active:animate-ping"
+      className="active:animate-ping"
       onClick={async () => {
         setWordLiked(!wordLiked);
         setHearts(h => (wordLiked ? h - 1 : h + 1));
         wordLiked ? removeHeart(wordId, authorId) : addHeart(wordId, authorId);
       }}
     >
-      {wordLiked ? (
-        <IoHeart className="bigger-text-responsive text-red-500" />
-      ) : (
-        <IoHeartOutline className="bigger-text-responsive" />
-      )}
-      <p className="text-2xl font-medium">{hearts}</p>
+      <div className="word-button">
+        {wordLiked ? (
+          <IoHeart className="prose-2xl text-red-500" />
+        ) : (
+          <IoHeartOutline className="prose-2xl" />
+        )}
+        {user ? <p className="prose-2xl font-medium">{hearts}</p> : null}
+      </div>
     </button>
   );
 };
