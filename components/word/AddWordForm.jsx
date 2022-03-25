@@ -64,7 +64,7 @@ const AddWordForm = () => {
       className="my-border p-5 sm:p-10 flex-grow bg-white w-full flex-center flex-col md:grid grid-cols-10 gap-10"
     >
       <input
-        className="input w-full md:h-full text-responsive p-4 col-span-4"
+        className="my-1 sm:my-0 input w-full md:h-full text-responsive p-4 col-span-4"
         placeholder="Từ ngữ"
         minLength={2}
         onChange={e => setWord(e.target.value)}
@@ -75,7 +75,7 @@ const AddWordForm = () => {
 
       <textarea
         rows={15}
-        className="input w-full md:h-full text-responsive resize-none col-span-6 row-span-3"
+        className="my-1 sm:my-0 input w-full md:h-full text-responsive resize-none col-span-6 row-span-3"
         placeholder="Định nghĩa"
         minLength={15}
         onChange={e => setDefinition(e.target.value)}
@@ -86,7 +86,7 @@ const AddWordForm = () => {
       <textarea
         rows={8}
         minLength={15}
-        className="input w-full md:h-full text-responsive resize-none col-span-4"
+        className="my-1 sm:my-0 input w-full md:h-full text-responsive resize-none col-span-4"
         placeholder="Ví Dụ"
         onChange={e => setExample(e.target.value)}
         value={example}
@@ -94,7 +94,7 @@ const AddWordForm = () => {
         spellCheck={false}
       />
 
-      <div className="input w-full md:h-full relative text-responsive flex col-span-4 group">
+      <div className="my-1 sm:my-0 input w-full md:h-full relative text-responsive flex col-span-4 group">
         <input
           className="input border-none w-full p-5 show_select"
           placeholder="Ví Dụ: tag1,tag2,tag3"
@@ -117,7 +117,7 @@ const AddWordForm = () => {
         <SelectYearTag setYearRelease={setYearRelease} />
       </div>
 
-      <div className="bg-blue-400 col-span-10 w-full">
+      <div className="my-1 sm:my-0 bg-blue-400 col-span-10 w-full">
         <button className="my-border ml-auto w-full bg-black text-white p-4 font-medium uppercase">
           Định Nghĩa
         </button>

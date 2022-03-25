@@ -29,7 +29,7 @@ export default function AboutPage() {
       <SectionWrapper>
         <div className="aspect-square rounded-full overflow-hidden mt-8 w-80">
           <Image
-            src="/about.jpg"
+            src="/assets/about.jpg"
             alt="A guy kissing a girl hand, both standing in the stairs in student uniform"
             width={320}
             height={320}

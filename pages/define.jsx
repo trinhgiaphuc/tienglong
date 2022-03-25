@@ -3,7 +3,7 @@ import SectionTitle from '@components/word/SectionTitle';
 
 export default function DefinePage() {
   return (
-    <div className="flex flex-col h-[94%]">
+    <div className="flex flex-col">
       <SectionTitle>Danh Mục Định Nghĩa</SectionTitle>
       <AddWordForm />
     </div>

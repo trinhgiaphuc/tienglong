@@ -28,22 +28,22 @@ const Feedback = () => {
         className="my-border px-2 py-8 flex-center flex-col gap-6"
       >
         <input
-          className="p-4 outline-none tracking-wide border-2 w-[95%] border-black "
+          className="my-1 sm:my-0 p-4 outline-none tracking-wide border-2 w-[95%] border-black "
           type="text"
           placeholder="TÊN XƯNG HÔ THÂN MẬT"
         />
         <input
-          className="p-4 outline-none tracking-wide border-2 w-[95%] border-black"
+          className="my-1 sm:my-0 p-4 outline-none tracking-wide border-2 w-[95%] border-black"
           type="email"
           placeholder="ĐỊA CHỈ EMAIL"
         />
         <textarea
-          className="p-4  outline-none border-2 tracking-wide w-[95%] h-96 border-black"
+          className="my-1 sm:my-0 p-4  outline-none border-2 tracking-wide w-[95%] h-96 border-black"
           type="text"
           placeholder="PHẢN HỒI CỦA BẠN"
         />
 
-        <div className="p-2 relative flex">
+        <div className="my-1 sm:my-0 p-2 relative flex-center">
           <input
             type="checkbox"
             className="opacity-0  absolute h-8 w-8"
@@ -58,7 +58,7 @@ const Feedback = () => {
           </label>
         </div>
 
-        <button className="p-4 w-[75%] bg-black text-white text-responsive uppercase font-medium transition-all active:scale-[0.98]  outline-none shadow-sm shadow-black">
+        <button className="my-1 sm:my-0 p-4 w-[75%] bg-black text-white text-responsive uppercase font-medium transition-all active:scale-[0.98]  outline-none shadow-sm shadow-black">
           Gửi
         </button>
       </form>

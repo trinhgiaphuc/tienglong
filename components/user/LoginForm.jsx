@@ -26,7 +26,7 @@ const LoginForm = ({ referer }) => {
       <div className="w-screen h-screen grid-item-center">
         <div className="flex-center flex-col gap-5">
           <button
-            className="my-border rounded w-full uppercase font-medium p-4 shadow-sm shadow-black"
+            className="login-button"
             onClick={() =>
               handleSignIn(facebookProvider).then(() => router.push(referer))
             }
@@ -34,7 +34,7 @@ const LoginForm = ({ referer }) => {
             Đăng Nhập Bằng Facebook
           </button>
           <button
-            className="my-border rounded w-full uppercase font-medium p-4 shadow-sm shadow-black"
+            className="login-button"
             onClick={() =>
               handleSignIn(googleProvider).then(() => router.push(referer))
             }

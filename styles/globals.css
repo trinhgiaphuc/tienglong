@@ -82,6 +82,10 @@
   .word-button {
     @apply border rounded-full py-2 px-4 flex-center border-zinc-300;
   }
+
+  .login-button {
+    @apply my-border my-1 sm:my-0 rounded w-full uppercase font-medium p-4 shadow-sm shadow-black;
+  }
 }
 
 @layer utilities {

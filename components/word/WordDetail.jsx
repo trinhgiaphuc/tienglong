@@ -30,14 +30,14 @@ const WordDetail = ({ wordDetails, wordIsPending }) => {
       <div className="w-full flex items-start">
         <div className="flex-grow flex gap-2 self-start flex-wrap">
           <Link href="/" passHref>
-            <a className="rounded-3xl smaller-text-responsive p-3 bg-orange-400 text-center">
+            <a className="my-1 sm:my-0 rounded-3xl smaller-text-responsive p-3 bg-orange-400 text-center">
               {new Date(createdAt).toLocaleDateString()}
             </a>
           </Link>
 
           {tags.map(tag => (
             <Link key={tag} href="/" passHref>
-              <a className="rounded-3xl smaller-text-responsive p-3 bg-blue-400 text-center">
+              <a className="my-1 sm:my-0 rounded-3xl smaller-text-responsive p-3 bg-blue-400 text-center">
                 {tag}
               </a>
             </Link>
