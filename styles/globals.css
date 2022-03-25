@@ -86,11 +86,19 @@
   }
 
   .word-button {
-    @apply border rounded-full py-2 px-4 flex-center border-zinc-300;
+    @apply border rounded-full p-3 flex-center gap-2 border-zinc-300;
   }
 
   .login-button {
     @apply my-border my-1 sm:my-0 rounded w-full uppercase font-medium p-4 shadow-sm shadow-black;
+  }
+
+  .year-created-tag {
+    @apply my-1 sm:my-0 px-2 prose rounded-3xl bg-orange-400 text-center text-black;
+  }
+
+  .other-tags {
+    @apply rounded-3xl prose px-2 my-1 sm:my-0 bg-blue-400 text-center text-black;
   }
 }
 

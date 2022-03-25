@@ -26,47 +26,49 @@ const WordDetail = ({ wordDetails, wordIsPending }) => {
   const [hideWord, setHideWord] = useState(false);
 
   return hideWord ? null : (
-    <div className="my-border h-full flex-center flex-col p-4 gap-2 font-mono">
+    <main className="my-border relative h-full flex-center flex-col p-4 gap-2 font-ole">
       <div className="w-full flex items-start">
-        <div className="flex-grow flex gap-2 self-start flex-wrap">
+        <div className="flex-grow flex gap-2 self-start flex-wrap ">
           <Link href="/" passHref>
-            <a className="my-1 sm:my-0 rounded-3xl smaller-text-responsive p-3 bg-orange-400 text-center">
+            <a className="year-created-tag">
               {new Date(createdAt).toLocaleDateString()}
             </a>
           </Link>
 
           {tags.map(tag => (
             <Link key={tag} href="/" passHref>
-              <a className="my-1 sm:my-0 rounded-3xl smaller-text-responsive p-3 bg-blue-400 text-center">
-                {tag}
-              </a>
+              <a className="other-tags">{tag}</a>
             </Link>
           ))}
         </div>
-
-        <WordDropDown authorId={authorId} />
       </div>
 
-      <h1 className="bigger-text-responsive uppercase font-bold font-ole text-center p-2">
-        {word}
-      </h1>
+      <div className="prose prose-lg">
+        <h1 className=" uppercase font-bold font-ole text-center p-2">
+          {word}
+        </h1>
 
-      <div className="prose text-responsive grid grid-cols-12 gap-4 items-baseline">
-        <p className="font-black col-span-3 ms:col-span-2 justify-self-center text-center">
-          Định Nghĩa:
-        </p>
-        <p className="col-span-9 ms:col-span-10 p-2 max-w-[65ch]">
-          {definition}
-        </p>
+        <div className="prose items-baseline">
+          <div className="prose text-black">
+            <h4 className="font-black text-black prose justify-self-center text-center">
+              Định Nghĩa:
+            </h4>
+            <p className="">{definition}</p>
+          </div>
 
-        <p className="font-black col-span-3 ms:col-span-2 justify-self-center text-center">
-          Ví Dụ:
-        </p>
-        <p className="col-span-9 ms:col-span-10 p-2 max-w-[65ch]">{example}</p>
+          <hr className="w-3/4 border-black mx-auto" />
+
+          <div className="prose text-black">
+            <h4 className="font-black prose text-black justify-self-center text-center">
+              Ví Dụ:
+            </h4>
+            <p className="">{example}</p>
+          </div>
+        </div>
       </div>
 
       <Link href={`/user/${authorId}`}>
-        <a className="text-responsive px-4 py-2 font-bold self-end uppercase ">
+        <a className="prose text-black px-4 py-2 font-bold self-end uppercase ">
           {author}
         </a>
       </Link>
@@ -87,7 +89,9 @@ const WordDetail = ({ wordDetails, wordIsPending }) => {
           <ReportButton />
         </div>
       )}
-    </div>
+
+      <WordDropDown authorId={authorId} />
+    </main>
   );
 };
 

@@ -9,16 +9,14 @@ const WordCard = ({ word }) => {
       <article className="mx-auto prose prose-h2:text-4xl prose-h2:m-4 prose-p:text-xl flex flex-col">
         <div className="md:flex-grow mr-10 flex flex-wrap gap-2 sm:justify-start sm:p-2">
           <Link href="/" passHref>
-            <a className="rounded-3xl prose px-2 my-1 sm:my-0 bg-orange-400 text-center">
+            <a className="year-created-tag">
               {new Date(createdAt).toLocaleDateString()}
             </a>
           </Link>
 
           {tags.map(tag => (
             <Link key={tag} href="/" passHref>
-              <a className="rounded-3xl prose px-2 my-1 sm:my-0 bg-blue-400 text-center">
-                {tag}
-              </a>
+              <a className="other-tags">{tag}</a>
             </Link>
           ))}
         </div>
