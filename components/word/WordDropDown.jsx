@@ -30,7 +30,7 @@ const WordDropDown = ({ wordId, authorId }) => {
     >
       <IoEllipsisVertical className="prose prose-2xl outline-none aspect-square rounded-full  hover:bg-gray-50 font-medium" />
       <div
-        className={`absolute top-full right-3/4 rounded-md shadow-sm border overflow-hidden bg-gray-100 opacity-0 scale-0 duration-150  ${
+        className={`absolute top-full right-3/4 min-w-max rounded-md shadow-sm border overflow-hidden bg-gray-100 opacity-0 scale-0 duration-150  ${
           toggle ? 'opacity-100 scale-100' : ''
         }`}
         tabIndex="-1"
