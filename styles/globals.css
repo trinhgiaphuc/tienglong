@@ -1,5 +1,11 @@
 @tailwind base;
 @tailwind components;
+
+@font-face {
+  font-family: 'Comfortaa';
+  src: url(/font/Comfortaa.ttf);
+}
+
 @tailwind utilities;
 
 @layer base {

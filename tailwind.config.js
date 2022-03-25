@@ -8,21 +8,7 @@ module.exports = {
     extend: {
       fontFamily: {
         mono: ['"Space Mono"', 'monospace'],
-        ole: [
-          'Comfortaa',
-          '-apple-system',
-          'BlinkMacSystemFont',
-          'Segoe UI',
-          'Roboto',
-          'Helvetica Neue',
-          'Arial',
-          'Noto Sans',
-          'sans-serif',
-          'Apple Color Emoji',
-          'Segoe UI Emoji',
-          'Segoe UI Symbol',
-          'Noto Color Emoji',
-        ],
+        ole: ['Comfortaa', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
       },
     },
   },
