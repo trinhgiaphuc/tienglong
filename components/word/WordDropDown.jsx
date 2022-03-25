@@ -19,18 +19,18 @@ const WordDropDown = ({ authorId }) => {
   };
 
   return (
-    <div
+    <button
       type="button"
       id="menu-button"
       aria-expanded="true"
       aria-haspopup="true"
-      className="absolute top-0 right-0"
+      className="absolute top-0 right-0 p-2 bg-transparent outline-none"
     >
       <button
         onClick={handleToggle}
-        className="aspect-square cursor-pointer bg-transparent rounded-full p-3 hover:bg-gray-50 font-medium group"
+        className=" aspect-square cursor-pointer bg-transparent outline-none rounded-full p-2 hover:bg-gray-50 font-medium group"
       >
-        <IoEllipsisVertical className="text-responsive" />
+        <IoEllipsisVertical className="prose prose-lg md:prose-xl lg:prose-2xl outline-none" />
       </button>
       <ul
         className={`absolute right-0 rounded-md shadow-lg bg-gray-50 ring-1 ring-black ring-opacity-5 opacity-0 scale-0  ${
@@ -41,7 +41,7 @@ const WordDropDown = ({ authorId }) => {
         {user?.id === authorId ? (
           <li id="choice" className="py-1" role="none">
             <button
-              className="block px-4 py-2 smaller-text-responsive min-w-max bg-gray-50 hover:bg-zinc-300"
+              className="block px-4 py-2 prose min-w-max bg-gray-50 hover:bg-zinc-300"
               tabIndex="-1"
             >
               Chỉnh Sửa
@@ -50,14 +50,14 @@ const WordDropDown = ({ authorId }) => {
         ) : null}
         <div id="choice" className="py-1" role="none">
           <button
-            className="w-full px-4 py-2 smaller-text-responsive min-w-max bg-gray-50 hover:bg-zinc-300 "
+            className="w-full px-4 py-2 prose min-w-max bg-gray-50 hover:bg-zinc-300 "
             tabIndex="-1"
           >
             Báo Cáo
           </button>
         </div>
       </ul>
-    </div>
+    </button>
   );
 };
 

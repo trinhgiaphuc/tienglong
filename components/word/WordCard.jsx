@@ -9,14 +9,14 @@ const WordCard = ({ word }) => {
       <div className="flex items-start mr-10">
         <div className="md:flex-grow  flex flex-wrap gap-2 sm:justify-start sm:p-2">
           <Link href="/" passHref>
-            <p className="rounded-3xl prose p-2 bg-orange-400 text-center">
+            <p className="rounded-3xl prose px-2 bg-orange-400 text-center">
               {new Date(createdAt).toLocaleDateString()}
             </p>
           </Link>
 
           {tags.map(tag => (
             <Link key={tag} href="/" passHref>
-              <a className="rounded-3xl prose p-2 bg-blue-400 text-center">
+              <a className="rounded-3xl prose px-2 bg-blue-400 text-center">
                 {tag}
               </a>
             </Link>
