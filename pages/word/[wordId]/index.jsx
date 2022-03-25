@@ -1,4 +1,4 @@
-import WordDetailList from '@components/word/WordDetailList';
+// import WordDetailList from '@components/word/WordDetailList';
 import WordDetail from '@components/word/WordDetail';
 import { firestoreAdmin } from '@lib/firebase-admin';
 

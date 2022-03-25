@@ -48,28 +48,30 @@ const Navigation = () => {
 const NavigationLink = ({ role }) => (
   <div className="flex items-center justify-between lg:flex-grow relative text-white bg-black px-4 group">
     <h2 className="hidden uppercase lg:block prose text-white">điều hướng</h2>
-    <IoGridOutline className="group-hover:rotate-[180deg] transition-all duration-1000" />
-    <div className="bg-black w-screen h-screen lg:w-full lg:h-auto absolute bottom-0 left-0 -z-10 opacity-0 group-hover:translate-y-full group-hover:opacity-100 transition-all duration-300 ease-in">
-      <ul className="flex flex-col p-4 gap-4 uppercase">
+    <IoGridOutline className="prose lg:prose-xl xl:prose-2xl text-white group-hover:rotate-[180deg] transition-all duration-1000" />
+    <div className="bg-black prose text-white w-screen h-screen lg:w-full lg:h-auto absolute bottom-0 left-0 -z-10 opacity-0 group-hover:translate-y-full group-hover:opacity-100 transition-all duration-300 ease-in">
+      <ul className="flex list-none flex-col p-4 gap-4 uppercase">
         <Link passHref href="/">
-          <li className="hover:underline">Trang Chủ</li>
+          <li className="hover:underline cursor-pointer">Trang Chủ</li>
         </Link>
         <Link passHref href="/define">
-          <li className="hover:underline">Định Nghĩa Từ</li>
+          <li className="hover:underline cursor-pointer">Định Nghĩa Từ</li>
         </Link>
         <Link passHref href="/shop">
-          <li className="hover:underline">Shop</li>
+          <li className="hover:underline cursor-pointer">Shop</li>
         </Link>
         <Link passHref href="/feedback">
-          <li className="hover:underline">Phản Hồi Của Người Dùng</li>
+          <li className="hover:underline cursor-pointer">
+            Phản Hồi Của Người Dùng
+          </li>
         </Link>
         {role?.includes('admin') ? (
           <Link passHref href="/admin">
-            <li className="hover:underline">Quản Trị</li>
+            <li className="hover:underline cursor-pointer">Quản Trị</li>
           </Link>
         ) : null}
         <Link passHref href="/about">
-          <li className="hover:underline">Về Tiếng Lòng</li>
+          <li className="hover:underline cursor-pointer">Về Tiếng Lòng</li>
         </Link>
       </ul>
     </div>

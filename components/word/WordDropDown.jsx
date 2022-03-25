@@ -4,7 +4,7 @@ import { useAuth } from '@lib/userContext';
 import { useEffect } from 'react';
 import Link from 'next/link';
 
-const WordDropDown = ({ authorId }) => {
+const WordDropDown = ({ wordId, authorId }) => {
   const [toggle, setToggle] = useState(false);
   const { user } = useAuth();
 
@@ -36,7 +36,7 @@ const WordDropDown = ({ authorId }) => {
         tabIndex="-1"
       >
         {user?.id === authorId ? (
-          <Link>
+          <Link href={`/word/${wordId}/edit`}>
             <a
               className="p-2 block text-xs md:text-sm lg:text-lg min-w-max bg-gray-100 hover:bg-zinc-300"
               tabIndex="-1"
@@ -45,7 +45,7 @@ const WordDropDown = ({ authorId }) => {
             </a>
           </Link>
         ) : null}
-        <Link>
+        <Link href="/">
           <a
             className="p-2 block text-xs md:text-sm lg:text-lg min-w-max bg-gray-100 hover:bg-zinc-300 "
             tabIndex="-1"
