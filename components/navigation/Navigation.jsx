@@ -17,7 +17,7 @@ const Navigation = () => {
   const { user, username, status } = useAuth();
 
   return (
-    <nav className="navbar h-12 z-50 sticky top-0 left-0">
+    <nav className="navbar h-12 z-50 sticky top-0 left-0 font-sans">
       <NavigationLink role={user?.role} />
 
       <div className="navbar__item bg-white px-4 flex-grow">
@@ -46,7 +46,7 @@ const Navigation = () => {
 };
 
 const NavigationLink = ({ role }) => (
-  <div className="flex items-center font-ole justify-between lg:flex-grow relative text-white bg-black px-4 group">
+  <div className="flex items-center font-sans justify-between lg:flex-grow relative text-white bg-black px-4 group">
     <h2 className="hidden uppercase lg:block prose text-white">điều hướng</h2>
     <IoGridOutline className="prose lg:prose-xl xl:prose-2xl text-white group-hover:rotate-[180deg] transition-all duration-1000" />
     <div className="bg-black prose md:prose-li:m-0 text-white w-screen h-screen lg:w-full lg:h-auto absolute bottom-0 left-0 -z-10 opacity-0 group-hover:translate-y-full group-hover:opacity-100 transition-all duration-300 ease-in">

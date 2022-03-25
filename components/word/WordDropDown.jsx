@@ -22,7 +22,6 @@ const WordDropDown = ({ wordId, authorId }) => {
   return (
     <button
       type="button"
-      id="menu-button"
       aria-expanded="true"
       aria-haspopup="true"
       className="absolute top-0 right-0 pt-2 pr-2 pb-1 pl-1 bg-transparent outline-none"

@@ -8,7 +8,7 @@
   }
 
   body {
-    @apply my-border bg-white overflow-x-hidden;
+    @apply my-border bg-white overflow-x-hidden font-ole;
   }
 
   /* #__next {
