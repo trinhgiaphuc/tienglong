@@ -16,7 +16,7 @@ const MyDocument = () => {
           rel="stylesheet"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Reggae+One&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap"
           rel="stylesheet"
         />
       </Head>

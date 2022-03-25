@@ -132,23 +132,25 @@ const SelectYearTag = ({ setYearRelease }) => {
     years.push(i);
   }
   return (
-    <select
-      className="outline-none show_select font-medium p-2 sm:p-4 tracking-wide text-responsive"
-      name="years"
-      id="select_year"
-      defaultValue={new Date().getFullYear()}
-      onChange={e => setYearRelease(e.target.value)}
-    >
-      {years.map(year => (
-        <option
-          className="text-responsive tracking-wide"
-          key={year}
-          value={year}
-        >
-          {year}
-        </option>
-      ))}
-    </select>
+    <div>
+      <select
+        className="outline-none show_select font-medium p-2 sm:p-4 tracking-wide text-responsive"
+        name="years"
+        id="select_year"
+        defaultValue={new Date().getFullYear()}
+        onChange={e => setYearRelease(e.target.value)}
+      >
+        {years.map(year => (
+          <option
+            className="text-responsive tracking-wide"
+            key={year}
+            value={year}
+          >
+            {year}
+          </option>
+        ))}
+      </select>
+    </div>
   );
 };
 

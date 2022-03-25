@@ -46,10 +46,10 @@ const Navigation = () => {
 };
 
 const NavigationLink = ({ role }) => (
-  <div className="flex items-center justify-between lg:flex-grow relative text-white bg-black px-4 group">
+  <div className="flex items-center font-ole justify-between lg:flex-grow relative text-white bg-black px-4 group">
     <h2 className="hidden uppercase lg:block prose text-white">điều hướng</h2>
     <IoGridOutline className="prose lg:prose-xl xl:prose-2xl text-white group-hover:rotate-[180deg] transition-all duration-1000" />
-    <div className="bg-black prose text-white w-screen h-screen lg:w-full lg:h-auto absolute bottom-0 left-0 -z-10 opacity-0 group-hover:translate-y-full group-hover:opacity-100 transition-all duration-300 ease-in">
+    <div className="bg-black prose md:prose-li:m-0 text-white w-screen h-screen lg:w-full lg:h-auto absolute bottom-0 left-0 -z-10 opacity-0 group-hover:translate-y-full group-hover:opacity-100 transition-all duration-300 ease-in">
       <ul className="flex list-none flex-col p-4 gap-4 uppercase">
         <Link passHref href="/">
           <li className="hover:underline cursor-pointer">Trang Chủ</li>

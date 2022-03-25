@@ -6,7 +6,7 @@ import logoSrc from '@public/assets/logo.svg';
 
 const Hero = React.memo(function WrappedHero() {
   return (
-    <div className="hero">
+    <div className="hero font-ole">
       <div className="my-border col-span-2 p-2 grid-item-center">
         <Image src={logoSrc} width={600} height={200} alt="logo tieng long" />
       </div>
