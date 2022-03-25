@@ -2,6 +2,7 @@ import { IoEllipsisVertical } from 'react-icons/io5';
 import { useState } from 'react';
 import { useAuth } from '@lib/userContext';
 import { useEffect } from 'react';
+import Link from 'next/link';
 
 const WordDropDown = ({ authorId }) => {
   const [toggle, setToggle] = useState(false);
@@ -29,29 +30,29 @@ const WordDropDown = ({ authorId }) => {
     >
       <IoEllipsisVertical className="prose prose-2xl outline-none aspect-square rounded-full  hover:bg-gray-50 font-medium" />
       <div
-        className={`absolute top-full right-3/4 rounded-md shadow-lg overflow-hidden bg-gray-100 ring-1 ring-black ring-opacity-5 opacity-0 scale-0 duration-150  ${
+        className={`absolute top-full right-3/4 rounded-md shadow-sm border overflow-hidden bg-gray-100 opacity-0 scale-0 duration-150  ${
           toggle ? 'opacity-100 scale-100' : ''
         }`}
         tabIndex="-1"
       >
         {user?.id === authorId ? (
-          <div id="choice" className="" role="none">
+          <Link>
             <a
-              className="p-2 block  prose min-w-max bg-gray-100 hover:bg-zinc-300"
+              className="p-2 block text-xs md:text-sm lg:text-lg min-w-max bg-gray-100 hover:bg-zinc-300"
               tabIndex="-1"
             >
               Chỉnh Sửa
             </a>
-          </div>
+          </Link>
         ) : null}
-        <div id="choice" className="" role="none">
+        <Link>
           <a
-            className="p-2 block prose min-w-max bg-gray-100 hover:bg-zinc-300 "
+            className="p-2 block text-xs md:text-sm lg:text-lg min-w-max bg-gray-100 hover:bg-zinc-300 "
             tabIndex="-1"
           >
             Báo Cáo
           </a>
-        </div>
+        </Link>
       </div>
     </button>
   );
