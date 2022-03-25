@@ -24,38 +24,34 @@ const WordDropDown = ({ authorId }) => {
       id="menu-button"
       aria-expanded="true"
       aria-haspopup="true"
-      className="absolute top-0 right-0 p-2 bg-transparent outline-none"
+      className="absolute top-0 right-0 pt-2 pr-2 pb-1 pl-1 bg-transparent outline-none"
+      onClick={handleToggle}
     >
-      <button
-        onClick={handleToggle}
-        className=" aspect-square cursor-pointer bg-transparent outline-none rounded-full p-2 hover:bg-gray-50 font-medium group"
-      >
-        <IoEllipsisVertical className="prose prose-lg md:prose-xl lg:prose-2xl outline-none" />
-      </button>
+      <IoEllipsisVertical className="prose prose-2xl outline-none aspect-square rounded-full   hover:bg-gray-50 font-medium" />
       <ul
-        className={`absolute right-0 rounded-md shadow-lg bg-gray-50 ring-1 ring-black ring-opacity-5 opacity-0 scale-0  ${
+        className={`absolute top-full right-3/4 rounded-md shadow-lg overflow-hidden bg-gray-100 ring-1 ring-black ring-opacity-5 opacity-0 scale-0 duration-150  ${
           toggle ? 'opacity-100 scale-100' : ''
-        } duration-150`}
+        }`}
         tabIndex="-1"
       >
         {user?.id === authorId ? (
-          <li id="choice" className="py-1" role="none">
+          <li id="choice" className="" role="none">
             <button
-              className="block px-4 py-2 prose min-w-max bg-gray-50 hover:bg-zinc-300"
+              className="p-2 prose min-w-max bg-gray-100 hover:bg-zinc-300"
               tabIndex="-1"
             >
               Chỉnh Sửa
             </button>
           </li>
         ) : null}
-        <div id="choice" className="py-1" role="none">
+        <li id="choice" className="" role="none">
           <button
-            className="w-full px-4 py-2 prose min-w-max bg-gray-50 hover:bg-zinc-300 "
+            className="p-2 prose min-w-max bg-gray-100 hover:bg-zinc-300 "
             tabIndex="-1"
           >
             Báo Cáo
           </button>
-        </div>
+        </li>
       </ul>
     </button>
   );
