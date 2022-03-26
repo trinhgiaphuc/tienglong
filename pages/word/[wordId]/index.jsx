@@ -1,4 +1,6 @@
 // import WordDetailList from '@components/word/WordDetailList';
+import SectionWord from '@components/word/SectionWords';
+import Title from '@components/word/Title';
 import WordDetail from '@components/word/WordDetail';
 import { firestoreAdmin } from '@lib/firebase-admin';
 
@@ -14,20 +16,16 @@ export async function getServerSideProps(ctx) {
   }
 }
 
-export default function Word({ wordDetails }) {
+export default function Word({ wordDetails = [] }) {
   return (
     <div className="my-border lg:p-2  flex flex-col">
       <div className="w-full lg:w-3/4 mx-auto">
         <div className="my-border group flex-center bg-black py-10 text-white">
-          <h1 className="title-responsive px-4 text-center py-2 uppercase">
-            Chi Tiết Từ
-          </h1>
+          <Title color="white">Chi Tiết Từ</Title>
         </div>
         <WordDetail wordDetails={wordDetails} />
         <div className="my-border group flex-center bg-black py-10 text-white">
-          <h1 className="title-responsive px-4 text-center py-2 uppercase">
-            những từ có thể liên quan
-          </h1>
+          <Title color="white">những từ có thể liên quan</Title>
         </div>
         {/* <WordDetailList /> */}
       </div>

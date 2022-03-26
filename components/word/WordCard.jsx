@@ -23,17 +23,19 @@ const WordCard = ({ word }) => {
 
         <Link href={`/word/${id}`} passHref>
           <a className="cursor-pointer">
-            <h2 className="prose font-bold text-center">{word.word}</h2>
+            <h2 className="font-bold text-center">{word.word}</h2>
           </a>
         </Link>
         <Link href={`/word/${id}`} passHref>
           <a className="prose cursor-pointer">
-            <p className="text-black line-clamp-4 px-2 sm:p-0">{definition}</p>
+            <p className="text-black text-center line-clamp-4 px-2 sm:p-0">
+              {definition}
+            </p>
           </a>
         </Link>
 
         <Link href={`/user/${authorId}`} passHref>
-          <p className="self-end font-bold  uppercase cursor-pointer">
+          <p className="self-end font-bold text-black  uppercase cursor-pointer">
             {author}
           </p>
         </Link>
