@@ -16,7 +16,7 @@ export default function Spinner({ size = 'medium' }) {
           width={100}
           height={100}
           layout="responsive"
-          src="/spinner.svg"
+          src="/assets/spinner.svg"
           alt="loading icon"
         />
       </div>

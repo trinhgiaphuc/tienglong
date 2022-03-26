@@ -4,6 +4,9 @@ import { validateToken } from '@lib/withAuth';
 export async function getServerSideProps({ req, res }) {
   let user;
 
+  const token = req.cookies?.ADMIN_ACCESS_TOKEN;
+  if (!token) return { props: {} };
+
   try {
     user = validateToken(req.cookies.ADMIN_ACCESS_TOKEN);
     if (user) {
@@ -16,7 +19,6 @@ export async function getServerSideProps({ req, res }) {
     }
   } catch (error) {
     console.log(error);
-    return { props: {} };
   }
 }
 
