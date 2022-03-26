@@ -79,7 +79,7 @@ const WordDetail = ({ wordDetails, wordIsPending }) => {
           <ApproveButton wordDetails={wordDetails} setHideWord={setHideWord} />
         </div>
       ) : (
-        <div className="flex gap-10">
+        <div className="grid grid-cols-3 gap-5 sm:gap-10">
           <HeartButton
             heartCount={heartCount}
             authorId={authorId}
