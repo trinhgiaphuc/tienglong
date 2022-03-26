@@ -5,7 +5,7 @@ import { getTodayWords } from '@lib/firebase-admin';
 export default function TodayWordPage({ todayWords }) {
   return (
     <div className="h-screen">
-      <SectionWord section="Từ Đang Thịnh Hành" words={todayWords} />
+      <SectionWord section="Từ Hôm Nay" words={todayWords} />
     </div>
   );
 }
