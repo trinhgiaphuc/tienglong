@@ -12,6 +12,7 @@ import {
   IoPersonCircleOutline,
 } from 'react-icons/io5';
 import { Fragment } from 'react';
+import SearchBar from './SearchBar';
 
 const Navigation = () => {
   const { user, username, status } = useAuth();
@@ -19,18 +20,11 @@ const Navigation = () => {
   return (
     <nav className="navbar h-12 z-50 sticky top-0 left-0">
       <NavigationLink role={user?.role} />
-
-      <div className="navbar__item bg-white px-4 flex-grow">
-        <input
-          className="navbar__item-text w-full prose lg:prose-xl xl:prose-2xl h-full outline-none"
-          placeholder="TÌM KIẾM"
-        />
-        <IoSearch className="prose lg:prose-xl xl:prose-2xl hidden sm:block" />
-      </div>
+      <SearchBar />
 
       {status === 'authenticated' ? (
         <Link href={`/user/${user?.id}`} passHref>
-          <div className="navbar__item min-w-max lg:flex-grow bg-white lg:pl-4 cursor-pointer">
+          <div className="navbar__item lg:flex-grow bg-white lg:pl-4 cursor-pointer">
             <UserTag status={status} username={username} user={user} />
           </div>
         </Link>

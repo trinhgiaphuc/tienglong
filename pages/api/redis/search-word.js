@@ -1,8 +1,8 @@
 import { searchWordsRedis } from '@lib/redis';
 
-export async function handler(req, res) {
-  console.log(req.query);
-  // const words = await searchWordsRedis(req);
+export default async function handler(req, res) {
+  const { q } = req.query;
+  const words = await searchWordsRedis(q);
 
-  res.status(200).json({ ok: 'ok' });
+  res.status(200).json(words);
 }
