@@ -44,7 +44,7 @@ const WordDetail = ({ wordDetails, wordIsPending }) => {
       </div>
 
       <div className="prose-lg prose-h1:mb-5">
-        <h2 className="text-xl sm:text-2xl lg:text-3xl text-black  leading-snug uppercase font-bold font-ole text-center p-2">
+        <h2 className="text-2xl sm:text-3xl text-black  leading-snug uppercase font-bold font-ole text-center p-2">
           {word}
         </h2>
 

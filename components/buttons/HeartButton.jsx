@@ -15,7 +15,7 @@ const HeartButton = ({ heartCount, authorId, wordId }) => {
 
   return (
     <button
-      className="active:animate-ping"
+      className="active:animate-ping mx-2 lg:mx-0"
       onClick={async () => {
         setWordLiked(!wordLiked);
         setHearts(h => (wordLiked ? h - 1 : h + 1));
