@@ -5,7 +5,7 @@ const WordList = ({ nogrid, words }) => {
 
   return (
     <ul className={`my-border flex flex-col ${nogrid ? '' : 'card-list'}`}>
-      {words.map((word, i) => {
+      {words?.map((word, i) => {
         if (i === 0) className = 'col-span-5 row-span-2 hover:bg-red-300';
         if (i === 1) className = 'col-span-4 row-span-2 hover:bg-green-300';
         if (i === 2) className = 'col-span-3 row-span-2 hover:bg-blue-300';

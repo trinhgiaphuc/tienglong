@@ -5,7 +5,7 @@ import SectionWord from '@components/word/SectionWords';
 import Title from '@components/word/Title';
 import { Fragment } from 'react';
 
-import { getInitialWords } from '@lib/firebase-admin';
+import { getTodayWords, getTrendingWords } from '@lib/firebase-admin';
 import Layout from '@components/layouts/Layout';
 
 const DefineBanner = () => (
@@ -27,18 +27,22 @@ const DefineBanner = () => (
   </Fragment>
 );
 
-export default function Home({ words }) {
+export default function Home({ todayWords, trendingWords }) {
   return (
     <Layout title="Tiếng Lòng" description="Từ Điển Tiếng Lóng">
       <Hero />
 
       <main className="my-border text-zinc-800">
-        <SectionWord section="từ hôm nay" href="/today-words" words={words} />
+        <SectionWord
+          section="từ hôm nay"
+          href="/today-words"
+          words={todayWords}
+        />
         <DefineBanner />
         <SectionWord
           section="từ đang thịnh hành"
           href="/trending-words"
-          words={words}
+          words={trendingWords}
         />
       </main>
 
@@ -49,10 +53,10 @@ export default function Home({ words }) {
 
 export async function getServerSideProps({ req, res }) {
   // FIXME: fix cookies
-
   try {
-    const words = await getInitialWords();
-    return { props: { words } };
+    const todayWords = await getTodayWords();
+    const trendingWords = await getTrendingWords();
+    return { props: { todayWords, trendingWords } };
   } catch (error) {
     console.log(error);
   }

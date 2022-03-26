@@ -45,7 +45,6 @@ const AddWordForm = () => {
       word,
       definition,
       example,
-      heartCount: 0,
       tags: combinedTags,
       yearRelease,
       author: username,
