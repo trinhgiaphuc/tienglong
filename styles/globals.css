@@ -86,7 +86,7 @@
   }
 
   .word-button {
-    @apply border rounded-2xl h-full p-3 flex-center gap-2 border-zinc-300;
+    @apply mx-2 lg:mx-0 border rounded-2xl h-full p-3 flex-center gap-2 border-zinc-300;
   }
 
   .login-button {
