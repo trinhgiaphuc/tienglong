@@ -44,7 +44,7 @@ const WordDetail = ({ wordDetails, wordIsPending }) => {
       </div>
 
       <div className="prose-lg prose-h1:mb-5">
-        <h2 className="prose text-black  leading-snug uppercase font-bold font-ole text-center p-2">
+        <h2 className="text-xl sm:text-2xl lg:text-3xl text-black  leading-snug uppercase font-bold font-ole text-center p-2">
           {word}
         </h2>
 
@@ -53,7 +53,7 @@ const WordDetail = ({ wordDetails, wordIsPending }) => {
             <h4 className="font-black text-black prose justify-self-center text-center">
               Định Nghĩa:
             </h4>
-            <p className="text-center prose-xl">{definition}</p>
+            <p className="text-center prose:sm sm:prose-xl">{definition}</p>
           </div>
 
           <hr className="w-3/4 my-0 border-black mx-auto" />
@@ -62,7 +62,7 @@ const WordDetail = ({ wordDetails, wordIsPending }) => {
             <h4 className="font-black text-black justify-self-center text-center">
               Ví Dụ:
             </h4>
-            <p className="text-center prose-xl">{example}</p>
+            <p className="text-center prose:sm sm:prose-xl">{example}</p>
           </div>
         </div>
       </div>
