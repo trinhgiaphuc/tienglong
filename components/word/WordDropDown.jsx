@@ -1,22 +1,33 @@
 import { IoEllipsisVertical } from 'react-icons/io5';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useAuth } from '@lib/userContext';
 import { useEffect } from 'react';
 import Link from 'next/link';
 
 const WordDropDown = ({ wordId, authorId }) => {
-  const [toggle, setToggle] = useState(false);
+  const [isToggle, setIsToggle] = useState(false);
   const { user } = useAuth();
 
+  const handleTurnOffDropDown = useCallback(e => {
+    if (e.key === 'Escape') {
+      setIsToggle(false);
+    }
+  }, []);
+
   useEffect(() => {
-    if (!toggle) return;
+    if (!isToggle) return;
     document.body.addEventListener('click', handleToggle);
-    return () => document.body.removeEventListener('click', handleToggle);
-  }, [toggle]);
+    document.addEventListener('keydown', handleTurnOffDropDown);
+
+    return () => {
+      document.body.removeEventListener('click', handleToggle);
+      document.removeEventListener('keydown', handleTurnOffDropDown);
+    };
+  }, [handleTurnOffDropDown, isToggle]);
 
   const handleToggle = e => {
     e.stopPropagation();
-    setToggle(t => !t);
+    setIsToggle(t => !t);
   };
 
   return (
@@ -30,7 +41,7 @@ const WordDropDown = ({ wordId, authorId }) => {
       <IoEllipsisVertical className="prose prose-2xl outline-none aspect-square rounded-full  hover:bg-gray-50 font-medium" />
       <div
         className={`absolute top-full right-3/4 min-w-max rounded-md shadow-sm border overflow-hidden bg-gray-100 opacity-0 scale-0 duration-150  ${
-          toggle ? 'opacity-100 scale-100' : ''
+          isToggle ? 'opacity-100 scale-100' : ''
         }`}
         tabIndex="-1"
       >

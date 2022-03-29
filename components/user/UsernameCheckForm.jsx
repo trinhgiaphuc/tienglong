@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { Timestamp } from 'firebase/firestore';
-import { createNewUser, getUsernameDoc } from '@lib/db';
+import { checkUserNameExist, createNewUser } from '@lib/db';
 import { auth } from '@lib/firebase';
 
 import {
@@ -28,6 +28,7 @@ const Result = ({ error }) => {
   );
 };
 
+// FIXME: FIX HERE
 const UsernameCheckForm = ({ setStatus, setUser, setUsername, username }) => {
   const [name, setName] = useState('');
   const [error, setError] = useState('');
@@ -43,8 +44,8 @@ const UsernameCheckForm = ({ setStatus, setUser, setUsername, username }) => {
       } else if (name.length < 5) {
         setError('Xin Vui Lòng Nhập Tên Ít Nhất 5 Ký Tự');
       } else {
-        const usernameDoc = await getUsernameDoc(name);
-        if (usernameDoc.data()) setError('Tên Người Dùng Đã Có Người Dùng');
+        const usernameExist = await checkUserNameExist(name);
+        if (usernameExist) setError('Tên Người Dùng Đã Có Người Dùng');
         setNameAccepted(true);
       }
     }
@@ -70,9 +71,7 @@ const UsernameCheckForm = ({ setStatus, setUser, setUsername, username }) => {
     const data = {
       id: uid,
       email,
-      role: ['user'],
       username: name,
-      heart: 0,
       image: photoURL,
       createdAt: Timestamp.now(),
       updatedAt: Timestamp.now(),

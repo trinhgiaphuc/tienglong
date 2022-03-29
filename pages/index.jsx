@@ -52,10 +52,10 @@ export default function Home({ todayWords, trendingWords }) {
 }
 
 export async function getServerSideProps({ req, res }) {
-  // FIXME: fix cookies
   try {
     const todayWords = await getTodayWords();
     const trendingWords = await getTrendingWords();
+
     return { props: { todayWords, trendingWords } };
   } catch (error) {
     console.log(error);

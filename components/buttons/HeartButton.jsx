@@ -1,5 +1,5 @@
 import { addHeart, checkHeartExistence, removeHeart } from '@lib/db';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '@lib/userContext';
 import { IoHeartOutline, IoHeart } from 'react-icons/io5';
 
@@ -7,22 +7,30 @@ const HeartButton = ({ heartCount, authorId, wordId }) => {
   const { user } = useAuth();
 
   const [hearts, setHearts] = useState(heartCount);
-  const [wordLiked, setWordLiked] = useState(false);
+  const [wordIsLiked, setWordIsLiked] = useState(false);
 
-  if (user) {
-    checkHeartExistence(wordId).then(setWordLiked);
-  }
+  useEffect(() => {
+    if (user) {
+      checkHeartExistence(wordId).then(setWordIsLiked);
+    }
+
+    return () => {};
+  }, [user, wordId]);
+
+  console.log(wordIsLiked);
 
   return (
     <button
       className="active:animate-ping word-button"
       onClick={async () => {
-        setWordLiked(!wordLiked);
-        setHearts(h => (wordLiked ? h - 1 : h + 1));
-        wordLiked ? removeHeart(wordId, authorId) : addHeart(wordId, authorId);
+        wordIsLiked
+          ? await removeHeart(wordId, authorId)
+          : await addHeart(wordId, authorId);
+        setWordIsLiked(!wordIsLiked);
+        setHearts(h => (wordIsLiked ? h - 1 : h + 1));
       }}
     >
-      {wordLiked ? (
+      {wordIsLiked ? (
         <IoHeart className="prose-2xl text-red-500" />
       ) : (
         <IoHeartOutline className="prose-2xl" />

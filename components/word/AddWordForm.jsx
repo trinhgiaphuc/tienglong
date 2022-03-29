@@ -46,7 +46,6 @@ const AddWordForm = () => {
       definition,
       example,
       tags: combinedTags,
-      yearRelease,
       author: username,
     });
 

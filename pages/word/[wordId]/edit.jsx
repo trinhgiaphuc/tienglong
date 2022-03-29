@@ -1,5 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import Title from '@components/word/Title';
+import AddWordForm from '@components/word/AddWordForm';
 
 const EditWordPage = () => {
   const router = useRouter();
@@ -7,9 +9,11 @@ const EditWordPage = () => {
   console.log(router.query);
 
   return (
-    <div>
-      <p>EditWordPage</p>
-      <p>word: {router.query.wordId}</p>
+    <div className="">
+      <div className="py-5 bg-black text-center">
+        <Title color="white">Chỉnh Sửa Từ</Title>
+      </div>
+      <AddWordForm />
     </div>
   );
 };

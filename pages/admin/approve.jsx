@@ -8,6 +8,7 @@ export async function getServerSideProps({ req, res }) {
 
   try {
     user = validateToken(req.cookies.ADMIN_ACCESS_TOKEN);
+    // FIXME: CHANGE TO CLIENT SIDE FETCHING
     const pendingWords = await getPendingWords();
     return { props: { pendingWords } };
   } catch (error) {

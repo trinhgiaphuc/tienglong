@@ -1,3 +1,5 @@
+import { getTrendingWords } from '@lib/firebase-admin';
+
 // import SectionWord from '@components/word/SectionWords';
 
 export default function TrendingWords({}) {
@@ -5,5 +7,6 @@ export default function TrendingWords({}) {
 }
 
 export async function getServerSideProps(ctx) {
+  const words = await getTrendingWords();
   return { props: {} };
 }

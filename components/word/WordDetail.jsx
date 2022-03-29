@@ -90,7 +90,7 @@ const WordDetail = ({ wordDetails, wordIsPending }) => {
         </div>
       )}
 
-      <WordDropDown authorId={authorId} />
+      <WordDropDown wordId={id} authorId={authorId} />
     </main>
   );
 };
