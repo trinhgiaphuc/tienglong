@@ -4,119 +4,168 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 const AddWordForm = () => {
+  const { username } = useAuth();
   const router = useRouter();
 
-  const { username } = useAuth();
+  const [otherTags, setOtherTags] = useState({ tag: '', tagList: [] });
+  const [error, setError] = useState({ isError: false, errorDetails: '' });
+  const [recommendedTag, setRecommendedTag] = useState({
+    source: '',
+    trend: '',
+  });
 
-  const [word, setWord] = useState('');
-  const [definition, setDefinition] = useState('');
-  const [example, setExample] = useState('');
-  const [tags, setTags] = useState({});
-  const [yearRelease, setYearRelease] = useState(new Date().getFullYear());
-  const [othersTags, setOthersTags] = useState('');
-
-  const handleSelect = e => {
-    if (e.target.name === 'muc_do_thinh_hanh') {
-      setTags({ ...tags, trend: e.target.id });
-    }
-    if (e.target.name === 'nguon_goc') {
-      setTags({ ...tags, source: e.target.id });
-    }
-  };
-
-  const tagCombiner = (tags, othersTags) => {
-    let finalTags = [];
-    if (Object.keys(tags).length > 0) {
-      finalTags = [...finalTags, ...Object.values(tags)];
-    }
-    if (othersTags.split(',')[0] !== '') {
-      finalTags = [...finalTags, ...othersTags.split(',')];
-    }
-    finalTags.push(yearRelease);
+  function tagCombiner(...tags) {
+    const finalTags = [];
+    tags.forEach(tag => {
+      if (typeof tag === 'string' && tag.length !== 0) finalTags.push(tag);
+    });
     return finalTags;
-  };
-
+  }
+  function shallowCheck(wordData) {
+    for (let data in wordData) {
+      if (typeof data !== 'string') return;
+    }
+  }
   const handleSubmit = async e => {
     e.preventDefault();
+    const form = new FormData(e.target);
+    const formData = Object.fromEntries(form);
+    const { word, definition, example, releaseYear } = formData;
+    const combinedTags = tagCombiner(
+      formData.source,
+      formData.trend,
+      ...otherTags.tagList
+    );
 
-    const combinedTags = tagCombiner(tags, othersTags);
+    console.log(word);
+    console.log(definition);
+    console.log(example);
+    console.log(combinedTags);
+    console.log(username);
 
-    const res = await addNewDefinition({
-      word,
-      definition,
-      example,
-      tags: combinedTags,
-      author: username,
-    });
+    // const res = await addNewDefinition({
+    //   word,
+    //   definition,
+    //   example,
+    //   tags: combinedTags,
+    //   author: username,
+    // });
 
-    if (res.success) {
-      router.push('/');
-    } else if (!res.success) {
-      console.log(res);
-    }
+    // if (res.success) {
+    //   router.push('/define/success');
+    // } else if (!res.success) {
+    //   console.log(res);
+    //   router.push('/define/fail');
+    // }
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="my-border p-5 sm:p-10 flex-grow bg-white w-full flex-center flex-col md:grid grid-cols-10 gap-10"
+      className="my-border p-5 sm:p-10  w-full flex-center flex-col md:grid grid-cols-10 gap-10"
     >
       <input
-        className="my-1 sm:my-0 input w-full md:h-full text-responsive p-4 col-span-4"
+        className="adding-word-input p-4 col-span-5"
+        name="word"
         placeholder="Từ ngữ"
         minLength={2}
-        onChange={e => setWord(e.target.value)}
-        value={word}
+        maxLength={150}
         type="text"
         spellCheck={false}
       />
 
       <textarea
         rows={15}
-        className="my-1 sm:my-0 input w-full md:h-full text-responsive resize-none col-span-6 row-span-3"
+        maxLength={5000}
+        className="adding-word-input resize-none col-span-5 row-span-4"
+        name="definition"
         placeholder="Định nghĩa"
-        minLength={15}
-        onChange={e => setDefinition(e.target.value)}
-        value={definition}
+        minLength={5}
         type="text"
         spellCheck={false}
       />
       <textarea
         rows={8}
-        minLength={15}
-        className="my-1 sm:my-0 input w-full md:h-full text-responsive resize-none col-span-4"
+        minLength={5}
+        maxLength={5000}
+        className="adding-word-input resize-none col-span-5"
+        name="example"
         placeholder="Ví Dụ"
-        onChange={e => setExample(e.target.value)}
-        value={example}
         type="text"
         spellCheck={false}
       />
 
-      <div className="my-1 sm:my-0 input w-full md:h-full relative text-responsive flex col-span-4 group">
+      <div className="adding-word-input col-span-5 relative flex flex-col sm:flex-row group">
         <input
-          className="input border-none w-full p-5 show_select"
-          placeholder="Ví Dụ: tag1,tag2,tag3"
+          className="input border-none w-full p-5 peer"
+          placeholder="Nhập từng thẻ sau đó ấn đính thẻ. (#Iambeautiful)"
+          maxLength={200}
+          value={otherTags.tag}
+          autoComplete="off"
           onChange={e =>
-            setOthersTags(
-              e.target.value
-                .trim()
-                .toLocaleLowerCase()
-                .replace(/[^a-zA-Z0-9,]+/, '')
-                .replace(',,', ',')
-            )
+            setOtherTags({
+              ...otherTags,
+              tag: e.target.value.trim().replace(' ', ''),
+            })
           }
-          value={othersTags}
+          name="otherTags"
         />
-        <div className="selector group-hover:scale-100 group-hover:-translate-y-full">
-          <SelectTrendTag handleSelect={handleSelect} />
-          <SelectSourceTag handleSelect={handleSelect} />
+
+        <button
+          type="button"
+          onClick={() => {
+            if (otherTags.tag.length > 1) {
+              setOtherTags({
+                tagList: [...otherTags.tagList, otherTags.tag],
+                tag: '',
+              });
+            }
+          }}
+          className="my-border rounded min-w-max text-xs font-medium py-4 sm:text-inherit sm:px-2 sm:py-0 bg-orange-400 shadow-sm shadow-black animate-btn-scale"
+        >
+          Đính Thẻ
+        </button>
+
+        <div className="selector group-hover:-translate-y-full rounded group-hover:z-10 peer-focus:z-10 peer-focus:-translate-y-full">
+          <div className="my-border py-4 col-span-2 text-center text-black uppercase bg-lime-200">
+            Một số thẻ gợi ý
+          </div>
+          <SelectTrendTag tag={recommendedTag} setTag={setRecommendedTag} />
+          <SelectSourceTag tag={recommendedTag} setTag={setRecommendedTag} />
+          <button
+            onClick={() => setRecommendedTag({ source: '', trend: '' })}
+            type="button"
+            className="my-border col-span-2 py-4 outline-none font-medium hover:bg-gray-500"
+          >
+            Bỏ Chọn Tất Cả Thẻ Gợi Ý
+          </button>
         </div>
 
-        <SelectYearTag setYearRelease={setYearRelease} />
+        <ul className="absolute bottom-full left-0 flex gap-3 max-w-full overflow-hidden whitespace-nowrap overflow-ellipsis">
+          {[...otherTags.tagList].reverse().map(tag => (
+            <li key={tag}>{tag}</li>
+          ))}
+        </ul>
       </div>
 
-      <div className="my-1 sm:my-0 bg-blue-400 col-span-10 w-full">
-        <button className="my-border ml-auto w-full bg-black text-white p-4 font-medium uppercase">
+      <div className="col-span-5 my-border rounded flex">
+        <ul className="flex-grow border-r-2 border-black flex items-center p-4">
+          <li className="italic font-bold text-zinc-700">#2022</li>
+          {[...otherTags.tagList].reverse().map(tag => (
+            <li className="italic font-bold text-zinc-700" key={tag}>
+              {tag}
+            </li>
+          ))}
+        </ul>
+        <SelectYearTag />
+      </div>
+
+      <div className="my-1 sm:my-0 col-span-10 w-full">
+        {/* TODO: ANIMATION */}
+        <button
+          type="submit"
+          className="my-border rounded w-full bg-black text-white p-4 font-medium uppercase active:animate-shrink"
+        >
           Định Nghĩa
         </button>
       </div>
@@ -124,96 +173,159 @@ const AddWordForm = () => {
   );
 };
 
-const SelectYearTag = ({ setYearRelease }) => {
+const SelectYearTag = () => {
   const years = [];
-  for (let i = 1800; i <= 2100; i++) {
+  const thisYear = new Date().getFullYear();
+
+  for (let i = 2000; i <= thisYear; i++) {
     years.push(i);
   }
+
   return (
-    <div>
-      <select
-        className="outline-none show_select font-medium p-2 sm:p-4 tracking-wide text-responsive"
-        name="years"
-        id="select_year"
-        defaultValue={new Date().getFullYear()}
-        onChange={e => setYearRelease(e.target.value)}
-      >
-        {years.map(year => (
-          <option
-            className="text-responsive tracking-wide"
-            key={year}
-            value={year}
-          >
-            {year}
+    <div className="col-span-1 h-full flex justify-center">
+      <div className="h-full">
+        <select
+          className="appearance-none block rounded h-full p-4 min-w-max font-medium bg-white outline-none"
+          aria-label=""
+        >
+          <option hidden value={new Date().getFullYear()}>
+            Năm Tạo Ra ({new Date().getFullYear()})
           </option>
-        ))}
-      </select>
+          <option className="prose p-1 font-medium" value="DiSản">
+            Di Sản
+          </option>
+          {years.map(year => (
+            <option
+              className="prose p-1 font-medium tracking-wide"
+              key={year}
+              value={year}
+            >
+              {year}
+            </option>
+          ))}
+        </select>
+      </div>
     </div>
+  );
+
+  return (
+    <select
+      className="outline-none font-medium p-2 sm:p-4 tracking-wide"
+      name="releaseYear"
+      id="select_year"
+    ></select>
   );
 };
 
-const SelectTrendTag = ({ handleSelect }) => (
-  <div className="my-border flex flex-col bg-red-400">
+const SelectTrendTag = ({ tag, setTag }) => (
+  <div className="my-border flex flex-col ">
     <div className="wordList__tag">
       <input
-        onChange={handleSelect}
+        onChange={e => setTag(p => ({ ...p, trend: e.target.value }))}
+        className="peer hidden"
         type="radio"
-        name="muc_do_thinh_hanh"
+        checked={tag.trend === 'khongloithoi'}
+        name="trend"
+        value="khongloithoi"
         id="#khongloithoi"
       />
-      <label htmlFor="#khongloithoi">Không Lỗi Thời</label>
+      <label
+        className="radio-label peer-checked:bg-blue-400"
+        htmlFor="#khongloithoi"
+      >
+        Không Lỗi Thời
+      </label>
     </div>
+
+    <hr />
 
     <div className="wordList__tag">
       <input
-        onChange={handleSelect}
+        onChange={e => setTag(p => ({ ...p, trend: e.target.value }))}
+        className="peer hidden"
         type="radio"
-        name="muc_do_thinh_hanh"
+        checked={tag.trend === 'dangthinhhanh'}
+        name="trend"
+        value="dangthinhhanh"
         id="#dangthinhhanh"
       />
-      <label htmlFor="#dangthinhhanh">Đang Thịnh Hành</label>
+      <label
+        htmlFor="#dangthinhhanh"
+        className="radio-label peer-checked:bg-blue-400"
+      >
+        Đang Thịnh Hành
+      </label>
     </div>
+    <hr />
 
     <div className="wordList__tag">
       <input
-        onChange={handleSelect}
+        onChange={e => setTag(p => ({ ...p, trend: e.target.value }))}
+        className="peer hidden"
         type="radio"
-        name="muc_do_thinh_hanh"
+        checked={tag.trend === 'khongconphobien'}
+        name="trend"
+        value="khongconphobien"
         id="#khongconphobien"
       />
-      <label htmlFor="#khongconphobien">Không Còn Phổ Biến</label>
+      <label
+        htmlFor="#khongconphobien"
+        className="radio-label peer-checked:bg-blue-400"
+      >
+        Không Còn Phổ Biến
+      </label>
     </div>
   </div>
 );
 
-const SelectSourceTag = ({ handleSelect }) => (
-  <div className="my-border flex flex-col bg-green-400">
+const SelectSourceTag = ({ tag, setTag }) => (
+  <div className="my-border flex flex-col">
     <div className="wordList__tag">
       <input
-        onChange={handleSelect}
+        onChange={e => setTag(p => ({ ...p, source: e.target.value }))}
+        className="peer hidden"
         type="radio"
-        name="nguon_goc"
+        checked={tag.source === 'mienbac'}
+        name="source"
+        value="mienbac"
         id="#mienbac"
       />
-      <label htmlFor="#mienbac">Nguồn Gốc Từ Phía Bắc</label>
+      <label className="radio-label peer-checked:bg-red-400" htmlFor="#mienbac">
+        Nguồn Gốc Từ Phía Bắc
+      </label>
     </div>
+    <hr />
     <div className="wordList__tag">
       <input
-        onChange={handleSelect}
+        onChange={e => setTag(p => ({ ...p, source: e.target.value }))}
+        className="peer hidden"
         type="radio"
-        name="nguon_goc"
+        checked={tag.source === 'mientrung'}
+        name="source"
+        value="mientrung"
         id="#mientrung"
       />
-      <label htmlFor="#mientrung">Nguồn Gốc Từ Miền Trung</label>
+      <label
+        className="radio-label peer-checked:bg-red-400"
+        htmlFor="#mientrung"
+      >
+        Nguồn Gốc Từ Miền Trung
+      </label>
     </div>
+    <hr />
     <div className="wordList__tag">
       <input
-        onChange={handleSelect}
+        onChange={e => setTag(p => ({ ...p, source: e.target.value }))}
+        className="peer hidden"
         type="radio"
-        name="nguon_goc"
+        checked={tag.source === 'miennam'}
+        name="source"
+        value="miennam"
         id="#miennam"
       />
-      <label htmlFor="#miennam">Nguồn Gốc Từ Phía Nam</label>
+      <label className="radio-label peer-checked:bg-red-400" htmlFor="#miennam">
+        Nguồn Gốc Từ Phía Nam
+      </label>
     </div>
   </div>
 );

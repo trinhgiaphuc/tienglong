@@ -10,7 +10,7 @@ const EditWordPage = () => {
 
   return (
     <div className="">
-      <div className="py-5 bg-black text-center">
+      <div className="py-5 bg-black flex-center">
         <Title color="white">Chỉnh Sửa Từ</Title>
       </div>
       <AddWordForm />

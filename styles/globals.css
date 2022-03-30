@@ -10,16 +10,16 @@
 
 @layer base {
   html {
-    @apply bg-white font-sans;
+    @apply bg-white font-sans h-screen w-screen box-border;
   }
 
   body {
-    @apply my-border bg-white overflow-x-hidden;
+    @apply my-border bg-white overflow-x-hidden w-full h-full;
   }
 
-  /* #__next {
+  #__next {
     @apply h-full w-full overflow-y-scroll overflow-x-hidden;
-  } */
+  }
 
   *::-webkit-scrollbar {
     display: none;
@@ -74,15 +74,15 @@
   }
 
   .wordList__tag {
-    @apply my-border p-2 sm:p-4 flex-grow flex-center;
+    @apply flex-grow flex-center;
   }
 
   .selector {
-    @apply absolute top-0 left-0 w-full h-[200%] overflow-y-scroll lg:h-auto md:w-[120%] font-medium flex flex-col lg:grid grid-cols-3 gap-2 scale-y-0 hover:scale-100 transition-all;
+    @apply absolute top-0 -z-10 left-0 w-full h-full my-border bg-white overflow-y-scroll lg:h-auto font-medium flex flex-col lg:grid grid-cols-2 transition-all;
   }
 
-  .show_select:focus ~ div {
-    @apply scale-100 -translate-y-full;
+  .radio-label {
+    @apply w-full h-full p-2 sm:p-4 text-center;
   }
 
   .word-button {
@@ -100,9 +100,17 @@
   .other-tags {
     @apply rounded-3xl prose px-2 m-1 sm:m-0 bg-blue-400 text-center text-black;
   }
+
+  .adding-word-input {
+    @apply my-1 sm:my-0 input w-full md:h-full text-xl rounded;
+  }
 }
 
 @layer utilities {
+  .h-body {
+    @apply h-[calc(100%-3rem)];
+  }
+
   .my-border {
     @apply border-2 border-black;
   }
@@ -113,6 +121,10 @@
 
   .animate-white-black {
     @apply bg-white text-black hover:bg-black hover:text-white transition-all;
+  }
+
+  .animate-btn-scale {
+    @apply active:scale-90;
   }
 
   .grid-item-center {
