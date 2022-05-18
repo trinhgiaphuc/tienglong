@@ -17,6 +17,7 @@ function MyApp({ Component, pageProps, words }) {
     </UserProvider>
   ) : (
     <UserProvider>
+      <Modal />
       <Navigation />
       <Component {...pageProps} words={words} />
     </UserProvider>
