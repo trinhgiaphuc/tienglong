@@ -6,11 +6,10 @@ import { validateToken } from '@lib/withAuth';
 export async function getServerSideProps({ req, res }) {
   const adminToken = getAdminToken(req);
   if (!adminToken) return { props: {} };
-  console.log('alo');
 
   try {
     let admin = validateToken(adminToken);
-    if (!!admin) {
+    if (admin) {
       return {
         redirect: {
           permanent: true,
@@ -20,6 +19,7 @@ export async function getServerSideProps({ req, res }) {
     }
   } catch (error) {
     console.error(error);
+    return { props: {} };
   }
 }
 
