@@ -1,34 +1,44 @@
-import { addHeart, checkHeartExistence, removeHeart } from '@lib/db';
-import { useState, useEffect } from 'react';
+import * as React from 'react';
+import { checkHeartExistence } from '@lib/db';
 import { useAuth } from '@lib/userContext';
 import { IoHeartOutline, IoHeart } from 'react-icons/io5';
 
 const HeartButton = ({ heartCount, authorId, wordId }) => {
   const { user } = useAuth();
 
-  const [hearts, setHearts] = useState(heartCount);
-  const [wordIsLiked, setWordIsLiked] = useState(false);
+  const [hearts, setHearts] = React.useState(heartCount);
+  const [wordIsLiked, setWordIsLiked] = React.useState(false);
 
-  useEffect(() => {
+  React.useEffect(() => {
+    const isLiked = sessionStorage.getItem(wordId) ?? false;
+    setWordIsLiked(isLiked);
     if (user) {
       checkHeartExistence(wordId).then(setWordIsLiked);
     }
-
-    return () => {};
   }, [user, wordId]);
 
-  console.log(wordIsLiked);
+  const handleReaction = async () => {
+    setHearts(h => (wordIsLiked ? h - 1 : h + 1));
+    setWordIsLiked(l => !l);
+
+    await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/word/like`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'Application/json',
+      },
+      body: JSON.stringify({
+        wordId,
+        authorId,
+        type: wordIsLiked ? 'unheart' : 'heart',
+      }),
+    });
+  };
 
   return (
     <button
+      disabled={user == null}
       className="active:animate-ping word-button"
-      onClick={async () => {
-        wordIsLiked
-          ? await removeHeart(wordId, authorId)
-          : await addHeart(wordId, authorId);
-        setWordIsLiked(!wordIsLiked);
-        setHearts(h => (wordIsLiked ? h - 1 : h + 1));
-      }}
+      onClick={handleReaction}
     >
       {wordIsLiked ? (
         <IoHeart className="prose-2xl text-red-500" />

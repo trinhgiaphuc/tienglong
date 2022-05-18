@@ -1,14 +1,14 @@
 import WordDetail from './WordDetail';
 
 // TODO: DELETE THAT SHIT
-const WordDetailList = ({ words }) => {
+const WordDetailList = ({ words, isPending = true }) => {
   return (
     <div className="my-border">
       {words?.map(wordDetails => (
         <WordDetail
           key={wordDetails.id}
           wordDetails={wordDetails}
-          wordIsPending={true}
+          wordIsPending={isPending}
         />
       ))}
     </div>

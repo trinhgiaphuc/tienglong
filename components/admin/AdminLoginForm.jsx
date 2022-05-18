@@ -18,7 +18,7 @@ const AdminLoginForm = () => {
     const result = await fetcher('admin', {
       uid: auth.currentUser.uid,
       password,
-    });
+    }).catch(console.error);
     if (result.error) {
       setLoading(false);
       setError(result.error);

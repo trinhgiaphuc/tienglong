@@ -1,15 +1,16 @@
 import AdminLoginForm from '@components/admin/AdminLoginForm';
+// import { verifyFirebaseToken } from '@lib/firebase-admin';
+import { getAdminToken } from '@lib/utils';
 import { validateToken } from '@lib/withAuth';
 
 export async function getServerSideProps({ req, res }) {
-  let user;
-
-  const token = req.cookies?.ADMIN_ACCESS_TOKEN;
-  if (!token) return { props: {} };
+  const adminToken = getAdminToken(req);
+  if (!adminToken) return { props: {} };
+  console.log('alo');
 
   try {
-    user = validateToken(req.cookies.ADMIN_ACCESS_TOKEN);
-    if (user) {
+    let admin = validateToken(adminToken);
+    if (!!admin) {
       return {
         redirect: {
           permanent: true,
@@ -18,7 +19,7 @@ export async function getServerSideProps({ req, res }) {
       };
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 

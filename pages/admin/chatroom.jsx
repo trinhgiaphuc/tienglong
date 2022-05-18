@@ -16,9 +16,7 @@ export async function getServerSideProps({ req, res }) {
       },
     };
   }
-
   const messages = await getMessages(10);
-
   return { props: { messages } };
 }
 

@@ -1,29 +1,20 @@
-import { auth } from '@lib/firebase-admin';
+import { verifyFirebaseToken } from '@lib/firebase-admin';
+import { isEmpty } from '@lib/utils';
 import cookie from 'cookie';
 
 export default async function handler(req, res) {
   const { authorization } = req.headers;
   const { login, logout } = req.body;
 
+  const token = authorization.split(' ')[1];
+
+  const decodedIdToken = await verifyFirebaseToken(token);
+
+  if (!decodedIdToken || isEmpty(decodedIdToken.uid)) {
+    return res.status(401).json({ message: 'Not Real User.' });
+  }
+
   if (login) {
-    const token = authorization.split(' ')[1];
-
-    let decodedIdToken;
-    try {
-      decodedIdToken = await auth.verifyIdToken(token);
-      if (!decodedIdToken || !decodedIdToken.uid) {
-        return res.status(401).json({ message: 'Not Real User.' });
-      }
-    } catch (error) {
-      console.log(`verifyIdToken error: ${error}`);
-      return {
-        redirect: {
-          permanent: true,
-          destination: '/enter',
-        },
-      };
-    }
-
     res.setHeader(
       'Set-Cookie',
       cookie.serialize('USER_ACCESS_TOKEN', token, {
@@ -46,5 +37,6 @@ export default async function handler(req, res) {
       }),
     ]);
   }
+
   return res.status(200).json({ ok: 'ok' });
 }

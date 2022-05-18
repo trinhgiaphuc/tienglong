@@ -1,62 +1,57 @@
-import { addNewDefinition } from '@lib/db';
+import * as React from 'react';
+
 import { useAuth } from '@lib/userContext';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+
+import { addNewDefinition } from '@lib/db';
 
 const AddWordForm = () => {
   const { username } = useAuth();
   const router = useRouter();
 
-  const [otherTags, setOtherTags] = useState({ tag: '', tagList: [] });
-  const [error, setError] = useState({ isError: false, errorDetails: '' });
-  const [recommendedTag, setRecommendedTag] = useState({
+  const [recommendedTag, setRecommendedTag] = React.useState({
     source: '',
     trend: '',
   });
+  const [otherTags, setOtherTags] = React.useState({ tag: '', tagList: [] });
+  const [createdYear, setCreatedYear] = React.useState(
+    new Date().getFullYear()
+  );
 
-  function tagCombiner(...tags) {
+  const tagCombiner = (...tags) => {
     const finalTags = [];
     tags.forEach(tag => {
       if (typeof tag === 'string' && tag.length !== 0) finalTags.push(tag);
     });
     return finalTags;
-  }
-  function shallowCheck(wordData) {
-    for (let data in wordData) {
-      if (typeof data !== 'string') return;
-    }
-  }
+  };
+
   const handleSubmit = async e => {
     e.preventDefault();
     const form = new FormData(e.target);
     const formData = Object.fromEntries(form);
-    const { word, definition, example, releaseYear } = formData;
+    const { word, definition, example } = formData;
     const combinedTags = tagCombiner(
       formData.source,
       formData.trend,
       ...otherTags.tagList
     );
 
-    console.log(word);
-    console.log(definition);
-    console.log(example);
-    console.log(combinedTags);
-    console.log(username);
+    const res = await addNewDefinition({
+      word,
+      definition,
+      example,
+      tags: combinedTags,
+      createdYear,
+      author: username,
+    });
 
-    // const res = await addNewDefinition({
-    //   word,
-    //   definition,
-    //   example,
-    //   tags: combinedTags,
-    //   author: username,
-    // });
-
-    // if (res.success) {
-    //   router.push('/define/success');
-    // } else if (!res.success) {
-    //   console.log(res);
-    //   router.push('/define/fail');
-    // }
+    if (res.success) {
+      router.push('/define/success');
+    } else if (!res.success) {
+      console.log(res);
+      router.push('/define/fail');
+    }
   };
 
   return (
@@ -130,8 +125,14 @@ const AddWordForm = () => {
           <div className="my-border py-4 col-span-2 text-center text-black uppercase bg-lime-200">
             Một số thẻ gợi ý
           </div>
-          <SelectTrendTag tag={recommendedTag} setTag={setRecommendedTag} />
-          <SelectSourceTag tag={recommendedTag} setTag={setRecommendedTag} />
+          <SelectTrendTag
+            tag={recommendedTag.trend}
+            setTag={setRecommendedTag}
+          />
+          <SelectSourceTag
+            tag={recommendedTag.source}
+            setTag={setRecommendedTag}
+          />
           <button
             onClick={() => setRecommendedTag({ source: '', trend: '' })}
             type="button"
@@ -140,28 +141,36 @@ const AddWordForm = () => {
             Bỏ Chọn Tất Cả Thẻ Gợi Ý
           </button>
         </div>
-
-        <ul className="absolute bottom-full left-0 flex gap-3 max-w-full overflow-hidden whitespace-nowrap overflow-ellipsis">
-          {[...otherTags.tagList].reverse().map(tag => (
-            <li key={tag}>{tag}</li>
-          ))}
-        </ul>
       </div>
 
-      <div className="col-span-5 my-border rounded flex">
-        <ul className="flex-grow border-r-2 border-black flex items-center p-4">
-          <li className="italic font-bold text-zinc-700">#2022</li>
-          {[...otherTags.tagList].reverse().map(tag => (
-            <li className="italic font-bold text-zinc-700" key={tag}>
-              {tag}
+      <div className="col-span-5 my-border rounded flex w-full">
+        <ul className="flex-grow border-r-2 border-black flex items-center p-4 overflow-x-scroll">
+          <li className="italic font-bold text-zinc-700 mx-1">
+            #{createdYear}
+          </li>
+          {[...otherTags.tagList].map(tag => (
+            <li className="mx-1" key={tag}>
+              <button
+                className="italic font-bold text-zinc-700 hover:line-through"
+                onClick={() =>
+                  setOtherTags({
+                    ...otherTags,
+                    tagList: otherTags.tagList.filter(t => t != tag),
+                  })
+                }
+              >
+                {tag}
+              </button>
             </li>
           ))}
         </ul>
-        <SelectYearTag />
+        <SelectYearTag
+          createdYear={createdYear}
+          setCreatedYear={setCreatedYear}
+        />
       </div>
 
       <div className="my-1 sm:my-0 col-span-10 w-full">
-        {/* TODO: ANIMATION */}
         <button
           type="submit"
           className="my-border rounded w-full bg-black text-white p-4 font-medium uppercase active:animate-shrink"
@@ -173,7 +182,7 @@ const AddWordForm = () => {
   );
 };
 
-const SelectYearTag = () => {
+const SelectYearTag = ({ createdYear, setCreatedYear }) => {
   const years = [];
   const thisYear = new Date().getFullYear();
 
@@ -187,9 +196,10 @@ const SelectYearTag = () => {
         <select
           className="appearance-none block rounded h-full p-4 min-w-max font-medium bg-white outline-none"
           aria-label=""
+          onChange={e => setCreatedYear(e.target.value)}
         >
-          <option hidden value={new Date().getFullYear()}>
-            Năm Tạo Ra ({new Date().getFullYear()})
+          <option hidden value={createdYear}>
+            Năm Tạo Ra ({createdYear})
           </option>
           <option className="prose p-1 font-medium" value="DiSản">
             Di Sản
@@ -207,14 +217,6 @@ const SelectYearTag = () => {
       </div>
     </div>
   );
-
-  return (
-    <select
-      className="outline-none font-medium p-2 sm:p-4 tracking-wide"
-      name="releaseYear"
-      id="select_year"
-    ></select>
-  );
 };
 
 const SelectTrendTag = ({ tag, setTag }) => (
@@ -224,7 +226,7 @@ const SelectTrendTag = ({ tag, setTag }) => (
         onChange={e => setTag(p => ({ ...p, trend: e.target.value }))}
         className="peer hidden"
         type="radio"
-        checked={tag.trend === 'khongloithoi'}
+        checked={tag === 'khongloithoi'}
         name="trend"
         value="khongloithoi"
         id="#khongloithoi"
@@ -244,7 +246,7 @@ const SelectTrendTag = ({ tag, setTag }) => (
         onChange={e => setTag(p => ({ ...p, trend: e.target.value }))}
         className="peer hidden"
         type="radio"
-        checked={tag.trend === 'dangthinhhanh'}
+        checked={tag === 'dangthinhhanh'}
         name="trend"
         value="dangthinhhanh"
         id="#dangthinhhanh"
@@ -263,7 +265,7 @@ const SelectTrendTag = ({ tag, setTag }) => (
         onChange={e => setTag(p => ({ ...p, trend: e.target.value }))}
         className="peer hidden"
         type="radio"
-        checked={tag.trend === 'khongconphobien'}
+        checked={tag === 'khongconphobien'}
         name="trend"
         value="khongconphobien"
         id="#khongconphobien"
@@ -285,7 +287,7 @@ const SelectSourceTag = ({ tag, setTag }) => (
         onChange={e => setTag(p => ({ ...p, source: e.target.value }))}
         className="peer hidden"
         type="radio"
-        checked={tag.source === 'mienbac'}
+        checked={tag === 'mienbac'}
         name="source"
         value="mienbac"
         id="#mienbac"
@@ -300,7 +302,7 @@ const SelectSourceTag = ({ tag, setTag }) => (
         onChange={e => setTag(p => ({ ...p, source: e.target.value }))}
         className="peer hidden"
         type="radio"
-        checked={tag.source === 'mientrung'}
+        checked={tag === 'mientrung'}
         name="source"
         value="mientrung"
         id="#mientrung"
@@ -318,7 +320,7 @@ const SelectSourceTag = ({ tag, setTag }) => (
         onChange={e => setTag(p => ({ ...p, source: e.target.value }))}
         className="peer hidden"
         type="radio"
-        checked={tag.source === 'miennam'}
+        checked={tag === 'miennam'}
         name="source"
         value="miennam"
         id="#miennam"

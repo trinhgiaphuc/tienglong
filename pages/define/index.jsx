@@ -1,5 +1,4 @@
 import AddWordForm from '@components/word/AddWordForm';
-import SectionTitle from '@components/word/SectionTitle';
 import Title from '@components/word/Title';
 
 export default function DefinePage() {

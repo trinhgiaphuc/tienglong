@@ -6,7 +6,7 @@ const WordCard = ({ word }) => {
 
   return (
     <div className="m-auto relative h-full w-full p-2 prose-a:no-underline font-ole flex flex-col ">
-      <article className="mx-auto prose prose-h2:text-4xl prose-h2:m-4 prose-p:text-xl flex flex-col">
+      <article className="mx-auto w-full prose prose-h2:text-4xl prose-h2:m-4 prose-p:text-xl flex flex-col">
         <div className="md:flex-grow mr-10 flex flex-wrap gap-2 sm:justify-start sm:p-2">
           <Link href="/" passHref>
             <a className="year-created-tag">

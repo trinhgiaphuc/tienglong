@@ -5,6 +5,7 @@ import { getAvatarFromMessage, supabase } from '@lib/supabase';
 import { IoAttach } from 'react-icons/io5';
 import { useEffect, useRef, useState } from 'react';
 import ChatInput from './ChatInput';
+import fetcher from '@lib/fetcher';
 
 const AdminChatroom = ({ messages }) => {
   const [currentMsg, setCurrentMsg] = useState(messages);
@@ -12,10 +13,12 @@ const AdminChatroom = ({ messages }) => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    await supabase
-      .from('message')
-      .insert({ content: content.text, userId: auth.currentUser.uid });
-    setContent('');
+    await fetcher('admin/chatroom', {
+      content: content.text,
+      userId: auth.currentUser.uid,
+    });
+
+    setContent({ text: '' });
   };
 
   const msgEndRef = useRef(null);

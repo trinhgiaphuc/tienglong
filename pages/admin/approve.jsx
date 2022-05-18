@@ -3,25 +3,7 @@ import { getPendingWords } from '@lib/firebase-admin';
 import { validateToken } from '@lib/withAuth';
 import Link from 'next/link';
 
-export async function getServerSideProps({ req, res }) {
-  let user;
-
-  try {
-    user = validateToken(req.cookies.ADMIN_ACCESS_TOKEN);
-    // FIXME: CHANGE TO CLIENT SIDE FETCHING
-    const pendingWords = await getPendingWords();
-    return { props: { pendingWords } };
-  } catch (error) {
-    return {
-      redirect: {
-        permanent: true,
-        destination: '/',
-      },
-    };
-  }
-}
-
-const ApprovePage = ({ pendingWords }) => {
+export default function ApprovePage({ pendingWords }) {
   return (
     <div className="my-border h-[94%] overflow-y-scroll no-scrollbar">
       <Link href="/admin/chatroom">
@@ -34,6 +16,25 @@ const ApprovePage = ({ pendingWords }) => {
       </div>
     </div>
   );
-};
+}
 
-export default ApprovePage;
+export async function getServerSideProps({ req }) {
+  try {
+    await validateToken(req.cookies.ADMIN_ACCESS_TOKEN);
+  } catch (error) {
+    console.error(error);
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
+    };
+  }
+
+  try {
+    const pendingWords = await getPendingWords();
+    return { props: { pendingWords } };
+  } catch (error) {
+    return { props: { pendingWords: [] } };
+  }
+}

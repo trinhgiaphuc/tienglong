@@ -20,10 +20,10 @@ export default async function handler(req, res) {
   try {
     admin = await findAdminWithId(uid);
   } catch (error) {
-    console.log(error);
+    return res.status(500).json({ error });
   }
 
-  if (admin) {
+  if (!!admin) {
     const passwordIsCorrect = bcrypt.compareSync(
       password,
       admin.hashedPassword
@@ -39,7 +39,7 @@ export default async function handler(req, res) {
         firebaseUserData.image
       );
     } catch (error) {
-      console.log(error);
+      return res.status(500).json({ error });
     }
   }
 
