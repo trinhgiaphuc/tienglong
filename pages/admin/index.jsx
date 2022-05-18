@@ -1,24 +1,17 @@
 import AdminLoginForm from '@components/admin/AdminLoginForm';
-// import { verifyFirebaseToken } from '@lib/firebase-admin';
 import { getAdminToken } from '@lib/utils';
-import { validateToken } from '@lib/withAuth';
+import { verifyToken } from '@lib/withAuth';
 
 export async function getServerSideProps({ req, res }) {
-  const adminToken = getAdminToken(req);
-  if (!adminToken) return { props: {} };
-
   try {
-    let admin = validateToken(adminToken);
-    if (admin) {
-      return {
-        redirect: {
-          permanent: true,
-          destination: '/admin/chatroom',
-        },
-      };
-    }
+    verifyToken(getAdminToken(req));
+    return {
+      redirect: {
+        permanent: true,
+        destination: '/admin/chatroom',
+      },
+    };
   } catch (error) {
-    console.error(error);
     return { props: {} };
   }
 }

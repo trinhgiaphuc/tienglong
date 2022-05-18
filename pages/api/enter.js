@@ -1,20 +1,11 @@
-import { verifyFirebaseToken } from '@lib/firebase-admin';
-import { isEmpty } from '@lib/utils';
 import cookie from 'cookie';
 
 export default async function handler(req, res) {
   const { authorization } = req.headers;
   const { login, logout } = req.body;
 
-  const token = authorization.split(' ')[1];
-
-  const decodedIdToken = await verifyFirebaseToken(token);
-
-  if (!decodedIdToken || isEmpty(decodedIdToken.uid)) {
-    return res.status(401).json({ message: 'Not Real User.' });
-  }
-
   if (login) {
+    const token = authorization.split(' ')[1];
     res.setHeader(
       'Set-Cookie',
       cookie.serialize('USER_ACCESS_TOKEN', token, {

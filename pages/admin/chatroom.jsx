@@ -1,17 +1,16 @@
 import AdminChatroom from '@components/admin/AdminChatroom';
 import { getMessages } from '@lib/supabase';
-import { validateToken } from '@lib/withAuth';
+import { getAdminToken } from '@lib/utils';
+import { verifyToken } from '@lib/withAuth';
 import Link from 'next/link';
 
 export async function getServerSideProps({ req, res }) {
-  let user;
-
   try {
-    user = validateToken(req.cookies.ADMIN_ACCESS_TOKEN);
+    verifyToken(getAdminToken(req));
   } catch (error) {
     return {
       redirect: {
-        permanent: true,
+        permanent: false,
         destination: '/',
       },
     };

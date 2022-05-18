@@ -1,6 +1,7 @@
 import WordDetailList from '@components/word/WordDetailList';
 import { getPendingWords } from '@lib/firebase-admin';
-import { validateToken } from '@lib/withAuth';
+import { getAdminToken } from '@lib/utils';
+import { verifyToken } from '@lib/withAuth';
 import Link from 'next/link';
 
 export default function ApprovePage({ pendingWords }) {
@@ -20,9 +21,8 @@ export default function ApprovePage({ pendingWords }) {
 
 export async function getServerSideProps({ req }) {
   try {
-    await validateToken(req.cookies.ADMIN_ACCESS_TOKEN);
+    verifyToken(getAdminToken(req));
   } catch (error) {
-    console.error(error);
     return {
       redirect: {
         permanent: false,

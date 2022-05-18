@@ -1,24 +1,20 @@
 import fetcher from '@lib/fetcher';
-import { auth } from '@lib/firebase';
 import Router from 'next/router';
-import { useState } from 'react';
+import * as React from 'react';
 
 import Spinner from '@components/utils/Spinner';
 
 const AdminLoginForm = () => {
-  const [passCode, setPasscode] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [passCode, setPasscode] = React.useState('');
+  const [error, setError] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
 
   const handleSubmit = async e => {
     e.preventDefault();
     const password = e.target[0].value;
 
     setLoading(true);
-    const result = await fetcher('admin', {
-      uid: auth.currentUser.uid,
-      password,
-    }).catch(console.error);
+    const result = await fetcher('admin', { password }).catch(console.error);
     if (result.error) {
       setLoading(false);
       setError(result.error);
@@ -45,7 +41,7 @@ const AdminLoginForm = () => {
           }}
           id="code"
           className="input rounded-lg"
-          placeholder="••••••"
+          placeholder="••••••••••••••••••"
           type="password"
         />
 
