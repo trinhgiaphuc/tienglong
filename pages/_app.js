@@ -7,9 +7,6 @@ import Navigation from '@components/navigation/Navigation';
 import UserProvider from '@lib/userContext';
 import { prefetchWords } from '@lib/utils';
 
-// TODO: ADD MODAL!!!!
-import Modal from '@components/layouts/Modal';
-
 function MyApp({ Component, pageProps, words }) {
   return Component.noNavigation ? (
     <UserProvider>
@@ -17,7 +14,6 @@ function MyApp({ Component, pageProps, words }) {
     </UserProvider>
   ) : (
     <UserProvider>
-      <Modal />
       <Navigation />
       <Component {...pageProps} words={words} />
     </UserProvider>

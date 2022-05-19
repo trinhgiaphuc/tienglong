@@ -13,6 +13,7 @@ const MyDocument = () => {
         />
       </Head>
       <Main />
+      <div id="modal"></div>
       <NextScript />
     </Html>
   );
