@@ -1,9 +1,13 @@
 import AdminLoginForm from '@components/admin/AdminLoginForm';
+import ReLoginModal from '@components/layouts/modals/ReLoginModal';
 import { getAdminToken } from '@lib/utils';
-import { verifyToken } from '@lib/withAuth';
+import { verifyToken, withAuth } from '@lib/withAuth';
 
-export async function getServerSideProps({ req, res }) {
+export const getServerSideProps = withAuth(async function ({ req, error }) {
   try {
+    if (error) {
+      return { props: { error: error.code || '' } };
+    }
     verifyToken(getAdminToken(req));
     return {
       redirect: {
@@ -14,9 +18,10 @@ export async function getServerSideProps({ req, res }) {
   } catch (error) {
     return { props: {} };
   }
-}
+});
 
-const AdminPage = props => {
+const AdminPage = ({ error }) => {
+  if (error === 'auth/id-token-expired') return <ReLoginModal />;
   return (
     <div className="h-[94%] w-full overflow-hidden">
       <div className="h-full w-full bg-slate-400 grid-item-center">

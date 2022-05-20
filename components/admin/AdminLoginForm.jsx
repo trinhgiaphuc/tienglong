@@ -1,26 +1,32 @@
-import fetcher from '@lib/fetcher';
-import Router from 'next/router';
 import * as React from 'react';
+import fetcher from '@lib/fetcher';
+import { useRouter } from 'next/router';
 
 import Spinner from '@components/utils/Spinner';
+import ReLoginModal from '@components/layouts/modals/ReLoginModal';
 
 const AdminLoginForm = () => {
   const [passCode, setPasscode] = React.useState('');
   const [error, setError] = React.useState('');
   const [loading, setLoading] = React.useState(false);
+  const router = useRouter();
+
+  if (error === 'auth/id-token-expired') {
+    return <ReLoginModal />;
+  }
 
   const handleSubmit = async e => {
     e.preventDefault();
     const password = e.target[0].value;
-
     setLoading(true);
-    const result = await fetcher('admin', { password }).catch(console.error);
-    if (result.error) {
-      setLoading(false);
-      setError(result.error);
+    router.prefetch('/admin/chatroom');
+
+    let res = await fetcher('admin', { password });
+    setLoading(false);
+    if (res.error) {
+      setError(res.error);
     } else {
-      setLoading(false);
-      Router.push('/admin/chatroom');
+      router.push('/admin/chatroom');
     }
   };
 
@@ -51,6 +57,7 @@ const AdminLoginForm = () => {
           </h1>
         ) : null}
         <button
+          disabled={passCode.length < 1}
           type="submit"
           className="uppercase flex-center my-border py-2 px-4 font-medium bg-green-400 rounded-lg"
         >

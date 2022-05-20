@@ -5,6 +5,7 @@ import { verifyToken } from '@lib/withAuth';
 import Link from 'next/link';
 
 export default function ApprovePage({ pendingWords }) {
+  console.log(pendingWords);
   return (
     <div className="my-border h-[94%] overflow-y-scroll no-scrollbar">
       <Link href="/admin/chatroom">

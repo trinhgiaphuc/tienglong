@@ -1,27 +1,23 @@
 import * as React from 'react';
+import { useRouter } from 'next/router';
+
 import { useForm } from 'react-hook-form';
 import { useAuth } from '@lib/userContext';
 import { addNewDefinition } from '@lib/db';
-import { useRouter } from 'next/router';
+
+import Tooltip from '@components/layouts/Tooltip';
 
 export default function AddWordForm() {
   const { username: author } = useAuth();
   const router = useRouter();
   const [otherTags, setOtherTags] = React.useState([]);
+  const [error, setError] = React.useState({ isError: false });
 
-  const {
-    register,
-    handleSubmit,
-    getValues,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit, getValues, setValue, watch } = useForm();
 
   const onSubmit = async data => {
     let wordData = { ...data, tags: otherTags };
-    const res = await addNewDefinition({ wordData, author });
-
+    const res = await addNewDefinition({ ...wordData, author });
     if (res.success) {
       router.push('/define/success');
     } else {
@@ -29,11 +25,19 @@ export default function AddWordForm() {
       router.push('/define/fail');
     }
   };
-  console.log('errors', errors);
+  if (error.isError) console.log('errors', error);
 
   function clearTag() {
     setValue('trend', '');
     setValue('source', '');
+  }
+
+  function handleRemoveError(errorName) {
+    if (error[errorName]) {
+      return () => setError(p => ({ ...p, [errorName]: null }));
+    } else {
+      return () => {};
+    }
   }
 
   function handleSetTag() {
@@ -47,42 +51,81 @@ export default function AddWordForm() {
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
       className="my-border p-5 sm:p-10  w-full flex-center flex-col md:grid grid-cols-10 gap-10"
+      onSubmit={handleSubmit(onSubmit, error =>
+        setError({ isError: true, ...error })
+      )}
     >
-      <input
-        type="text"
-        placeholder="Từ Ngữ"
-        className="adding-word-input p-4 col-span-5"
-        spellCheck={false}
-        {...register('word', {
-          required: true,
-          min: [2],
-          max: 150,
-        })}
-      />
-      <textarea
-        className="adding-word-input resize-none col-span-5 row-span-4"
-        rows={15}
-        spellCheck={false}
-        placeholder="Định nghĩa"
-        {...register('definition', {
-          required: true,
-          min: 5,
-          max: 5000,
-        })}
-      />
-      <textarea
-        className="adding-word-input resize-none col-span-5"
-        {...register('example', {
-          required: true,
-          min: 5,
-          max: 5000,
-        })}
-        rows={8}
-        spellCheck={false}
-        placeholder="Ví Dụ"
-      />
+      <div className="adding-word-input col-span-5 relative">
+        <input
+          type="text"
+          className=" w-full h-full py-2 outline-none"
+          placeholder="Từ Ngữ"
+          spellCheck={false}
+          maxLength={150}
+          onClick={handleRemoveError('word')}
+          {...register('word', {
+            required: {
+              value: true,
+              message: 'Xin hãy điền đầy đủ vùng cần thiết',
+            },
+            minLength: {
+              value: 1,
+              message: 'Từ ngữ phải có ít nhất một ký tự',
+            },
+          })}
+        />
+        {error.isError && error.word ? (
+          <Tooltip display error={error.word.message} />
+        ) : null}
+      </div>
+      <div className="adding-word-input col-span-5 row-span-4 relative">
+        <textarea
+          className="w-full h-full resize-none outline-none"
+          rows={5}
+          onClick={handleRemoveError('definition')}
+          spellCheck={false}
+          maxLength={5000}
+          placeholder="Định nghĩa"
+          {...register('definition', {
+            required: {
+              value: true,
+              message: 'Xin hãy điền đầy đủ vùng cần thiết',
+            },
+            minLength: {
+              value: 5,
+              message: 'Xin hãy định nghĩa dài hơn một chút',
+            },
+          })}
+        />
+        {error.isError && error.definition ? (
+          <Tooltip display error={error.definition.message} />
+        ) : null}
+      </div>
+
+      <div className="adding-word-input col-span-5 relative">
+        <textarea
+          className="resize-none w-full h-full outline-none"
+          onClick={handleRemoveError('example')}
+          maxLength={5000}
+          {...register('example', {
+            required: {
+              value: true,
+              message: 'Xin hãy điền đầy đủ vùng cần thiết',
+            },
+            minLength: {
+              value: 5,
+              message: 'Xin hãy đặt ví dụ dài hơn một chút',
+            },
+          })}
+          rows={8}
+          spellCheck={false}
+          placeholder="Ví Dụ"
+        />
+        {error.isError && error.example ? (
+          <Tooltip display error={error.example.message} />
+        ) : null}
+      </div>
 
       <TagSection register={register} otherTags={otherTags} clearTag={clearTag}>
         <OtherTagsField register={register} handleSetTag={handleSetTag} />
@@ -111,9 +154,9 @@ const SelectYearTag = ({ register }) => {
       <div className="h-full">
         <select
           {...register('createdYear')}
-          className="appearance-none block rounded h-full p-4 min-w-max font-medium bg-white outline-none"
+          className="appearance-none block rounded h-full p-4 minLength-w-max font-medium bg-white outline-none"
         >
-          <option hidden value={thisYear}>
+          <option hidden value={thisYear} defaultChecked>
             Năm ({thisYear})
           </option>
           <option className="prose p-1 font-medium" value="DiSản">
@@ -240,7 +283,7 @@ const SelectSourceTag = ({ register }) => (
 const OtherTagsField = ({ register, handleSetTag }) => (
   <React.Fragment>
     <input
-      {...register('tags', { max: 200, min: 1 })}
+      {...register('tags', { maxLength: 200, minLength: 1 })}
       className="input border-none w-full p-5 peer"
       placeholder="Nhập từng thẻ sau đó ấn đính thẻ. (#Iambeautiful)"
       autoComplete="off"
