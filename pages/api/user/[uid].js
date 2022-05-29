@@ -2,7 +2,7 @@ import { getSpecificUser, getUserWords } from '@lib/firebase-admin';
 
 export default async function handler(req, res) {
   const { uid } = req.query;
-  if (uid.length > 0) {
+  if (uid.length > 1) {
     try {
       let [userDetails, userWords] = await Promise.all([
         getSpecificUser(uid),
