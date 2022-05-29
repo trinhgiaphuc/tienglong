@@ -1,13 +1,22 @@
 import AdminLoginForm from '@components/admin/AdminLoginForm';
 import ReLoginModal from '@components/layouts/modals/ReLoginModal';
-import { getAdminToken } from '@lib/utils';
-import { verifyToken, withAuth } from '@lib/withAuth';
+import { verifyFirebaseToken } from '@lib/firebase-admin';
+import { getAdminToken, getUserToken } from '@lib/utils';
+import { verifyToken } from '@lib/withAuth';
 
-export const getServerSideProps = withAuth(async function ({ req, error }) {
+export async function getServerSideProps({ req }) {
   try {
-    if (error) {
-      return { props: { error: error.code || '' } };
-    }
+    await verifyFirebaseToken(getUserToken(req));
+  } catch (error) {
+    return {
+      redirect: {
+        destination: '/enter',
+        permanent: true,
+      },
+    };
+  }
+
+  try {
     verifyToken(getAdminToken(req));
     return {
       redirect: {
@@ -18,7 +27,7 @@ export const getServerSideProps = withAuth(async function ({ req, error }) {
   } catch (error) {
     return { props: {} };
   }
-});
+}
 
 const AdminPage = ({ error }) => {
   if (error === 'auth/id-token-expired') return <ReLoginModal />;
