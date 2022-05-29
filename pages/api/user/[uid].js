@@ -2,11 +2,11 @@ import { getSpecificUser, getUserWords } from '@lib/firebase-admin';
 
 export default async function handler(req, res) {
   const { uid } = req.query;
-  let userDetails;
-  let userWords;
   try {
-    userDetails = await getSpecificUser(uid);
-    userWords = await getUserWords(uid);
+    let [userDetails, userWords] = Promise.all([
+      getSpecificUser(uid),
+      getUserWords(uid),
+    ]);
     return res.status(200).json({ userDetails, userWords });
   } catch (error) {
     console.error(error);

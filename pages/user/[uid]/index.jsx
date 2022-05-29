@@ -26,12 +26,12 @@ export default function ProfilePage({ userDetails, userWords }) {
 export async function getStaticProps(ctx) {
   let { uid } = ctx.params;
   try {
-    let { userDetails, userWords, error } = await fetcher(`user/${uid}`);
-    if (error) throw error;
+    let res = await fetcher(`user/${uid}`);
+    if (res.error) throw error;
     return {
       props: {
-        userDetails,
-        userWords,
+        userDetails: res.userDetails,
+        userWords: res.userWords,
       },
       revalidate: 150,
     };
