@@ -5,9 +5,9 @@ import WordList from '@components/word/WordList';
 import ResponsiveSplitScreen from '@components/layouts/ResponsiveSplitScreen';
 import Title from '@components/word/Title';
 
-export default function ProfilePage({ userDetails, userWords }) {
-  if (userDetails.isError) {
-    console.error(userDetails.error);
+export default function ProfilePage({ error, userDetails, userWords }) {
+  if (error && !userDetails) {
+    console.error(error);
     return <h1>Sorry</h1>;
   }
   return (
@@ -38,7 +38,8 @@ export async function getStaticProps(ctx) {
   } catch (error) {
     return {
       props: {
-        userDetails: { isError: true, error },
+        error,
+        userDetails: null,
         userWords: [],
       },
     };
