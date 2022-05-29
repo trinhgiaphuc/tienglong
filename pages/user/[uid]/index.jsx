@@ -48,7 +48,7 @@ export async function getStaticProps(ctx) {
 
 export async function getStaticPaths() {
   return {
-    paths: [{ params: { uid: 'dQZUcTXuXDUf9UGHZRkS64V5r0h1' } }],
+    paths: [{ params: { uid: '' } }],
     fallback: 'blocking',
   };
 }
