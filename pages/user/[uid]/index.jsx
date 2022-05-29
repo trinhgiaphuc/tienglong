@@ -6,6 +6,9 @@ import ResponsiveSplitScreen from '@components/layouts/ResponsiveSplitScreen';
 import Title from '@components/word/Title';
 
 export default function ProfilePage({ userDetails, userWords }) {
+  if (userDetails.isError) {
+    console.error(userDetails.error);
+  }
   return (
     <ResponsiveSplitScreen>
       <BioForm {...userDetails} />
@@ -21,15 +24,18 @@ export default function ProfilePage({ userDetails, userWords }) {
 
 export async function getStaticProps(ctx) {
   let { uid } = ctx.params;
-  let { userDetails, userWords } = await fetcher(`user/${uid}`);
-
-  return {
-    props: {
-      userDetails,
-      userWords,
-    },
-    revalidate: 150,
-  };
+  try {
+    let { userDetails, userWords } = await fetcher(`user/${uid}`);
+    return {
+      props: {
+        userDetails,
+        userWords,
+      },
+      revalidate: 150,
+    };
+  } catch (error) {
+    return { props: { userDetails: { isError: true, error }, userWords: [] } };
+  }
 }
 
 export async function getStaticPaths() {

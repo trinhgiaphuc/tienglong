@@ -15,10 +15,12 @@ const BioForm = ({ image, username }) => {
       ) : null}
 
       <div className="">
-        <h1 className="uppercase font-mono text-responsive">{username}</h1>
+        <h1 className="uppercase font-ole text-responsive font-bold">
+          {username}
+        </h1>
       </div>
 
-      <div className="sm:w-3/4 w-full font-mono">
+      <div className="sm:w-3/4 w-full font-ole">
         <p>lời giới thiệu từ bản thân:</p>
         <textarea
           className="p-2 w-full border-2 border-black outline-none"

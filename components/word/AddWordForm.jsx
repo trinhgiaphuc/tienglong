@@ -51,7 +51,7 @@ export default function AddWordForm() {
 
   return (
     <form
-      className="my-border p-5 sm:p-10  w-full flex-center flex-col md:grid grid-cols-10 gap-10"
+      className="my-border p-5 sm:p-10 md:h-full h-auto w-full flex-center flex-col md:grid grid-cols-10 gap-10"
       onSubmit={handleSubmit(onSubmit, error =>
         setError({ isError: true, ...error })
       )}
