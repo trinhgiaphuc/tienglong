@@ -1,7 +1,6 @@
 import { getSpecificUser, getUserWords } from '@lib/firebase-admin';
 
 export default async function handler(req, res) {
-  console.log(req.query);
   const { uid } = req.query;
   let userDetails;
   let userWords;
