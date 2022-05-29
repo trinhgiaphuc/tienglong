@@ -79,8 +79,7 @@ const UserTag = ({ status, username, user }) =>
         {status === 'authenticated' ? username : 'Khách'}
       </h2>
       {user ? (
-        <div className="block aspect-square h-full">
-          {/* TODO: Make Image visible on phone browser */}
+        <div className="block-image aspect-square h-full">
           <Image
             src={user.image}
             alt="user image"

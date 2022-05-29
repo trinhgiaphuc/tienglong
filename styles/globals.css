@@ -158,4 +158,8 @@
   .animate-left-right-out {
     @apply translate-x-full opacity-0;
   }
+
+  .block-image > span {
+    @apply block !important;
+  }
 }

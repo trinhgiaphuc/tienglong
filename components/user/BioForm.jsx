@@ -4,7 +4,7 @@ const BioForm = ({ image, username }) => {
   return (
     <form className="my-border h-full p-20 flex-center flex-col gap-7 lg:order-1">
       {image ? (
-        <div className="w-2/3 sm:w-1/2 md:w-1/3 lg:w-1/2 xl:w-2/5  my-border aspect-square">
+        <div className="w-2/3 sm:w-1/2 md:w-1/3 lg:w-1/2 xl:w-2/5  my-border aspect-square block-image">
           <Image
             src={image}
             alt="user profile image"
