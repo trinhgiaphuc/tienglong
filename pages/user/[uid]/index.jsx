@@ -8,6 +8,7 @@ import Title from '@components/word/Title';
 export default function ProfilePage({ userDetails, userWords }) {
   if (userDetails.isError) {
     console.error(userDetails.error);
+    return <h1>Sorry</h1>;
   }
   return (
     <ResponsiveSplitScreen>
