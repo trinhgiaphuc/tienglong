@@ -1,4 +1,5 @@
 import LoginForm from '@components/user/LoginForm';
+import { getUserToken } from '@lib/utils';
 
 const EnterPage = ({ referer }) => {
   return <LoginForm referer={referer} />;
@@ -6,20 +7,15 @@ const EnterPage = ({ referer }) => {
 
 EnterPage.noNavigation = true;
 
-export const getServerSideProps = ctx => {
-  const token = ctx.req.cookies.USER_ACCESS_TOKEN || '';
-
-  if (token.length !== 0) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: true,
-      },
-    };
+export async function getServerSideProps({ req, res }) {
+  res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+  try {
+    getUserToken(req);
+    return { redirect: { destination: '/', permanent: true } };
+  } catch (error) {
+    const { referer = '/' } = req.headers;
+    return { props: { referer } };
   }
-
-  const { referer = '/' } = ctx.req.headers;
-  return { props: { referer } };
-};
+}
 
 export default EnterPage;

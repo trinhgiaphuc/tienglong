@@ -2,10 +2,11 @@
 import SectionWord from '@components/word/SectionWords';
 import Title from '@components/word/Title';
 import WordDetail from '@components/word/WordDetail';
-import { getSpecificWordServer } from '@lib/firebase-admin';
-import { useAuth } from '@lib/userContext';
-import { useState, useEffect } from 'react';
+import fetcher from '@lib/fetcher';
+// import { useAuth } from '@lib/userContext';
+// import { useState, useEffect } from 'react';
 
+// TODO: BIG DAY TOMORROW, REFACTOR TO ISR
 export default function Word({ wordDetails = [] }) {
   // const { user } = useAuth();
   // const [relatedWords, setRelatedWords] = useState([]);
@@ -31,14 +32,20 @@ export default function Word({ wordDetails = [] }) {
   );
 }
 
-export async function getServerSideProps(ctx) {
-  const { wordId } = ctx.query;
-
+export async function getStaticProps(ctx) {
+  let { wordId } = ctx.params;
   try {
-    const wordDetails = await getSpecificWordServer(wordId);
-
-    return { props: { wordDetails } };
+    const wordDetails = await fetcher(`word/${wordId}`);
+    return { props: { wordDetails }, revalidate: 150 };
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    return { props: { wordDetails: [] } };
   }
+}
+
+export async function getStaticPaths() {
+  return {
+    paths: [{ params: { wordId: 'BVAKKBTmMeLFdDEEdX8o' } }],
+    fallback: 'blocking',
+  };
 }
