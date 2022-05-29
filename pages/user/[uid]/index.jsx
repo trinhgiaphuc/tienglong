@@ -38,7 +38,7 @@ export async function getStaticProps(ctx) {
   } catch (error) {
     return {
       props: {
-        error,
+        error: JSON.parse(JSON.stringify(error)),
         userDetails: null,
         userWords: [],
       },
