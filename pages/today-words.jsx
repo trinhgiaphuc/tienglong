@@ -1,5 +1,6 @@
 import Title from '@components/word/Title';
 import WordDetailList from '@components/word/WordDetailList';
+import fetcher from '@lib/fetcher';
 
 export default function TodayWordPage({ words }) {
   const { todayWords } = words;
