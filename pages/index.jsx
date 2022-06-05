@@ -6,8 +6,10 @@ import Hero from '@components/layouts/Hero';
 import SectionWord from '@components/word/SectionWords';
 import Title from '@components/word/Title';
 import Layout from '@components/layouts/Layout';
+import fetcher from '@lib/fetcher';
 
 export default function Home({ words }) {
+  console.log(words);
   const { todayWords = [], trendingWords = [] } = words;
   return (
     <Layout title="Tiếng Lòng" description="Từ Điển Tiếng Lóng">
@@ -30,6 +32,12 @@ export default function Home({ words }) {
       <Footer />
     </Layout>
   );
+}
+
+export async function getStaticProps() {
+  let words = await fetcher('word/today-words');
+  let revalidate = words.length < 1 ? 300 : 1800;
+  return { props: { words }, revalidate };
 }
 
 const DefineBanner = () => (

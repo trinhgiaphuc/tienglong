@@ -1,13 +1,11 @@
 import '@styles/globals.css';
 
 import * as React from 'react';
-import App from 'next/app';
 import Navigation from '@components/navigation/Navigation';
 
 import UserProvider from '@lib/userContext';
-import { prefetchWords } from '@lib/utils';
 
-function MyApp({ Component, pageProps, words }) {
+function MyApp({ Component, pageProps }) {
   return Component.noNavigation ? (
     <UserProvider>
       <Component {...pageProps} />
@@ -15,14 +13,9 @@ function MyApp({ Component, pageProps, words }) {
   ) : (
     <UserProvider>
       <Navigation />
-      <Component {...pageProps} words={words} />
+      <Component {...pageProps} />
     </UserProvider>
   );
 }
-
-MyApp.getInitialProps = prefetchWords(async context => {
-  const pageProps = await App.getInitialProps(context);
-  return { pageProps, words: context.words };
-});
 
 export default MyApp;
