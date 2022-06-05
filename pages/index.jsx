@@ -9,7 +9,6 @@ import Layout from '@components/layouts/Layout';
 import fetcher from '@lib/fetcher';
 
 export default function Home({ words }) {
-  console.log(words);
   const { todayWords = [], trendingWords = [] } = words;
   return (
     <Layout title="Tiếng Lòng" description="Từ Điển Tiếng Lóng">
@@ -34,10 +33,14 @@ export default function Home({ words }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps({ req, res }) {
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=300, stale-while-revalidate=300'
+  );
+
   let words = await fetcher('word/today-words');
-  let revalidate = words.length < 1 ? 300 : 1800;
-  return { props: { words }, revalidate };
+  return { props: { words } };
 }
 
 const DefineBanner = () => (
