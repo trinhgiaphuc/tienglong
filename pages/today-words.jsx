@@ -17,7 +17,12 @@ export default function TodayWordPage({ words }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps({ req, res }) {
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=300, stale-while-revalidate=300'
+  );
+
   let words = await fetcher('word/today-words');
   let revalidate = words.length < 1 ? 300 : 1800;
   return { props: { words }, revalidate };
