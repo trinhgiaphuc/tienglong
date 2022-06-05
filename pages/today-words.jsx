@@ -24,6 +24,5 @@ export async function getServerSideProps({ req, res }) {
   );
 
   let words = await fetcher('word/today-words');
-  let revalidate = words.length < 1 ? 300 : 1800;
-  return { props: { words }, revalidate };
+  return { props: { words } };
 }
