@@ -17,12 +17,7 @@ export default function TodayWordPage({ words }) {
   );
 }
 
-export async function getServerSideProps({ req, res }) {
-  res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=300, stale-while-revalidate=300'
-  );
-
+export async function getServerSideProps() {
   let words = await fetcher('word/today-words');
   return { props: { words } };
 }
