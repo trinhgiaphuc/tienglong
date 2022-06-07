@@ -7,8 +7,7 @@ const EnterPage = ({ referer }) => {
 
 EnterPage.noNavigation = true;
 
-export async function getServerSideProps({ req, res }) {
-  res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+export async function getServerSideProps({ req }) {
   try {
     getUserToken(req);
     return { redirect: { destination: '/', permanent: true } };

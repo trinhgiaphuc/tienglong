@@ -14,10 +14,7 @@ const LoginForm = ({ referer }) => {
   return (
     <div className="overflow-hidden">
       <Link href={referer} passHref>
-        <button
-          className="p-4 absolute uppercase font-medium top-0 left-0"
-          // onClick={() => router.push(referer)}
-        >
+        <button className="p-4 absolute uppercase font-medium top-0 left-0">
           &larr; <span className="underline underline-offset-1">Quay Lại</span>
         </button>
       </Link>

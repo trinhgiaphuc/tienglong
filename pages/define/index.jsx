@@ -1,5 +1,6 @@
 import AddWordForm from '@components/word/AddWordForm';
 import Title from '@components/word/Title';
+import { getUserToken } from '@lib/utils';
 
 export default function DefinePage() {
   return (
@@ -10,4 +11,17 @@ export default function DefinePage() {
       <AddWordForm />
     </div>
   );
+}
+
+export async function getServerSideProps({ req }) {
+  try {
+    getUserToken(req);
+  } catch (error) {
+    return {
+      redirect: {
+        destination: '/enter',
+        permanent: false,
+      },
+    };
+  }
 }
