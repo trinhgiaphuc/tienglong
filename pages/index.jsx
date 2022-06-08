@@ -38,13 +38,11 @@ export async function getServerSideProps({ req, res }) {
     'public, s-maxage=300, stale-while-revalidate=300'
   );
   try {
-    const { todayWords, trendingWords, error } = await fetcher(
-      'word/today-words'
-    );
+    const { todayWords, error } = await fetcher('word/today-words');
     if (error) {
       throw error;
     }
-    return { props: { todayWords, trendingWords } };
+    return { props: { todayWords, trendingWords: [] } };
   } catch (error) {
     console.error(error);
     return { props: { todayWords: [], trendingWords: [] } };
