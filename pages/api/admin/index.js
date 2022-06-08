@@ -14,6 +14,7 @@ const handler = withAdminAuth(async function (req, res) {
   try {
     user = await getSpecificUser(uid);
   } catch (error) {
+    console.error(error);
     return res.status(500).json({ error });
   }
   if (!isAdmin(user)) {
