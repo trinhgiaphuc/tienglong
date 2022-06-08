@@ -16,6 +16,7 @@ export default function DefinePage() {
 export async function getServerSideProps({ req }) {
   try {
     getUserToken(req);
+    return { props: {} };
   } catch (error) {
     return {
       redirect: {

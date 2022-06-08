@@ -24,26 +24,21 @@ const handler = withAdminAuth(async function (req, res) {
   let adminAccount;
 
   try {
-    adminAccount = await checkAdminAccountExist(uid);
+    adminAccount = await findAdminWithId(uid);
   } catch (error) {
     return res.status(500).json({ error, type: 'check account error' });
   }
 
-  if (!adminAccount) {
-    try {
-      let hashedPassword = await hashPassword(password);
-      adminAccount = await createAdminAccount(
-        uid,
-        username,
-        hashedPassword,
-        image
-      );
-    } catch {
-      return res.status(500).json({ error, type: 'create account error' });
-    }
-  } else {
+  if (adminAccount) {
     if (!passwordIsTheSame(password, adminAccount.hashedPassword)) {
       return res.status(401).json({ error: 'Mật mã sai' });
+    }
+  } else {
+    try {
+      let hashedPassword = await hashPassword(password);
+      await createAdminAccount(uid, username, hashedPassword, image);
+    } catch (error) {
+      return res.status(500).json({ error, type: 'create account error' });
     }
   }
 
@@ -64,17 +59,6 @@ const handler = withAdminAuth(async function (req, res) {
 
   return res.status(200).json({ ok: 'ok' });
 });
-
-async function checkAdminAccountExist(uid) {
-  try {
-    let adminAccount = await findAdminWithId(uid);
-    return adminAccount === null || typeof adminAccount === 'undefined'
-      ? false
-      : adminAccount;
-  } catch (error) {
-    throw error;
-  }
-}
 
 async function hashPassword(password) {
   try {
