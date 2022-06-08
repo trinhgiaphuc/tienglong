@@ -20,49 +20,49 @@ const handler = withAdminAuth(async function (req, res) {
     return res.status(401).json({ error: 'Tài khoản chưa được cấp quyền.' });
   }
 
-  // let { username, image } = user;
-  // let adminAccount;
+  let { username, image } = user;
+  let adminAccount;
 
-  // try {
-  //   adminAccount = await checkAdminAccountExist(uid);
-  // } catch (error) {
-  //   return res.status(500).json({ error, type: 'check account error' });
-  // }
+  try {
+    adminAccount = await checkAdminAccountExist(uid);
+  } catch (error) {
+    return res.status(500).json({ error, type: 'check account error' });
+  }
 
-  // if (!adminAccount) {
-  //   try {
-  //     let hashedPassword = await hashPassword(password);
-  //     adminAccount = await createAdminAccount(
-  //       uid,
-  //       username,
-  //       hashedPassword,
-  //       image
-  //     );
-  //   } catch {
-  //     return res.status(500).json({ error, type: 'create account error' });
-  //   }
-  // } else {
-  //   if (!passwordIsTheSame(password, adminAccount.hashedPassword)) {
-  //     return res.status(401).json({ error: 'Mật mã sai' });
-  //   }
+  if (!adminAccount) {
+    try {
+      let hashedPassword = await hashPassword(password);
+      adminAccount = await createAdminAccount(
+        uid,
+        username,
+        hashedPassword,
+        image
+      );
+    } catch {
+      return res.status(500).json({ error, type: 'create account error' });
+    }
+  } else {
+    if (!passwordIsTheSame(password, adminAccount.hashedPassword)) {
+      return res.status(401).json({ error: 'Mật mã sai' });
+    }
 
-  //   let token = jwt.sign({ username, image }, process.env.JWT_SECRET, {
-  //     expiresIn: '8h',
-  //   });
+    let token = jwt.sign({ username, image }, process.env.JWT_SECRET, {
+      expiresIn: '8h',
+    });
 
-  //   res.setHeader(
-  //     'Set-Cookie',
-  //     cookie.serialize('ADMIN_ACCESS_TOKEN', token, {
-  //       httpOnly: true,
-  //       maxAge: 8 * 60 * 60,
-  //       path: '/',
-  //       sameSite: 'strict',
-  //       secure: process.env.NODE_ENV === 'production',
-  //     })
-  //   );
+    res.setHeader(
+      'Set-Cookie',
+      cookie.serialize('ADMIN_ACCESS_TOKEN', token, {
+        httpOnly: true,
+        maxAge: 8 * 60 * 60,
+        path: '/',
+        sameSite: 'strict',
+        secure: process.env.NODE_ENV === 'production',
+      })
+    );
 
-  return res.status(200).json({ ok: user });
-  // }
+    return res.status(200).json({ ok: user });
+  }
 });
 
 async function checkAdminAccountExist(uid) {
