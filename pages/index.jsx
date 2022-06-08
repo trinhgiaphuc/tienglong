@@ -8,8 +8,7 @@ import Title from '@components/word/Title';
 import Layout from '@components/layouts/Layout';
 import fetcher from '@lib/fetcher';
 
-export default function Home({ words }) {
-  const { todayWords = [], trendingWords = [] } = words;
+export default function Home({ todayWords = [], trendingWords = [] }) {
   return (
     <Layout title="Tiếng Lòng" description="Từ Điển Tiếng Lóng">
       <Hero />
@@ -38,9 +37,17 @@ export async function getServerSideProps({ req, res }) {
     'Cache-Control',
     'public, s-maxage=300, stale-while-revalidate=300'
   );
-
-  let words = await fetcher('word/today-words');
-  return { props: { words } };
+  try {
+    const { todayWords, trendingWords, error } = await fetcher(
+      'word/today-words'
+    );
+    if (error) {
+      throw error;
+    }
+    return { props: { todayWords, trendingWords } };
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 const DefineBanner = () => (
