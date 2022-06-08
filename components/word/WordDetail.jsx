@@ -35,7 +35,7 @@ const WordDetail = ({ wordDetails, wordIsPending }) => {
             </a>
           </Link>
 
-          {tags.map(tag => (
+          {tags?.map(tag => (
             <Link key={tag} href="/" passHref>
               <a className="other-tags">{tag}</a>
             </Link>

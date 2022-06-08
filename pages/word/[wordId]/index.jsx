@@ -35,8 +35,13 @@ export default function Word({ wordDetails = [] }) {
 export async function getStaticProps(ctx) {
   let { wordId } = ctx.params;
   try {
-    const wordDetails = await fetcher(`word/${wordId}`);
-    return { props: { wordDetails }, revalidate: 150 };
+    const { wordDetails, error } = await fetcher(`word/${wordId}`);
+    if (error) {
+      throw error;
+    }
+    if (wordDetails) {
+      return { props: { wordDetails }, revalidate: 150 };
+    }
   } catch (error) {
     console.error(error);
     return { props: { wordDetails: [] } };
