@@ -6,9 +6,9 @@ import { isAdmin, getSpecificUser } from '@lib/firebase-admin';
 import { createAdminAccount, findAdminWithId } from '@lib/supabase';
 import withAdminAuth from '@lib/withAuthAdmin';
 
-async function handler(req, res) {
+const handler = withAdminAuth(async function (req, res) {
   const { password } = req.body;
-  const { uid = 'K5e8Qp4X4ARu6HPixfrPHTvqs443' } = req;
+  const { uid } = req;
 
   let user;
   try {
@@ -63,7 +63,7 @@ async function handler(req, res) {
 
   return res.status(200).json({ ok: user });
   // }
-}
+});
 
 async function checkAdminAccountExist(uid) {
   try {
