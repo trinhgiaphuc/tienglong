@@ -15,7 +15,7 @@ const handler = withAdminAuth(async function (req, res) {
     user = await getSpecificUser(uid);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error });
+    return res.status(500).json({ error, type: 'get user error' });
   }
   if (!isAdmin(user)) {
     return res.status(401).json({ error: 'Tài khoản chưa được cấp quyền.' });
