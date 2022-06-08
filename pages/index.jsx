@@ -47,6 +47,7 @@ export async function getServerSideProps({ req, res }) {
     return { props: { todayWords, trendingWords } };
   } catch (error) {
     console.error(error);
+    return { props: { todayWords: [], trendingWords: [] } };
   }
 }
 
