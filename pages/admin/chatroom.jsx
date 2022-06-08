@@ -6,7 +6,9 @@ import Link from 'next/link';
 
 export async function getServerSideProps({ req, res }) {
   try {
-    verifyToken(getAdminToken(req));
+    const adminToken = getAdminToken(req);
+    if (!adminToken) throw new Error();
+    verifyToken(adminToken);
   } catch (error) {
     return {
       redirect: {

@@ -22,7 +22,9 @@ export default function ApprovePage({ pendingWords }) {
 
 export async function getServerSideProps({ req }) {
   try {
-    verifyToken(getAdminToken(req));
+    const adminToken = getAdminToken(req);
+    if (!adminToken) throw new Error();
+    verifyToken(adminToken);
   } catch (error) {
     return {
       redirect: {

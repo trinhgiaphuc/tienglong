@@ -6,7 +6,7 @@ import { isAdmin, getSpecificUser } from '@lib/firebase-admin';
 import { createAdminAccount, findAdminWithId } from '@lib/supabase';
 import withAdminAuth from '@lib/withAuthAdmin';
 
-const handler = withAdminAuth(async function (req, res) {
+export default withAdminAuth(async function (req, res) {
   const { password } = req.body;
   const { uid } = req;
 
@@ -87,5 +87,3 @@ async function hashPassword(password) {
 function passwordIsTheSame(password, hashedPassword) {
   return bcrypt.compareSync(password, hashedPassword);
 }
-
-export default handler;

@@ -4,6 +4,17 @@ import { verifyFirebaseToken } from '@lib/firebase-admin';
 import { getAdminToken, getUserToken } from '@lib/utils';
 import { verifyToken } from '@lib/withAuth';
 
+export default function AdminPage({ error }) {
+  if (error === 'auth/id-token-expired') return <ReLoginModal />;
+  return (
+    <div className="h-[94%] w-full overflow-hidden">
+      <div className="h-full w-full bg-slate-400 grid-item-center">
+        <AdminLoginForm />
+      </div>
+    </div>
+  );
+}
+
 export async function getServerSideProps({ req }) {
   try {
     await verifyFirebaseToken(getUserToken(req));
@@ -16,28 +27,25 @@ export async function getServerSideProps({ req }) {
     };
   }
 
-  try {
-    verifyToken(getAdminToken(req));
+  const adminToken = getAdminToken(req);
+  if (adminToken) {
+    try {
+      verifyToken(adminToken);
+    } catch (error) {
+      return {
+        redirect: {
+          destination: '/',
+          permanent: true,
+        },
+      };
+    }
     return {
       redirect: {
         permanent: true,
         destination: '/admin/chatroom',
       },
     };
-  } catch (error) {
+  } else {
     return { props: {} };
   }
 }
-
-const AdminPage = ({ error }) => {
-  if (error === 'auth/id-token-expired') return <ReLoginModal />;
-  return (
-    <div className="h-[94%] w-full overflow-hidden">
-      <div className="h-full w-full bg-slate-400 grid-item-center">
-        <AdminLoginForm />
-      </div>
-    </div>
-  );
-};
-
-export default AdminPage;
