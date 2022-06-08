@@ -21,10 +21,14 @@ const handler = withAdminAuth(async function (req, res) {
   }
 
   let { username, image } = user;
+  let adminAccount;
   try {
-    let adminAccount = await checkAdminAccountExist(uid);
-
-    if (!adminAccount) {
+    adminAccount = await checkAdminAccountExist(uid);
+  } catch (error) {
+    return res.status(500).json({ error, type: 'check account error' });
+  }
+  if (!adminAccount) {
+    try {
       let hashedPassword = await hashPassword(password);
       adminAccount = await createAdminAccount(
         uid,
@@ -32,30 +36,30 @@ const handler = withAdminAuth(async function (req, res) {
         hashedPassword,
         image
       );
-    } else {
-      if (!passwordIsTheSame(password, adminAccount.hashedPassword)) {
-        return res.status(401).json({ error: 'Mật mã sai' });
-      }
-
-      let token = jwt.sign({ username, image }, process.env.JWT_SECRET, {
-        expiresIn: '8h',
-      });
-
-      res.setHeader(
-        'Set-Cookie',
-        cookie.serialize('ADMIN_ACCESS_TOKEN', token, {
-          httpOnly: true,
-          maxAge: 8 * 60 * 60,
-          path: '/',
-          sameSite: 'strict',
-          secure: process.env.NODE_ENV === 'production',
-        })
-      );
-
-      return res.status(200).json({ ok: true });
+    } catch {
+      return res.status(500).json({ error, type: 'create account error' });
     }
-  } catch (error) {
-    return res.status(500).json({ error });
+  } else {
+    if (!passwordIsTheSame(password, adminAccount.hashedPassword)) {
+      return res.status(401).json({ error: 'Mật mã sai' });
+    }
+
+    let token = jwt.sign({ username, image }, process.env.JWT_SECRET, {
+      expiresIn: '8h',
+    });
+
+    res.setHeader(
+      'Set-Cookie',
+      cookie.serialize('ADMIN_ACCESS_TOKEN', token, {
+        httpOnly: true,
+        maxAge: 8 * 60 * 60,
+        path: '/',
+        sameSite: 'strict',
+        secure: process.env.NODE_ENV === 'production',
+      })
+    );
+
+    return res.status(200).json({ ok: true });
   }
 });
 

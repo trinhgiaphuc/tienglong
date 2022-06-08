@@ -4,7 +4,6 @@ export default async function handler(req, res) {
   const { authorization } = req.headers;
   const { login, logout } = req.body;
 
-  console.log(authorization);
   if (login) {
     const token = authorization.split(' ')[1];
     res.setHeader(
