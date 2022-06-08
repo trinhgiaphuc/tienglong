@@ -51,13 +51,11 @@ const AdminLoginForm = () => {
           type="password"
         />
 
-        {error.length !== 0
-          ? {
-              /* <h1 className="bg-red-400 rounded-lg p-2 border-2 border-red-600">
+        {/* {error.length !== 0 ? (
+          <h1 className="bg-red-400 rounded-lg p-2 border-2 border-red-600">
             {error}
-          </h1> */
-            }
-          : null}
+          </h1>
+        ) : null} */}
         <button
           disabled={passCode.length < 1}
           type="submit"
