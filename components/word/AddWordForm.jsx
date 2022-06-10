@@ -17,15 +17,9 @@ export default function AddWordForm() {
 
   const onSubmit = async data => {
     let wordData = { ...data, tags: otherTags };
-    const res = await addNewDefinition({ ...wordData, author });
-    if (res.success) {
-      router.push('/define/success');
-    } else {
-      console.error(res);
-      router.push('/define/fail');
-    }
+    await addNewDefinition({ ...wordData, author });
+    router.push('/define/success');
   };
-  if (error.isError) console.log('errors', error);
 
   function clearTag() {
     setValue('trend', '');

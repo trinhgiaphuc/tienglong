@@ -1,8 +1,7 @@
 import React from 'react';
 import DefinePageLink from '@components/buttons/DefinePageLink';
 
-export default function SuccessPage({ isTrolling }) {
-  if (isTrolling) return <h1>Tới Đây Chi Dọ</h1>;
+export default function SuccessPage() {
   return (
     <div className="h-[95vh] grid-item-center">
       <div className="mx-auto prose h-1/2 flex flex-col justify-evenly">
@@ -18,14 +17,4 @@ export default function SuccessPage({ isTrolling }) {
       </div>
     </div>
   );
-}
-
-export async function getServerSideProps(ctx) {
-  const { referer = '/' } = ctx.req.headers;
-
-  if (referer !== 'http://localhost:3000/define') {
-    return { props: { isTrolling: true } };
-  }
-
-  return { props: { isTrolling: false } };
 }
