@@ -13,7 +13,6 @@ import {
   IoCogSharp,
 } from 'react-icons/io5';
 import { useForm } from 'react-hook-form';
-import fetcher from '@lib/fetcher';
 
 const badWords = ['congsan', 'cong_san', 'dmcs', 'dm_cs'];
 
@@ -61,16 +60,10 @@ export default function CompleteForm({ setStatus, setUser, setUsername }) {
       await intergratePassword(email, password)
         .then(async () => {
           await createNewUser(data)
-            .then(async () => {
-              await fetcher('user/create', { data: { ...data, password } })
-                .then(() => {
-                  setUser(data);
-                  setUsername(name);
-                  setStatus('authenticated');
-                })
-                .catch(error => {
-                  throw error;
-                });
+            .then(() => {
+              setUser(data);
+              setUsername(name);
+              setStatus('authenticated');
             })
             .catch(error => {
               throw error;

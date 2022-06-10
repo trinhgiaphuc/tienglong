@@ -1,3 +1,5 @@
+import { verifyFirebaseToken } from '@lib/firebase-admin';
+import { getUserToken } from '@lib/utils';
 import cookie from 'cookie';
 
 export default async function handler(req, res) {
@@ -6,6 +8,11 @@ export default async function handler(req, res) {
 
   if (login) {
     const token = authorization.split(' ')[1];
+    try {
+      await verifyFirebaseToken(token);
+    } catch (error) {
+      return res.status(400).json({ ok: 'not ok' });
+    }
     res.setHeader(
       'Set-Cookie',
       cookie.serialize('USER_ACCESS_TOKEN', token, {
@@ -17,6 +24,11 @@ export default async function handler(req, res) {
       })
     );
   } else if (logout) {
+    try {
+      verifyFirebaseToken(getUserToken(req));
+    } catch (error) {
+      return res.status(400).json({ error });
+    }
     res.setHeader('Set-Cookie', [
       cookie.serialize('USER_ACCESS_TOKEN', '', {
         maxAge: -1,
