@@ -93,12 +93,8 @@
     @apply my-border my-1 sm:my-0 rounded w-full uppercase font-medium p-4 shadow-sm shadow-black;
   }
 
-  .year-created-tag {
-    @apply m-1 sm:m-0 px-2 prose rounded-3xl bg-orange-400 text-center text-black;
-  }
-
   .other-tags {
-    @apply rounded-3xl prose px-2 m-1 sm:m-0 bg-blue-400 text-center text-black;
+    @apply rounded-3xl prose px-2 m-1 sm:m-0 bg-orange-400 text-center text-black;
   }
 
   .adding-word-input {

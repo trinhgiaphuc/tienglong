@@ -29,12 +29,6 @@ const WordDetail = ({ wordDetails, wordIsPending }) => {
     <main className="my-border relative h-full flex-center flex-col p-4 gap-2 font-ole">
       <div className="px-2 w-full flex flex-wrap items-start mb-5 mr-8">
         <div className="flex-grow flex gap-2 self-start flex-wrap ">
-          <Link href="/" passHref>
-            <a className="year-created-tag">
-              {new Date(createdAt).toLocaleDateString()}
-            </a>
-          </Link>
-
           {tags?.map(tag => (
             <Link key={tag} href="/" passHref>
               <a className="other-tags">{tag}</a>

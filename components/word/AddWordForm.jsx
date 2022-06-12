@@ -15,8 +15,11 @@ export default function AddWordForm() {
 
   const { register, handleSubmit, getValues, setValue, watch } = useForm();
 
-  const onSubmit = async data => {
-    let wordData = { ...data, tags: otherTags };
+  const onSubmit = async ({ createdYear, source, trend, ...data }) => {
+    let wordData = {
+      ...data,
+      tags: [createdYear, source, trend, ...otherTags].filter(Boolean),
+    };
     await addNewDefinition({ ...wordData, author });
     router.push('/define/success');
   };
@@ -171,6 +174,26 @@ const SelectYearTag = ({ register }) => {
   );
 };
 
+const TagSection = ({ register, children, clearTag }) => (
+  <div className="adding-word-input col-span-5 relative flex flex-col sm:flex-row group">
+    {children}
+    <div className="selector group-hover:-translate-y-full rounded group-hover:z-10 peer-focus:z-10 peer-focus:-translate-y-full">
+      <div className="my-border py-4 col-span-2 text-center text-black uppercase bg-lime-200">
+        Một số thẻ gợi ý
+      </div>
+      <SelectTrendTag register={register} />
+      <SelectSourceTag register={register} />
+      <button
+        onClick={clearTag}
+        type="button"
+        className="my-border col-span-2 py-4 outline-none font-medium hover:bg-gray-500"
+      >
+        Bỏ Chọn Tất Cả Thẻ Gợi Ý
+      </button>
+    </div>
+  </div>
+);
+
 const SelectTrendTag = ({ register }) => (
   <div className="my-border flex flex-col ">
     <div className="wordList__tag">
@@ -291,26 +314,6 @@ const OtherTagsField = ({ register, handleSetTag }) => (
       Đính Thẻ
     </button>
   </React.Fragment>
-);
-
-const TagSection = ({ register, children, clearTag }) => (
-  <div className="adding-word-input col-span-5 relative flex flex-col sm:flex-row group">
-    {children}
-    <div className="selector group-hover:-translate-y-full rounded group-hover:z-10 peer-focus:z-10 peer-focus:-translate-y-full">
-      <div className="my-border py-4 col-span-2 text-center text-black uppercase bg-lime-200">
-        Một số thẻ gợi ý
-      </div>
-      <SelectTrendTag register={register} />
-      <SelectSourceTag register={register} />
-      <button
-        onClick={clearTag}
-        type="button"
-        className="my-border col-span-2 py-4 outline-none font-medium hover:bg-gray-500"
-      >
-        Bỏ Chọn Tất Cả Thẻ Gợi Ý
-      </button>
-    </div>
-  </div>
 );
 
 const PreviewTagsField = ({ otherTags = [], setOtherTags, createdYear }) => (

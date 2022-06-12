@@ -3,18 +3,8 @@ import SectionWord from '@components/word/SectionWords';
 import Title from '@components/word/Title';
 import WordDetail from '@components/word/WordDetail';
 import fetcher from '@lib/fetcher';
-// import { useAuth } from '@lib/userContext';
-// import { useState, useEffect } from 'react';
 
-// TODO: BIG DAY TOMORROW, REFACTOR TO ISR
 export default function Word({ wordDetails = [] }) {
-  // const { user } = useAuth();
-  // const [relatedWords, setRelatedWords] = useState([]);
-  // useEffect(() => {
-  //   if (user) {}
-  //   return () => {};
-  // }, [user]);
-
   return (
     <div className="my-border lg:p-2  flex flex-col">
       <div className="w-full lg:w-3/4 mx-auto">
