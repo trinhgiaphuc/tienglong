@@ -6,9 +6,10 @@ async function handler(req, res) {
   const { uid } = req;
 
   try {
-    const res = await createWord(word, uid);
+    await createWord(word, uid);
     return res.status(200).json({ ok: true });
   } catch (error) {
+    console.error(error);
     return res.status(400).json({ error });
   }
 }
