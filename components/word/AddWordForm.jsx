@@ -8,7 +8,9 @@ import { addNewDefinition } from '@lib/db';
 import Tooltip from '@components/layouts/Tooltip';
 
 export default function AddWordForm() {
-  const { username: author } = useAuth();
+  const {
+    user: { username: author },
+  } = useAuth();
   const router = useRouter();
   const [otherTags, setOtherTags] = React.useState([]);
   const [error, setError] = React.useState({ isError: false });

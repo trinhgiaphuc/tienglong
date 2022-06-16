@@ -4,9 +4,9 @@ import cookie from 'cookie';
 
 import { isAdmin, getSpecificUser } from '@lib/firebase-admin';
 import { createAdminAccount, findAdminWithId } from '@lib/supabase';
-import withAdminAuth from '@lib/withAuthAdmin';
+import { withAuth } from '@lib/withAuth';
 
-const handler = withAdminAuth(async function (req, res) {
+const handler = withAuth(async function (req, res) {
   const { password } = req.body;
   const { uid } = req;
 
@@ -14,7 +14,10 @@ const handler = withAdminAuth(async function (req, res) {
   try {
     user = await getSpecificUser(uid);
   } catch (error) {
-    return res.status(500).json({ error, type: 'get user error' });
+    console.error(error);
+    return res
+      .status(500)
+      .json({ error: 'Something is wrong, please try later.' });
   }
   if (!isAdmin(user)) {
     return res.status(401).json({ error: 'Tài khoản chưa được cấp quyền.' });
@@ -26,7 +29,12 @@ const handler = withAdminAuth(async function (req, res) {
   try {
     adminAccount = await findAdminWithId(uid);
   } catch (error) {
-    return res.status(500).json({ error, type: 'check account error' });
+    return res
+      .status(500)
+      .json({
+        error:
+          'Đã xảy ra lỗi khi đang xác thực tài khoản, vui lòng thử lại sau',
+      });
   }
 
   if (adminAccount) {
@@ -38,19 +46,21 @@ const handler = withAdminAuth(async function (req, res) {
       let hashedPassword = await hashPassword(password);
       await createAdminAccount(uid, username, hashedPassword, image);
     } catch (error) {
-      return res.status(500).json({ error, type: 'create account error' });
+      return res.status(500).json({
+        error: 'Đã xảy ra lỗi khi tạo tài khoản, vui lòng thử lại sau',
+      });
     }
   }
 
   let token = jwt.sign({ username, image }, process.env.JWT_SECRET, {
-    expiresIn: '8h',
+    expiresIn: '3h',
   });
 
   res.setHeader(
     'Set-Cookie',
     cookie.serialize('ADMIN_ACCESS_TOKEN', token, {
       httpOnly: true,
-      maxAge: 8 * 60 * 60,
+      maxAge: 3 * 60 * 60,
       path: '/',
       sameSite: 'strict',
       secure: process.env.NODE_ENV === 'production',

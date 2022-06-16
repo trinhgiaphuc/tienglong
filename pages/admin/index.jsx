@@ -1,11 +1,10 @@
 import AdminLoginForm from '@components/admin/AdminLoginForm';
-import ReLoginModal from '@components/layouts/modals/ReLoginModal';
+import { getUserToken } from '@lib/utils';
 import { verifyFirebaseToken } from '@lib/firebase-admin';
-import { getAdminToken, getUserToken } from '@lib/utils';
-import { verifyToken } from '@lib/withAuth';
 
-export default function AdminPage({ error }) {
-  if (error === 'auth/id-token-expired') return <ReLoginModal />;
+export default function AdminPage({ username, image }) {
+  console.log(username);
+  console.log(image);
   return (
     <div className="h-[94%] w-full overflow-hidden">
       <div className="h-full w-full bg-slate-400 grid-item-center">
@@ -17,35 +16,17 @@ export default function AdminPage({ error }) {
 
 export async function getServerSideProps({ req }) {
   try {
-    await verifyFirebaseToken(getUserToken(req));
+    const { role, username, image } = await verifyFirebaseToken(
+      getUserToken(req)
+    );
+    if (role.includes('admin')) return { props: { username, image } };
+    else return { redirect: { destination: '/', permanent: false } };
   } catch (error) {
     return {
       redirect: {
         destination: '/enter',
-        permanent: true,
+        permanent: false,
       },
     };
-  }
-
-  const adminToken = getAdminToken(req);
-  if (adminToken) {
-    try {
-      verifyToken(adminToken);
-    } catch (error) {
-      return {
-        redirect: {
-          destination: '/',
-          permanent: true,
-        },
-      };
-    }
-    return {
-      redirect: {
-        permanent: true,
-        destination: '/admin/chatroom',
-      },
-    };
-  } else {
-    return { props: {} };
   }
 }

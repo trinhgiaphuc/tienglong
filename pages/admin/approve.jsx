@@ -21,9 +21,7 @@ export default function ApprovePage({ pendingWords }) {
 
 export async function getServerSideProps({ req }) {
   try {
-    const adminToken = getAdminToken(req);
-    if (!adminToken) throw new Error();
-    verifyToken(adminToken);
+    verifyToken(getAdminToken(req));
   } catch (error) {
     return {
       redirect: {

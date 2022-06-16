@@ -17,7 +17,7 @@ import { Fragment } from 'react';
 import SearchBar from './SearchBar';
 
 const Navigation = () => {
-  const { user, username, status } = useAuth();
+  const { user, status } = useAuth();
 
   return (
     <nav className="navbar h-12 z-50 sticky top-0 left-0">
@@ -27,12 +27,12 @@ const Navigation = () => {
       {status === 'authenticated' ? (
         <Link href={`/user/${user?.id}`} passHref>
           <div className="navbar__item lg:flex-grow bg-white lg:pl-4 cursor-pointer">
-            <UserTag status={status} username={username} user={user} />
+            <UserTag status={status} username={user?.username} user={user} />
           </div>
         </Link>
       ) : (
         <div className="navbar__item lg:flex-grow bg-white px-4">
-          <UserTag status={status} username={username} user={user} />
+          <UserTag status={status} username="Khách" user={user} />
         </div>
       )}
 
@@ -52,9 +52,6 @@ const NavigationLink = ({ role }) => (
         </Link>
         <Link passHref href="/define">
           <li className="hover:underline cursor-pointer">Định Nghĩa Từ</li>
-        </Link>
-        <Link passHref href="/shop">
-          <li className="hover:underline cursor-pointer">Shop</li>
         </Link>
         <Link passHref href="/feedback">
           <li className="hover:underline cursor-pointer">
@@ -107,7 +104,9 @@ const AuthButton = ({ status }) => {
   return status === 'authenticated' ? (
     <button
       className="navbar__item lg:flex-grow bg-white px-4 cursor-pointer"
-      onClick={handleSignOut}
+      onClick={() => {
+        handleSignOut();
+      }}
     >
       {loadingAuth()}
       <IoLogOutOutline className="prose lg:prose-xl xl:prose-2xl" />

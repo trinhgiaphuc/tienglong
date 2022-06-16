@@ -23,17 +23,13 @@ const LoginForm = ({ referer }) => {
         <div className="flex-center flex-col gap-5">
           <button
             className="login-button"
-            onClick={() =>
-              handleSignIn(facebookProvider).then(() => router.push(referer))
-            }
+            onClick={async () => await handleSignIn(facebookProvider, referer)}
           >
             Đăng Nhập Bằng Facebook
           </button>
           <button
             className="login-button"
-            onClick={() =>
-              handleSignIn(googleProvider).then(() => router.push(referer))
-            }
+            onClick={async () => await handleSignIn(googleProvider, referer)}
           >
             Đằng Nhập Bằng Google
           </button>

@@ -20,6 +20,7 @@ export async function getServerSideProps({ req }) {
   } catch (error) {
     return {
       redirect: {
+        source: '/define',
         destination: '/enter',
         permanent: false,
       },

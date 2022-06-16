@@ -7,6 +7,7 @@ import SectionWord from '@components/word/SectionWords';
 import Title from '@components/word/Title';
 import Layout from '@components/layouts/Layout';
 import fetcher from '@lib/fetcher';
+import Modal from '@components/commons/Modal';
 
 export default function Home({ todayWords = [], trendingWords = [] }) {
   return (

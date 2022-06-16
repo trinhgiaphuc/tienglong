@@ -2,17 +2,12 @@ import '@styles/globals.css';
 
 import * as React from 'react';
 import Navigation from '@components/navigation/Navigation';
-
 import UserProvider from '@lib/userContext';
 
 function MyApp({ Component, pageProps }) {
-  return Component.noNavigation ? (
+  return (
     <UserProvider>
-      <Component {...pageProps} />
-    </UserProvider>
-  ) : (
-    <UserProvider>
-      <Navigation />
+      {Component.noNavigation ? null : <Navigation />}
       <Component {...pageProps} />
     </UserProvider>
   );

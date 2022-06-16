@@ -13,10 +13,12 @@ import {
   IoCogSharp,
 } from 'react-icons/io5';
 import { useForm } from 'react-hook-form';
+import fetcher from '@lib/fetcher';
+import Modal from '@components/commons/Modal';
 
 const badWords = ['congsan', 'cong_san', 'dmcs', 'dm_cs'];
 
-export default function CompleteForm({ setStatus, setUser, setUsername }) {
+export default function CompleteAccountForm({ setStatus, setUser }) {
   const router = useRouter();
   const [name, setName] = React.useState('');
   const [error, setError] = React.useState('');
@@ -25,6 +27,30 @@ export default function CompleteForm({ setStatus, setUser, setUsername }) {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const [formComplete, setFormComplete] = React.useState(false);
+
+  if (formComplete) {
+    return (
+      <Modal>
+        <h1 className="text-2xl p-2">Tạo tài khoản thành công</h1>
+        <p className="p-4">
+          Cảm ơn bạn, quá trình tạo tài khoản đã hoàn tất, xin mời bạn đăng nhập
+          lại để có thể sử dụng tài khoản
+        </p>
+        <div className="p-2">
+          <button
+            onClick={() => {
+              auth.signOut();
+              router.replace('/enter');
+            }}
+            className="px-4 py-2 border border-black rounded-md"
+          >
+            Đồng ý
+          </button>
+        </div>
+      </Modal>
+    );
+  }
 
   if (!auth.currentUser) {
     router.push('/enter');
@@ -42,7 +68,7 @@ export default function CompleteForm({ setStatus, setUser, setUsername }) {
     }
   }
 
-  const onSubmit = async ({ password, repassword }) => {
+  async function onSubmit({ password, repassword }) {
     if (!passwordIsValid(password, repassword)) {
       return;
     }
@@ -59,15 +85,10 @@ export default function CompleteForm({ setStatus, setUser, setUsername }) {
     try {
       await intergratePassword(email, password)
         .then(async () => {
-          await createNewUser(data)
-            .then(() => {
-              setUser(data);
-              setUsername(name);
-              setStatus('authenticated');
-            })
-            .catch(error => {
-              throw error;
-            });
+          const user = await createNewUser(data);
+          const token = await auth.currentUser.getIdToken();
+          fetcher(`user/${user.id}/claims`, { token });
+          setFormComplete(true);
         })
         .catch(error => {
           throw error;
@@ -75,24 +96,26 @@ export default function CompleteForm({ setStatus, setUser, setUsername }) {
     } catch (error) {
       console.error(error);
     }
-  };
+  }
+
+  function onError() {
+    if (
+      errors.password?.type === 'required' ||
+      errors.repassword?.type === 'required'
+    ) {
+      setError('Xin vui lòng điền đủ mật khẩu để hoàn tất');
+    }
+    if (
+      errors.password?.type === 'minLength' ||
+      errors.repassword?.type === 'minLength'
+    ) {
+      setError('Xin vui lòng thiết lập mật khẩu ít nhất 6 ký tự');
+    }
+  }
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit, () => {
-        if (
-          errors.password?.type === 'required' ||
-          errors.repassword?.type === 'required'
-        ) {
-          setError('Xin vui lòng điền đủ mật khẩu để hoàn tất');
-        }
-        if (
-          errors.password?.type === 'minLength' ||
-          errors.repassword?.type === 'minLength'
-        ) {
-          setError('Xin vui lòng thiết lập mật khẩu ít nhất 6 ký tự');
-        }
-      })}
+      onSubmit={handleSubmit(onSubmit, onError)}
       className="my-border bg-white flex-grow flex p-4 font-ole"
     >
       <div className="w-full h-full flex-center flex-col gap-5">
@@ -181,7 +204,20 @@ function NameCheckInput({ name, setName }) {
   const [checkingName, setCheckingName] = React.useState(false);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const check = React.useCallback(checkUserNameExist(), []);
+  const check = React.useCallback(
+    (function check() {
+      let name, exist;
+      return async username => {
+        if (name === username) exist;
+        else {
+          name = username;
+          exist = await checkUserNameExist(username);
+        }
+      };
+    })(),
+    []
+  );
+
   const checkName = React.useCallback(
     async name => {
       for (const badWord of badWords) {
