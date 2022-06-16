@@ -13,13 +13,12 @@ const SearchBar = () => {
     let timer;
     if (query.length > 2) {
       timer = setTimeout(async () => {
-        console.log('working');
         try {
           const res = await fetch(`/api/redis/search-word?${param}`);
           const words = await res.json();
           setWordList(words);
         } catch (error) {
-          console.log(error);
+          console.error(error);
         }
       }, 300);
     }

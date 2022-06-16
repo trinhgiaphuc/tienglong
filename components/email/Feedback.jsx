@@ -5,7 +5,6 @@ import CheckBoxIcon from './CheckboxIcon';
 const Feedback = () => {
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(e);
   };
 
   return (

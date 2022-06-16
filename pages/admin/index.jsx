@@ -2,9 +2,7 @@ import AdminLoginForm from '@components/admin/AdminLoginForm';
 import { getUserToken } from '@lib/utils';
 import { verifyFirebaseToken } from '@lib/firebase-admin';
 
-export default function AdminPage({ username, image }) {
-  console.log(username);
-  console.log(image);
+export default function AdminPage() {
   return (
     <div className="h-[94%] w-full overflow-hidden">
       <div className="h-full w-full bg-slate-400 grid-item-center">
@@ -16,10 +14,8 @@ export default function AdminPage({ username, image }) {
 
 export async function getServerSideProps({ req }) {
   try {
-    const { role, username, image } = await verifyFirebaseToken(
-      getUserToken(req)
-    );
-    if (role.includes('admin')) return { props: { username, image } };
+    const { role } = await verifyFirebaseToken(getUserToken(req));
+    if (role.includes('admin')) return { props: {} };
     else return { redirect: { destination: '/', permanent: false } };
   } catch (error) {
     return {

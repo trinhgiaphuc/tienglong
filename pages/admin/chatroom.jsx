@@ -4,22 +4,7 @@ import { getAdminToken } from '@lib/utils';
 import { verifyToken } from '@lib/withAuth';
 import Link from 'next/link';
 
-export async function getServerSideProps({ req, res }) {
-  try {
-    verifyToken(getAdminToken(req));
-  } catch (error) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: '/',
-      },
-    };
-  }
-  const messages = await getMessages(10);
-  return { props: { messages } };
-}
-
-const AdminChatroomPage = ({ messages }) => {
+export default function AdminChatroomPage({ messages }) {
   return (
     <div className="h-[94%] bg-neutral-400 flex items-center flex-col">
       <Link href="/admin/approve">
@@ -30,6 +15,22 @@ const AdminChatroomPage = ({ messages }) => {
       <AdminChatroom messages={messages} />
     </div>
   );
-};
+}
 
-export default AdminChatroomPage;
+export async function getServerSideProps({ req }) {
+  try {
+    verifyToken(getAdminToken(req));
+    const messages = await getMessages(10).catch(error => {
+      console.error(error);
+      return [];
+    });
+    return { props: { messages } };
+  } catch (error) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
+    };
+  }
+}
