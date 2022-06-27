@@ -4,7 +4,7 @@ export default async function handler(req, res) {
   const { uid } = req.query;
   if (uid.length > 1) {
     try {
-      const userWords = (await getUserWords(uid)) || {};
+      const userWords = (await getUserWords(uid)) || [];
 
       res.setHeader(
         'Cache-Control',

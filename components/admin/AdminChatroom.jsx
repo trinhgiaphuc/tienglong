@@ -1,12 +1,11 @@
 import ChatCard from './ChatCard';
 
-import { getAvatarFromMessage, supabase } from '@lib/supabase';
+import { supabase } from '@lib/supabase';
 import { useEffect, useRef, useState } from 'react';
 import SendMessageForm from './SendMessageForm';
 
 const AdminChatroom = ({ messages }) => {
   const [currentMsg, setCurrentMsg] = useState([]);
-
   const msgEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -17,7 +16,6 @@ const AdminChatroom = ({ messages }) => {
     supabase
       .from('message')
       .on('INSERT', async payload => {
-        console.log(payload);
         setCurrentMsg([...currentMsg, { ...payload.new }]);
       })
       .subscribe();

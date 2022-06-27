@@ -48,10 +48,16 @@ const OthersChatCard = ({ content, avatar, created_at, username }) => {
 
 const MyChatCard = ({ content, avatar, created_at }) => {
   return (
-    <div className="p-4 flex items-center justify-end gap-2">
+    <div className="p-4 flex font-ole items-center justify-end gap-2">
       <div className="px-4 py-2 rounded-3xl flex items-start flex-col my-border ">
-        <p className="smaller-text-responsive">
-          {new Date(created_at).toLocaleString()}
+        <p className="text-xs">
+          {new Date(created_at).toLocaleString('vi-VN', {
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric',
+            minute: '2-digit',
+            hour: '2-digit',
+          })}
         </p>
         <p className="text-responsive text-center self-center max-w-[35ch]">
           {content}
