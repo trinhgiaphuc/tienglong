@@ -1,6 +1,6 @@
 import WordCard from './WordCard';
 
-const WordList = ({ nogrid, words }) => {
+const WordList = ({ nogrid, words, lastwordNote }) => {
   let className = '';
 
   return (
@@ -21,6 +21,13 @@ const WordList = ({ nogrid, words }) => {
           </li>
         );
       })}
+      {lastwordNote ? (
+        <li className={`my-border ${className}`} key="cuoui-trag">
+          <h2 className="text-center font-ole text-xl uppercase bg-zinc-300 py-4 px-2">
+            Đã hết từ.
+          </h2>
+        </li>
+      ) : null}
     </ul>
   );
 };

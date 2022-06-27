@@ -11,7 +11,6 @@ import Link from 'next/link';
 
 export default function ProfilePage({ uid, userWords, error }) {
   const [userDetails, setUserDetails] = React.useState(null);
-  console.log(uid);
   React.useEffect(() => {
     fetcher(`user/${uid}`).then(setUserDetails);
   }, [uid]);
@@ -26,7 +25,6 @@ export default function ProfilePage({ uid, userWords, error }) {
         </div>
       )}
 
-      {/* FIXME: Fix the style in mobile */}
       {error ? (
         <div className="h-full flex-center">
           <Link href="/enter" passHref>
@@ -37,10 +35,10 @@ export default function ProfilePage({ uid, userWords, error }) {
         </div>
       ) : (
         <div className="h-full overflow-y-scroll">
-          <div className="my-border">
+          <div className="my-border py-5">
             <Title>Từ Được Người Dùng Định Nghĩa</Title>
           </div>
-          <WordList nogrid={true} words={userWords} />
+          <WordList nogrid={true} words={userWords} lastwordNote={true} />
         </div>
       )}
     </ResponsiveSplitScreen>
