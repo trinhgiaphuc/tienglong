@@ -36,7 +36,7 @@ export default function Home({ todayWords = [], trendingWords = [] }) {
 export async function getServerSideProps({ req, res }) {
   res.setHeader(
     'Cache-Control',
-    'public, s-maxage=300, stale-while-revalidate=300'
+    'public, s-maxage=60, stale-while-revalidate=60'
   );
   try {
     const { todayWords, error } = await fetcher('word/today-words');
