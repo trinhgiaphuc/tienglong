@@ -7,6 +7,7 @@ export default async function handler(req, res) {
     await createWordRedis(word);
     res.status(200).json({ ok: 'ok' });
   } catch (error) {
+    console.error(error);
     res.status(400).json({ error });
   }
 }

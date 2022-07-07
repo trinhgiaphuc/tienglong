@@ -8,12 +8,10 @@ import { addNewDefinition } from '@lib/db';
 import Tooltip from '@components/layouts/Tooltip';
 
 export default function AddWordForm() {
-  const {
-    user: { username: author },
-  } = useAuth();
   const router = useRouter();
   const [otherTags, setOtherTags] = React.useState([]);
   const [error, setError] = React.useState({ isError: false });
+  const { user = {} } = useAuth();
 
   const { register, handleSubmit, getValues, setValue, watch } = useForm();
 
@@ -22,7 +20,7 @@ export default function AddWordForm() {
       ...data,
       tags: [createdYear, source, trend, ...otherTags].filter(Boolean),
     };
-    await addNewDefinition({ ...wordData, author });
+    await addNewDefinition({ ...wordData, author: user.username });
     router.push('/define/success');
   };
 
@@ -35,7 +33,7 @@ export default function AddWordForm() {
     if (error[errorName]) {
       return () => setError(p => ({ ...p, [errorName]: null }));
     } else {
-      return () => {};
+      return () => { };
     }
   }
 

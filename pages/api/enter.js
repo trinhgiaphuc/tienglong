@@ -52,8 +52,20 @@ export default async function handler(req, res) {
       ]);
     }
   } catch (error) {
-    console.error(error);
-    return res.status(403).json({ error: 'Cookie is wrong or expired' });
+    if (error.code ==='auth/session-cookie-expired') {
+      res.setHeader('Set-Cookie', [
+        cookie.serialize('USER_ACCESS_TOKEN', '', {
+          maxAge: -1,
+          path: '/',
+        }),
+        cookie.serialize('ADMIN_ACCESS_TOKEN', '', {
+          maxAge: -1,
+          path: '/',
+        }),
+      ]);
+    } else {
+      return res.status(403).json({ error: 'Cookie is wrong or expired' });
+    }
   }
 
   return res.status(200).json({ ok: 'ok' });
