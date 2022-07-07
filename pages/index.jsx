@@ -38,16 +38,11 @@ export async function getServerSideProps({ req, res }) {
     'Cache-Control',
     'public, s-maxage=60, stale-while-revalidate=60'
   );
-  try {
-    const { todayWords, error } = await fetcher('word/today-words');
-    if (error) {
-      throw error;
-    }
-    return { props: { todayWords, trendingWords: [] } };
-  } catch (error) {
-    console.error(error);
-    return { props: { todayWords: [], trendingWords: [] } };
-  }
+
+  const { todayWords } = await fetcher('word/today-words');
+  const { trendingWords } = await fetcher('word/trending-words');
+
+  return { props: { todayWords, trendingWords } };
 }
 
 const DefineBanner = () => (
