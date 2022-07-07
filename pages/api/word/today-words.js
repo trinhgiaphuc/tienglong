@@ -1,6 +1,10 @@
 import { getTodayWords } from '@lib/firebase-admin';
 
 export default async function handler(req, res) {
+  if (req.method !== 'GET') {
+    return res.status(400).json({ message: 'Bad request' });
+  }
+
   try {
     const todayWords = JSON.parse(JSON.stringify(await getTodayWords()));
     res.setHeader(

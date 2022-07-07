@@ -1,16 +1,13 @@
 import { auth, getSpecificUser } from "@lib/firebase-admin";
 import { getUserToken } from "@lib/utils";
 
-// const ADMIN_EMAIL = [
-//   "procute2k@gmail.com",
-//   "pussicat113@gmail.com",
-//   "trinhgiaphuc2k@gmail.com",
-//   "trinhphuc0509@gmail.com",
-//   "trinhyaphuc@gmail.com",
-//   "thangleo6752@gmail.com"
-// ];
-
 export default async function handler(req, res) {
+
+  if (req.method !== 'POST') {
+    return res.status(400).json({ message: 'Bad request' });
+  }
+
+
   try {
     getUserToken(req);
     return res.status(200).json();

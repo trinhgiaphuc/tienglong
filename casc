@@ -1,0 +1,131 @@
+* [31m9638f75[m -[33m (HEAD -> main, master/main)[m implementing trending-words and implementing cache for words [32m(56 minutes ago) [1;34m<Phuc Trinh>[m
+* [31m7ead432[m -[33m[m fix define page error [32m(3 hours ago) [1;34m<Phuc Trinh>[m
+* [31m03a53fe[m -[33m[m fix increment word when add word [32m(8 days ago) [1;34m<Phuc Trinh>[m
+* [31m74d7307[m -[33m[m add fetch words and hearts count [32m(8 days ago) [1;34m<Phuc Trinh>[m
+* [31m26df565[m -[33m[m change create new user account pattern [32m(9 days ago) [1;34m<Phuc Trinh>[m
+* [31mf5cce2e[m -[33m[m change revalidate time for user word [32m(9 days ago) [1;34m<Phuc Trinh>[m
+* [31m94b8f0b[m -[33m[m change revalidate time [32m(9 days ago) [1;34m<Phuc Trinh>[m
+* [31med3d665[m -[33m[m update user details context [32m(10 days ago) [1;34m<Phuc Trinh>[m
+* [31mf530f79[m -[33m[m add end of word list note [32m(10 days ago) [1;34m<Phuc Trinh>[m
+* [31mbf4b457[m -[33m[m fix admin chat [32m(10 days ago) [1;34m<Phuc Trinh>[m
+* [31meebbdbf[m -[33m[m update send message functionality to the whole new level [32m(3 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m4b2f110[m -[33m[m change the way authentication work [32m(3 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m5624e41[m -[33m[m add create word functionality for desktop [32m(4 weeks ago) [1;34m<Phuc Trinh>[m
+* [31mcf35435[m -[33m[m add create word functionality for desktop [32m(4 weeks ago) [1;34m<Phuc Trinh>[m
+* [31ma5d383a[m -[33m[m add create word functionality for desktop [32m(4 weeks ago) [1;34m<Phuc Trinh>[m
+* [31mf13d067[m -[33m[m add create word functionality for desktop [32m(4 weeks ago) [1;34m<Phuc Trinh>[m
+* [31mf359f5d[m -[33m[m add reset password for desktop user [32m(4 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m522136c[m -[33m[m fix add word page [32m(4 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m9cf2516[m -[33m[m fix login [32m(4 weeks ago) [1;34m<Phuc Trinh>[m
+* [31md9f1f3c[m -[33m[m implementing desktop login [32m(4 weeks ago) [1;34m<Phuc Trinh>[m
+* [31mc3e4c79[m -[33m[m fix all the mess I did with npm audit fix --force [32m(4 weeks ago) [1;34m<Phuc Trinh>[m
+* [31ma34a6ff[m -[33m[m fix all the mess I did with npm audit fix --force [32m(4 weeks ago) [1;34m<Phuc Trinh>[m
+* [31mf9fa9f9[m -[33m[m fix login for admibn [32m(4 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m18e53d4[m -[33m[m reverse [32m(4 weeks ago) [1;34m<Phuc Trinh>[m
+* [31mfd57c42[m -[33m[m reverse [32m(4 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m1b443f2[m -[33m[m admin [32m(4 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m8154a74[m -[33m[m admin [32m(4 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m8e9938c[m -[33m[m admin auth debug [32m(4 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m633033d[m -[33m[m admin auth [32m(4 weeks ago) [1;34m<Phuc Trinh>[m
+* [31mb403c6c[m -[33m[m module not found [32m(4 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m7c11209[m -[33m[m MODULE_NOT_FOUND [32m(4 weeks ago) [1;34m<Phuc Trinh>[m
+* [31mb6c116a[m -[33m[m Objects are not valid as a React child [32m(4 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m0b24a3a[m -[33m[m analyze admin login error [32m(4 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m4327f93[m -[33m[m fix logged in but not create cookie [32m(4 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m297f857[m -[33m[m fix logged in but not create cookie [32m(4 weeks ago) [1;34m<Phuc Trinh>[m
+* [31md28bec9[m -[33m[m redeploy3 [32m(4 weeks ago) [1;34m<Phuc Trinh>[m
+* [31mcc5031d[m -[33m[m redeploy2 [32m(4 weeks ago) [1;34m<Phuc Trinh>[m
+* [31mabd329b[m -[33m[m redeploy [32m(4 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m033b0b9[m -[33m[m redeploy [32m(4 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m5f1b0f4[m -[33m[m add password required for login account [32m(4 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m7e7dd72[m -[33m[m change fetch today-words style [32m(5 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m7a9d7b0[m -[33m[m change fetch today-words style [32m(5 weeks ago) [1;34m<Phuc Trinh>[m
+* [31mfd812e5[m -[33m[m change fetch today-words style [32m(5 weeks ago) [1;34m<Phuc Trinh>[m
+* [31mcb89a77[m -[33m[m change fetch today-words style [32m(5 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m4b1b094[m -[33m[m change fetch today-words style [32m(5 weeks ago) [1;34m<Phuc Trinh>[m
+* [31mdf2b4ba[m -[33m[m change fetch today-words style [32m(5 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m13aff2f[m -[33m[m change fetch today-words style [32m(5 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m4d9a9cf[m -[33m[m change fetch today-words style [32m(5 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m7fc3d0c[m -[33m[m change fetch today-words style [32m(5 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m5eb8021[m -[33m[m change fetch today-words style [32m(5 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m2227ae6[m -[33m[m add more condition to words fetch at initial page load or full reload page [32m(6 weeks ago) [1;34m<Phuc Trinh>[m
+* [31mb8d8b2b[m -[33m[m update user detail page to ISR [32m(6 weeks ago) [1;34m<Phuc Trinh>[m
+* [31me53b405[m -[33m[m update user detail page to ISR [32m(6 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m6cc8d44[m -[33m[m test prod user detail [32m(6 weeks ago) [1;34m<Phuc Trinh>[m
+* [31mad98069[m -[33m[m test prod user detail [32m(6 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m9504053[m -[33m[m test prod user detail [32m(6 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m8944db0[m -[33m[m test prod user detail [32m(6 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m51dbb46[m -[33m[m test prod user detail [32m(6 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m66d6978[m -[33m[m test prod user detail [32m(6 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m9ba524c[m -[33m[m test prod user detail [32m(6 weeks ago) [1;34m<Phuc Trinh>[m
+* [31mf00ba10[m -[33m[m change SSR to ISR in user detail [32m(6 weeks ago) [1;34m<Phuc Trinh>[m
+* [31ma73b40d[m -[33m[m change SSR to ISR in user detail [32m(6 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m627e4de[m -[33m[m change SSR to ISR in word detail [32m(6 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m0888f35[m -[33m[m add handle error functionality in addWordForm [32m(7 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m52c92cc[m -[33m[m update form management with react-hook-form [32m(7 weeks ago) [1;34m<Phuc Trinh>[m
+* [31me80a38c[m -[33m[m update cache path2 [32m(7 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m4ee7e8f[m -[33m[m update cache path1 [32m(7 weeks ago) [1;34m<Phuc Trinh>[m
+* [31mffa3207[m -[33m[m update cache path [32m(7 weeks ago) [1;34m<Phuc Trinh>[m
+* [31me20fe76[m -[33m[m add admin checking middleware [32m(7 weeks ago) [1;34m<Phuc Trinh>[m
+* [31mc2dadce[m -[33m[m adding seeding feature [32m(7 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m01587f9[m -[33m[m refactor code [32m(7 weeks ago) [1;34m<Phuc Trinh>[m
+* [31m47cc483[m -[33m[m styling add word form component [32m(3 months ago) [1;34m<Phuc Trinh>[m
+* [31mf291845[m -[33m[m rebuild database strategy [32m(3 months ago) [1;34m<Phuc Trinh>[m
+* [31ma314c19[m -[33m[m add more UI to define page [32m(3 months ago) [1;34m<Phuc Trinh>[m
+* [31mc46d506[m -[33m[m fix redis client connections exceed [32m(3 months ago) [1;34m<Phuc Trinh>[m
+* [31m039ae71[m -[33m[m add search engine with redis [32m(3 months ago) [1;34m<Phuc Trinh>[m
+* [31m1f3798b[m -[33m[m integrating redis [32m(3 months ago) [1;34m<Phuc Trinh>[m
+* [31mbef1f73[m -[33m[m fix typography 8 [32m(3 months ago) [1;34m<Phuc Trinh>[m
+* [31m22d5737[m -[33m[m fix typography 7 [32m(3 months ago) [1;34m<Phuc Trinh>[m
+* [31m53ecba3[m -[33m[m fix typography 6 [32m(3 months ago) [1;34m<Phuc Trinh>[m
+* [31m465d735[m -[33m[m fix typography 5 [32m(3 months ago) [1;34m<Phuc Trinh>[m
+* [31m517d149[m -[33m[m fix typography 4 [32m(3 months ago) [1;34m<Phuc Trinh>[m
+* [31m7564d1f[m -[33m[m fix typography 3 [32m(3 months ago) [1;34m<Phuc Trinh>[m
+* [31m2e581d5[m -[33m[m fix typography 2 [32m(3 months ago) [1;34m<Phuc Trinh>[m
+* [31m3d1dd9f[m -[33m[m fix typography 1 [32m(3 months ago) [1;34m<Phuc Trinh>[m
+* [31m07d0d57[m -[33m[m fix login admin 1 [32m(3 months ago) [1;34m<Phuc Trinh>[m
+* [31m574f16e[m -[33m[m style word card component 2 [32m(3 months ago) [1;34m<Phuc Trinh>[m
+* [31m7f7f2c9[m -[33m[m style wordDetail Component [32m(3 months ago) [1;34m<Phuc Trinh>[m
+* [31m0902cef[m -[33m[m modify font 4 [32m(3 months ago) [1;34m<Phuc Trinh>[m
+* [31m7f2ac68[m -[33m[m modify font 3 [32m(3 months ago) [1;34m<Phuc Trinh>[m
+* [31m5eab667[m -[33m[m modify font 2 [32m(3 months ago) [1;34m<Phuc Trinh>[m
+* [31m5298370[m -[33m[m change font [32m(3 months ago) [1;34m<Phuc Trinh>[m
+* [31md79a721[m -[33m[m fix some sizings that flex does not support for phone browser [32m(3 months ago) [1;34m<Phuc Trinh>[m
+* [31m9561097[m -[33m[m fix avatar not display 1 [32m(3 months ago) [1;34m<Phuc Trinh>[m
+* [31m400952e[m -[33m[m fix dropdown button 3 [32m(3 months ago) [1;34m<Phuc Trinh>[m
+* [31maa94a87[m -[33m[m fix dropdown button 2 [32m(3 months ago) [1;34m<Phuc Trinh>[m
+* [31m2cc3e1a[m -[33m[m change WordId Page to a dynamic folder and Add edit word page inside of it [32m(4 months ago) [1;34m<Phuc Trinh>[m
+* [31m2f323df[m -[33m[m fix dropdown 4 [32m(4 months ago) [1;34m<Phuc Trinh>[m
+* [31m8540dff[m -[33m[m fix dropdown 3 [32m(4 months ago) [1;34m<Phuc Trinh>[m
+* [31mf402ac3[m -[33m[m fix dropdown 2 [32m(4 months ago) [1;34m<Phuc Trinh>[m
+* [31mcf5bd67[m -[33m[m fix dropdown button 1 [32m(4 months ago) [1;34m<Phuc Trinh>[m
+* [31m93f28ef[m -[33m[m fix screen size 1 [32m(4 months ago) [1;34m<Phuc Trinh>[m
+* [31m8c6922e[m -[33m[m change font size and logo in hero section [32m(4 months ago) [1;34m<Phuc Trinh>[m
+* [31m544536e[m -[33m[m add head tag [32m(4 months ago) [1;34m<Phuc Trinh>[m
+* [31mb7f6297[m -[33m[m test font [32m(4 months ago) [1;34m<Phuc Trinh>[m
+* [31mfe50706[m -[33m[m fix font [32m(4 months ago) [1;34m<Phuc Trinh>[m
+* [31mc5b8f5d[m -[33m[m adjust word dropdown component [32m(4 months ago) [1;34m<Phuc Trinh>[m
+* [31m3b7a178[m -[33m[m update authentication function [32m(4 months ago) [1;34m<Phuc Trinh>[m
+* [31m65e5ba1[m -[33m[m add font style [32m(4 months ago) [1;34m<Phuc Trinh>[m
+* [31mc1e8918[m -[33m[m refactor logout [32m(4 months ago) [1;34m<Phuc Trinh>[m
+* [31m2f17a7d[m -[33m[m create trending-words page [32m(4 months ago) [1;34m<Phuc Trinh>[m
+* [31m4d2d3f7[m -[33m[m fix auth [32m(4 months ago) [1;34m<Phuc Trinh>[m
+* [31m3e0abd9[m -[33m[m add dropdown button for word [32m(4 months ago) [1;34m<Phuc Trinh>[m
+* [31m3c35007[m -[33m[m adjust username checking logic [32m(4 months ago) [1;34m<Phuc Trinh>[m
+* [31m0794a21[m -[33m (origin/main)[m react-query integrate [32m(4 months ago) [1;34m<Phuc Trinh>[m
+* [31m929b493[m -[33m[m refactor title components [32m(4 months ago) [1;34m<Phuc Trinh>[m
+* [31mafca3ea[m -[33m[m add responsive Split Screen layout component [32m(4 months ago) [1;34m<Phuc Trinh>[m
+* [31m4947833[m -[33m[m format component folder and add split screen layout component [32m(4 months ago) [1;34m<Phuc Trinh>[m
+* [31mcaf21b6[m -[33m[m add auth wrapepr [32m(4 months ago) [1;34m<Phuc Trinh>[m
+* [31m5060901[m -[33m[m add auth wrapper [32m(4 months ago) [1;34m<Phuc Trinh>[m
+* [31m3e8be22[m -[33m[m fix firebase admin login and add wrapper auth function [32m(4 months ago) [1;34m<Phuc Trinh>[m
+* [31m32db969[m -[33m[m integrate firebase-admin authentication [32m(4 months ago) [1;34m<Phuc Trinh>[m
+* [31m3bce9df[m -[33m[m hide scrollbar [32m(4 months ago) [1;34m<Phuc Trinh>[m
+* [31m971c5ec[m -[33m[m fix loading state [32m(4 months ago) [1;34m<Phuc Trinh>[m
+* [31m2e9b55b[m -[33m[m add admin login loading state [32m(4 months ago) [1;34m<Phuc Trinh>[m
+* [31mdabca1d[m -[33m[m add heart button [32m(4 months ago) [1;34m<Phuc Trinh>[m
+* [31ma7b24e9[m -[33m[m 'add approve functionality' [32m(4 months ago) [1;34m<Phuc Trinh>[m
+* [31m633e6ff[m -[33m[m main [32m(5 months ago) [1;34m<Phuc Trinh>[m
+* [31m8b1fbbb[m -[33m[m main [32m(6 months ago) [1;34m<Phuc Trinh>[m
+* [31m21de1a4[m -[33m[m create new project [32m(6 months ago) [1;34m<Phuc Trinh>[m
+* [31md0570dd[m -[33m[m Initial commit from Create Next App [32m(6 months ago) [1;34m<Phuc Trinh>[m
