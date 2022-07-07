@@ -338,7 +338,7 @@ const SubmitField = ({ formType }) => (
   <div className="my-1 sm:my-0 col-span-10 w-full">
     <button
       type="submit"
-      className="my-border rounded w-full bg-black text-white p-4 font-medium uppercase active:animate-shrink"
+      className="my-border rounded w-full bg-black text-white p-4 font-medium uppercase"
     >
       {formType === 'edit' ? 'Cập Nhật' : 'Định Nghĩa'}
     </button>
