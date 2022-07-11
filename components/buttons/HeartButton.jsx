@@ -10,8 +10,6 @@ const HeartButton = ({ heartCount, authorId, wordId }) => {
   const [wordIsLiked, setWordIsLiked] = React.useState(false);
 
   React.useEffect(() => {
-    const isLiked = sessionStorage.getItem(wordId) ?? false;
-    setWordIsLiked(isLiked);
     if (user) {
       checkHeartExistence(wordId).then(setWordIsLiked);
     }

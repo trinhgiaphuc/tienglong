@@ -11,18 +11,32 @@ import Link from 'next/link';
 
 export default function ProfilePage({ uid, userWords, error }) {
   const [userDetails, setUserDetails] = React.useState(null);
+  const [userNotFound, setUserNotFound] = React.useState(false);
   React.useEffect(() => {
-    fetcher(`user/${uid}`).then(setUserDetails);
+    fetcher(`user/${uid}`).then(res => {
+      if (typeof res !== 'object') {
+        throw new Error('user not found');
+      } else {
+        setUserDetails(res);
+      }
+    }).catch(() => setUserNotFound(true));
   }, [uid]);
 
   return (
     <ResponsiveSplitScreen>
-      {userDetails ? (
-        <BioForm {...userDetails} />
-      ) : (
+      {userNotFound ? (
         <div className="my-border h-full p-20 flex-center flex-col gap-7 lg:order-1">
-          <Spinner />
+          <h1 className='text-3xl text-red-400 font-bold'>
+            Người dùng không tồn tại
+          </h1>
         </div>
+      ) : (
+        userDetails ?
+          <BioForm {...userDetails} />
+          :
+          <div className="my-border h-full p-20 flex-center flex-col gap-7 lg:order-1">
+            <Spinner />
+          </div>
       )}
 
       {error ? (
@@ -38,7 +52,7 @@ export default function ProfilePage({ uid, userWords, error }) {
           <div className="my-border py-5">
             <Title>Từ Được Người Dùng Định Nghĩa</Title>
           </div>
-          <WordList nogrid={true} words={userWords} lastwordNote={true} />
+        {userNotFound ? null : <WordList nogrid={true} words={userWords} lastwordNote={true} />}
         </div>
       )}
     </ResponsiveSplitScreen>

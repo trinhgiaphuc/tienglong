@@ -10,6 +10,7 @@ import fetcher from '@lib/fetcher';
 import Modal from '@components/commons/Modal';
 
 export default function Home({ todayWords = [], trendingWords = [] }) {
+
   return (
     <Layout title="Tiếng Lòng" description="Từ Điển Tiếng Lóng">
       <Hero />

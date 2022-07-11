@@ -14,17 +14,19 @@
     moduleDirectories: ["node_modules", "<rootDir>"],
 
     testEnvironment: "jest-environment-jsdom",
+    testPathIgnorePatterns: ["__mocks__"],
 
     transformIgnorePatterns: ["<rootDir>/node_modules/@firebase"],
 
     moduleNameMapper: {
+      "^@/(.*)$": "<rootDir>/$1",
       "^@firebase/(.*)$": "<rootDir>/node_modules/@firebase/$1",
       "^firebase/(.*)$": "<rootDir>/node_modules/firebase/$1",
       "^@components/(.*)$": "<rootDir>/components/$1",
       "^@lib/(.*)$": "<rootDir>/lib/$1",
       "^assets/(.*)$": "<rootDir>/assets/$1",
       "^styles/(.*)$": "<rootDir>/styles/$1",
-      "/^pages/(.*)$/": "<rootDir>/pages/$1",
+      "^@pages/(.*)$": "<rootDir>/pages/$1",
     },
   };
 

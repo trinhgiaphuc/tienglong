@@ -14,7 +14,7 @@ export default async function handler(req, res) {
 
       return res.status(200).json(userDetails);
     } catch (error) {
-      return res.status(500).json({ error: JSON.stringify(error) });
+      return res.status(404).json({ error: "not-found" });
     }
   } else {
     return res.status(400).json({ error: 'Không tìm thấy người dùng' });
