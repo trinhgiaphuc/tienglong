@@ -1,16 +1,10 @@
 import { facebookProvider, googleProvider, handleSignIn } from '@lib/firebase';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 
 const LoginForm = ({ referer }) => {
   const router = useRouter();
   const path = '/' +  referer.split('/')[3];
   
-  // useEffect(() => {
-    // router.prefetch(referer);
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
   return (
     <div className="overflow-hidden">
         <button onClick={() => router.push(referer, undefined, {shallow: true})} className="p-4 absolute uppercase font-medium top-0 left-0">

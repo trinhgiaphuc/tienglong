@@ -14,9 +14,6 @@ export default function DefinePage() {
 }
 
 export async function getServerSideProps({ req, res }) {
-
-  res.setHeader('Cache-Control', `s-maxage=60, stale-while-revalidate`) 
-
   try {
     getUserToken(req);
     return { props: {} };

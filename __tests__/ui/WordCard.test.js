@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import Word from '@pages/word/[wordId]';
 import getFakeData from '../__mocks__/fakeData';
 
-test('word component display correctly', async () => {
+test.skip('word component display correctly', async () => {
 
   const { wordDetails } = await getFakeData();
 

@@ -1,21 +1,19 @@
 import { IoEllipsisVertical } from 'react-icons/io5';
 import { useState, useCallback } from 'react';
-import { useAuth } from '@lib/userContext';
 import { useEffect } from 'react';
 import Link from 'next/link';
 
 const WordDropDown = ({ wordId, authorId }) => {
-  const [isToggle, setIsToggle] = useState(false);
-  const { user } = useAuth();
+  const [isShown, setIsShown] = useState(false);
 
   const handleTurnOffDropDown = useCallback(e => {
     if (e.key === 'Escape') {
-      setIsToggle(false);
+      setIsShown(false);
     }
   }, []);
 
   useEffect(() => {
-    if (!isToggle) return;
+    if (!isShown) return;
     document.body.addEventListener('click', handleToggle);
     document.addEventListener('keydown', handleTurnOffDropDown);
 
@@ -23,15 +21,16 @@ const WordDropDown = ({ wordId, authorId }) => {
       document.body.removeEventListener('click', handleToggle);
       document.removeEventListener('keydown', handleTurnOffDropDown);
     };
-  }, [handleTurnOffDropDown, isToggle]);
+  }, [handleTurnOffDropDown, isShown]);
 
   const handleToggle = e => {
     e.stopPropagation();
-    setIsToggle(t => !t);
+    setIsShown(t => !t);
   };
 
   return (
     <button
+      data-testid="toggle-dropdown-btn"
       type="button"
       aria-expanded="true"
       aria-haspopup="true"
@@ -41,22 +40,13 @@ const WordDropDown = ({ wordId, authorId }) => {
       <IoEllipsisVertical className="prose prose-2xl outline-none aspect-square rounded-full  hover:bg-gray-50 font-medium" />
       <div
         className={`absolute top-full right-3/4 min-w-max rounded-md shadow-sm border overflow-hidden bg-gray-100 opacity-0 scale-0 duration-150  ${
-          isToggle ? 'opacity-100 scale-100' : ''
+          isShown ? 'opacity-100 scale-100' : ''
         }`}
         tabIndex="-1"
       >
-        {user?.id === authorId ? (
-          <Link href={`/word/${wordId}/edit`}>
-            <a
-              className="p-2 block text-xs md:text-sm lg:text-lg min-w-max bg-gray-100 hover:bg-zinc-300"
-              tabIndex="-1"
-            >
-              Chỉnh Sửa
-            </a>
-          </Link>
-        ) : null}
         <Link href="/">
           <a
+            data-testid="report-dropdown"
             className="p-2 block text-xs md:text-sm lg:text-lg min-w-max bg-gray-100 hover:bg-zinc-300 "
             tabIndex="-1"
           >

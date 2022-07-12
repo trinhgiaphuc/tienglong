@@ -9,6 +9,13 @@ export const handlers = [
       const {userDetails} = await getFakeData();
       return res(ctx.json(userDetails));
     }
-  })
+  }),
+  rest.post('http://localhost:3000/api/redis/add-word', async (req, res, ctx) => {
+    return res(ctx.json({ok: 'ok'}));
+  }),
+  rest.post('http://localhost:3000/api/word/like', async (req, res, ctx) => {
+    return res(ctx.json({ok: 'ok'}));
+  }),
 ];
+
 

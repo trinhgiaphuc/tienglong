@@ -43,7 +43,7 @@ const HeartButton = ({ heartCount, authorId, wordId }) => {
       ) : (
         <IoHeartOutline className="prose-2xl" />
       )}
-      {user ? <p className="font-medium">{hearts}</p> : null}
+      {user ? <p id="heart-button" className="font-medium">{hearts}</p> : null}
     </button>
   );
 };

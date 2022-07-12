@@ -1,4 +1,4 @@
-export default async function getFakeData() {
+export default function getFakeData() {
   const wordDetails = {
     word: 'Hello Worlds',
     definition: 'I am super handsome',
@@ -10,6 +10,18 @@ export default async function getFakeData() {
     id: 'asoijdl',
     createdAt: 12000
   }
+
+  const genWordDetails = (number) => ({
+    word: `Hello Worlds ${number}`,
+    definition: `I am super handsome ${number}`,
+    example: `I am testing a the word page ${number}`,
+    heartCount: 300,
+    author: `Mister Man ${number}`,
+    authorId: `ashdjaskd${number}`,
+    tags: ['1900', '1234'],
+    id: `asoijdl${number}`,
+    createdAt: 12000
+  });
 
   const userDetails = {
     createdAt: '123',
@@ -28,6 +40,19 @@ export default async function getFakeData() {
       "chimte",
   }
 
-  return { wordDetails, userDetails };
+  const wordDetailList = [
+    genWordDetails(1),
+    genWordDetails(2),
+    genWordDetails(3),
+    genWordDetails(4),
+    genWordDetails(5),
+    genWordDetails(6),
+    genWordDetails(7),
+    genWordDetails(8),
+    genWordDetails(9),
+    genWordDetails(0),
+  ]
+
+  return { wordDetails, userDetails, wordDetailList };
 }
 

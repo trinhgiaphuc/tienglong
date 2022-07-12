@@ -1,9 +1,9 @@
 import WordCard from './WordCard';
 
-const WordList = ({ nogrid, words, lastwordNote }) => {
+const WordList = ({ nogrid, words = [], lastwordNote }) => {
   let className = '';
 
-  return (
+  return words.length === 0 ? null : (
     <ul className={`my-border flex flex-col ${nogrid ? '' : 'card-list'}`}>
       {words?.map((word, i) => {
         if (i === 0) className = 'col-span-5 row-span-2 hover:bg-red-300';
@@ -22,7 +22,7 @@ const WordList = ({ nogrid, words, lastwordNote }) => {
         );
       })}
       {lastwordNote ? (
-        <li className={`my-border ${className}`} key="cuoui-trag">
+        <li className={`my-border ${className}`} key="cuoi-trang">
           <h2 className="text-center font-ole text-xl uppercase bg-zinc-300 py-4 px-2">
             Đã hết từ.
           </h2>

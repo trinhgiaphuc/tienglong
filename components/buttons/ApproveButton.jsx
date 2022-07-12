@@ -5,12 +5,7 @@ const ApproveButton = ({ setHideWord, wordDetails }) => {
   return (
     <button
       onClick={async () => {
-        try {
-          await approvePendingWord(wordDetails);
-        } catch (error) {
-          console.log("FUCKEDUP");
-          console.error(error);
-        }
+        approvePendingWord(wordDetails);
         setHideWord(true);
       }}
       className="word-button active:scale-75 duration-700 mx-2 lg:mx-0"
