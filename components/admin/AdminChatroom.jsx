@@ -3,8 +3,10 @@ import ChatCard from './ChatCard';
 import { supabase } from '@lib/supabase';
 import { useEffect, useRef, useState } from 'react';
 import SendMessageForm from './SendMessageForm';
+import fetcher from '@lib/fetcher';
 
-const AdminChatroom = ({ messages }) => {
+const AdminChatroom = () => {
+  const [messages, setMessages] = useState([]);
   const [currentMsg, setCurrentMsg] = useState([]);
   const msgEndRef = useRef(null);
 
@@ -13,6 +15,7 @@ const AdminChatroom = ({ messages }) => {
   };
 
   useEffect(() => {
+    fetcher('admin/get-messages').then(({messages}) => setMessages(messages));
     supabase
       .from('message')
       .on('INSERT', async payload => {

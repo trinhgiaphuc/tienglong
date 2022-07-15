@@ -5,6 +5,7 @@ export default async function handler(req, res) {
 
   try {
     let wordDetails = await getSpecificWordServer(wordId);
+    res.setHeader("Cache-Control", "max-age=600");
     return res.status(200).json({ wordDetails });
   } catch (error) {
     return res.status(500).json({ error });

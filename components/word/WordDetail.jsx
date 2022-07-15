@@ -79,7 +79,7 @@ const WordDetail = ({ wordDetails, wordIsPending }) => {
             authorId={authorId}
             wordId={id}
           />
-          <ShareButton />
+          <ShareButton wordId={id} />
           <ReportButton />
         </div>
       )}

@@ -13,16 +13,17 @@ export default function AdminPage() {
 }
 
 export async function getServerSideProps({ req }) {
-  try {
-    const { role } = await verifyFirebaseToken(getUserToken(req));
-    if (role.includes('admin')) return { props: {} };
-    else return { redirect: { destination: '/', permanent: false } };
-  } catch (error) {
+  const { result, error } = await verifyFirebaseToken(getUserToken(req));
+  if (error) {
     return {
       redirect: {
         destination: '/enter',
         permanent: false,
       },
-    };
+    }
+  } else {
+    const { role } = result;
+    if (role.includes('admin')) return { props: {} };
+    else return { redirect: { destination: '/', permanent: false } };
   }
 }

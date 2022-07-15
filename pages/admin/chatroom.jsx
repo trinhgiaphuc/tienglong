@@ -4,7 +4,7 @@ import { getAdminToken } from '@lib/utils';
 import { verifyToken } from '@lib/withAuth';
 import Link from 'next/link';
 
-export default function AdminChatroomPage({ messages }) {
+export default function AdminChatroomPage() {
   return (
     <div className="h-[94%] bg-neutral-400 flex items-center flex-col">
       <Link href="/admin/approve">
@@ -12,7 +12,7 @@ export default function AdminChatroomPage({ messages }) {
           &#8592; Duyệt Bài
         </a>
       </Link>
-      <AdminChatroom messages={messages} />
+      <AdminChatroom />
     </div>
   );
 }
@@ -20,11 +20,7 @@ export default function AdminChatroomPage({ messages }) {
 export async function getServerSideProps({ req }) {
   try {
     verifyToken(getAdminToken(req));
-    const messages = await getMessages(10).catch(error => {
-      console.error(error);
-      return [];
-    });
-    return { props: { messages } };
+    return {props: {}};
   } catch (error) {
     return {
       redirect: {

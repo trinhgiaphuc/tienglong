@@ -39,7 +39,8 @@ export default async function handler(req, res) {
         return res.status(500).json({ error });
       }
     } else {
-      await verifyFirebaseToken(token);
+      const { error } = await verifyFirebaseToken(token);
+      if (error) throw error;
       res.setHeader('Set-Cookie', [
         cookie.serialize('USER_ACCESS_TOKEN', '', {
           maxAge: -1,
@@ -52,7 +53,7 @@ export default async function handler(req, res) {
       ]);
     }
   } catch (error) {
-    if (error.code ==='auth/session-cookie-expired') {
+    if (error.code === 'auth/session-cookie-expired') {
       res.setHeader('Set-Cookie', [
         cookie.serialize('USER_ACCESS_TOKEN', '', {
           maxAge: -1,
