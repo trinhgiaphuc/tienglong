@@ -21,7 +21,7 @@
     "react-hook-form": "^7.31.1",
     "react-icons": "^4.3.1",
     "react-share": "^4.4.0",
-    "redis-om": "^0.2.0"
+    "redis-om": "^0.3.6"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.2",

@@ -16,8 +16,7 @@ const SearchBar = () => {
         try {
           const res = await fetch(`/api/redis/search-word?${param}`);
           const words = await res.json();
-          console.log(words);
-          // setWordList(words);
+          setWordList(words);
         } catch (error) {
           console.error(error);
         }
