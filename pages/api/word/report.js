@@ -1,5 +1,4 @@
 import { reportWord, verifyFirebaseToken } from '@lib/firebase-admin';
-import { auth } from '@lib/firebase';
 import { getUserToken } from '@lib/utils';
 
 export default async function handler(req, res) {
